@@ -66,12 +66,6 @@
                   </tr>
                   <tr>
                     <td>Trident</td>
-                    <td>Internet
-                      Explorer 6
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Trident</td>
                     <td>Internet Explorer 7</td>
                   </tr>
                   <tr>
