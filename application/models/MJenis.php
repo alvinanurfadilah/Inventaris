@@ -37,5 +37,3 @@ class MJenis extends CI_Model
         return(($this->db->affected_rows() > 0) ? true : false);
     }
 }
-
-?>

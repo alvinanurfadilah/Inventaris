@@ -29,26 +29,24 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="Jenis.php" class="nav-link">
+              <a href="<?= base_url('') ?>master/Obat.php" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Obat</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="<?= base_url('') ?>master/Jenis.php" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Jenis</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="../satuan.php" class="nav-link">
+              <a href="<?= base_url('') ?>master/Satuan.php" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Satuan</p>
               </a>
             </li>
           </ul>
-        </li>
-        <li class="nav-item">
-          <a href="../obat.php" class="nav-link">
-            <i class="nav-icon fas fa-tachometer-alt"></i>
-            <p>
-              Data Obat
-            </p>
-          </a>
         </li>
         <li class="nav-item">
           <a href="#" class="nav-link">
