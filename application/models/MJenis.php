@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit ('No direct script access allowed');
 
 class MJenis extends CI_Model
 {
-    private $tbl = 'jenis';
+    private $tbl = 'tbl_jenis';
 
     public function show($where='')
     {
@@ -23,12 +23,23 @@ class MJenis extends CI_Model
         return(($this->db->affected_rows() > 0) ? true : false);
     }
 
-    public function update($where, $object)
+    public function edit_data($where,$table)
+    {
+        return $this->db->get_where($table,$where);
+    }
+
+    public function update_data($where, $data, $table)
     {
         $this->db->where($where);
-        $this->db->update($this->tbl, $object);
-        return(($this->db->affected_rows() > 0) ? true : false);
+        $this->db->update($table, $data);
     }
+
+    // public function update($where, $object)
+    // {
+    //     $this->db->where($where);
+    //     $this->db->update($this->tbl, $object);
+    //     return(($this->db->affected_rows() > 0) ? true : false);
+    // }
 
     public function delete($where)
     {

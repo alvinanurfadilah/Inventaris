@@ -52,8 +52,13 @@
                       <td><?= $i++ ?></td>
                       <td><?= $val['jenis'] ?></td>
                       <td>
-                        <i class="fas fa-edit"></i>
-                        <i class="fas fa-trash-alt"></i>
+                        <div class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-default-update">
+                          <i class="fas fa-edit"></i>
+                        </div>
+
+                        <?php echo anchor('CJenis/delete/'.$val['id'], '<div class="btn btn-danger btn-sm">
+                          <i class="fas fa-trash-alt"></i>
+                        </div>') ?>
                       </td>
                     </tr>
                   <?php endforeach ?>
@@ -75,7 +80,7 @@
 </div>
 
 
-<!-- Modal -->
+<!-- Modal Input -->
 <div class="modal fade" id="modal-default">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -85,18 +90,53 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        <div class="row">
-          <label for="horizontal-text-input" class="col-sm-3 col-form-label">Nama Jenis</label>
-          <div class="col-sm-9">
-            <input type="text" class="form-control" name="jenis" id="jenis" placeholder="Masukkan Nama Jenis">
+      <form action="<?= base_url('CJenis/index_post'); ?>" method="POST">
+        <div class="modal-body">
+          <div class="row">
+            <label for="horizontal-text-input" class="col-sm-3 col-form-label">Nama Jenis</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" name="jenis_obat" id="jenis_obat" placeholder="Masukkan Nama Jenis">
+            </div>
           </div>
         </div>
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Tambah</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<!-- Modal Update -->
+<div class="modal fade" id="modal-default-update">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Update Jenis</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
-      <div class="modal-footer justify-content-between">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
+      <?php foreach ($data->result_array() as $val) : ?>
+        <form action="<?= base_url('CJenis/update'); ?>" method="POST">
+          <div class="modal-body">
+            <div class="row">
+              <label for="horizontal-text-input" class="col-sm-3 col-form-label">Nama Jenis</label>
+              <div class="col-sm-9">
+                <input type="hidden" class="form-control" name="id" id="id" value="<?= $val['id'] ?>">
+                <input type="text" class="form-control" name="jenis" id="jenis" value="<?= $val['jenis'] ?>">
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer justify-content-between">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Update</button>
+          </div>
+        </form>
+      <?php endforeach ?>
     </div>
     <!-- /.modal-content -->
   </div>

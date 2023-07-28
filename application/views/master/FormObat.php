@@ -25,7 +25,7 @@
                         </div> -->
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form class="form-horizontal">
+                        <form class="form-horizontal" action="<?= base_url('CObat/index_post'); ?>">
                             <div class="card-body">
                             <div class="form-group row">
                                 <label for="inputEmail3" class="col-sm-2 col-form-label"><h5><b>Form Obat</b></h5></label>
@@ -56,6 +56,11 @@
                                 </div>
                             </div>
                             <!-- /.card-body -->
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-info">Sign in</button>
+                                <button type="submit" class="btn btn-default float-right">Cancel</button>
+                            </div>
+                            <!-- /.card-footer -->
                         </form>
                         <div class="modal-header mb-3"></div>
 

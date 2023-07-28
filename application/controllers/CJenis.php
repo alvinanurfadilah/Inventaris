@@ -6,10 +6,6 @@ class CJenis extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        // $model = strtolower(get_class($this));
-        // if (file_exists(APPATH . 'models/' . ucfirst($model) . 'MJenis.php')) {
-        //     $this->load->model(ucfirst($model) . 'MJenis', $model, true);
-        // }
         $this->load->model('MJenis');
         $this->load->helper('url'); 
     }
@@ -23,13 +19,74 @@ class CJenis extends CI_Controller
         $this->load->view('pages/Footer');
     }
 
+    public function index_post()
+    {
+        $data = [
+            'slug' => str_replace(' ', '-', strtolower($this->input->post('jenis_obat'))),
+            'jenis' => $this->input->post('jenis_obat'),
+            'created_at' => date('Y-m-d H:i:s')
+        ];
+        $this->db->insert('tbl_jenis', $data);
+        redirect('CJenis/index');
+    }
+
+    function edit($slug){
+        $where = array('slug' => $slug);
+        $data['data'] = $this->MJenis->edit_data($where,'tbl_jenis');
+        $row = ['id' => $data['id']];
+        $this->load->view('master/Jenis',$row);
+    }
+
+    function update(){
+        $id = $this->input->post('id');
+        $jenis = $this->input->post('jenis');
+     
+        $data = array(
+            'slug' => str_replace(' ', '-', strtolower($this->input->post('jenis'))),
+            'jenis' => $jenis,
+            'updated_at' => date('Y-m-d H:m:s')
+        );
+     
+        $where = array(
+            'id' => $id
+        );
+     
+        $this->MJenis->update_data($where,$data,'tbl_jenis');
+        redirect('CJenis/index');
+    }
+
+    public function delete($id)
+    {
+        $where = ['id' => $id];
+        $this->MJenis->delete($where, 'tbl_jenis');
+        redirect('CJenis/index');
+    }
+
+
+    // public function index_put($slug='')
+    // {
+    //     $idslug = ['slug' => $slug];
+    //     $data['data'] = $this->MJenis->show($idslug, 'tbl_jenis');
+    //     $row = ['id' => $data['id']];
+
+    //     $this->input->post('id');
+        
+    //     $arr['slug'] = str_replace(' ', '-', strtolower($this->input->post('jenis')));
+    //     $arr['jenis'] = $this->input->post('jenis');
+    //     $arr['updated_at'] = date('Y-m-d H:i:s');
+
+    //     $this->db->update($arr, $row, 'tbl_jenis');
+    //     redirect('CJenis/index');
+    // }
+
+
     // public function index_post($slug='')
     // {
-    //     $jsonArray = json_decade($this->input->raw_input_stream, true);
-    //     $postReal = $this->form_validation->set_data($jsonArray);
+    //     $jsonArray = json_decode($this->input->raw_input_stream, true);
+    //     //$postReal = $this->form_validation->set_data($jsonArray);
 
     //     if (!$slug) {
-    //         $this->form_validation->set_rules('name', 'Jenis Obat', 'trim|required', [
+    //         $this->form_validation->set_rules('jenis', 'Jenis Obat', 'trim|required', [
     //             'required' => '%s Required'
     //         ]);
     //     }
@@ -37,24 +94,24 @@ class CJenis extends CI_Controller
     //     if ($this->form_validation->run() == FALSE && !$slug) {
     //         $this->response([
     //             'status' => FALSE,
-    //             'title' => 'Invalid input reuired',
+    //             'title' => 'Invalid input required',
     //             'message' => validation_errors()
     //         ]);
     //     }else {
     //         if(@$slug){
-    //             if(@$slug && @$jsonArray['name']){
-    //                 $arr['jenis'] = $jsonArray['name'];
+    //             if(@$slug && @$jsonArray['jenis']){
+    //                 $arr['jenis_obat'] = $jsonArray['jenis'];
     //             }
     //         }else{
     //             $arr = [
     //                 'slug' => str_replace(' ', '-', strtolower($jsonArray ['jenis'])),
-    //                 'jenis' => $jsonArray['name']
+    //                 'jenis_obat' => $jsonArray['jenis']
     //             ];
     //         }
     //         if(!$slug){
     //             $arr['created_at'] = date('Y-m-d H:i:s');
 
-    //             $ins = $this->jenis->insert($arr);
+    //             $ins = $this->jenis_obat->insert($arr, 'data');
     //             if($ins){
     //                 $this->response([
     //                     'status' => TRUE,
@@ -68,6 +125,7 @@ class CJenis extends CI_Controller
     //                     'message' => 'Jenis Obat was error created!'
     //                 ]);
     //             }
+    //             redirect('CJenis/index');
     //         }else{
     //             $idslug = ['slug' => $slug];
     //             $row = $this->jenis->show($idslug)->row_array();

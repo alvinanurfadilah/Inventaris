@@ -29,8 +29,8 @@
                   <h3 class="card-title">Data Obat</h3>
                 </div>
                 <div class="col-sm-12 col-md-6">
-                  <a href="FormObat.php">
-                    <button type="button" class="btn btn-primary btn-social pull-right" data-toggle="modal" data-target="#modal-default">
+                  <a href="<?= base_url('FormObat.php') ?>">
+                    <button type="button" class="btn btn-primary btn-social pull-right" data-toggle="modal" data-target="">
                       <i class="fa fa-plus"></i>
                     </button>
                   </a>

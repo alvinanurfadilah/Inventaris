@@ -19,4 +19,16 @@ class CObat extends CI_Controller
                 $this->load->view('master/Obat', $data);
                 $this->load->view('pages/Footer');
         }
+
+        public function index_post()
+        {
+                $data = [
+                        'slug' => str_replace(' ', '-', strtolower($this->input->post('satuan'))),
+                        'kode_obat' => $this->input->post('kode_obat'),
+                        'name' => $this->input->post('name'),
+                        'created_at' => date('Y-m-d H:i:s')
+                ];
+                $this->db->insert('tbl_obat', $data);
+                redirect('CObat/index');
+        }
 }

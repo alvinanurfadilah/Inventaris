@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit ('No direct script access allowed');
 
 class MObat extends CI_Model
 {
-    private $obat = 'obat';
+    private $obat = 'tbl_obat';
     private $v_obat = 'v_obat'; 
 
     public function show($where='')
