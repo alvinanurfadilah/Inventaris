@@ -1,10 +1,10 @@
 <?php 
 defined('BASEPATH') OR exit ('No direct script access allowed');
 
-class MObat extends CI_Model
+class MObatProses extends CI_Model
 {
-    private $tbl = 'tbl_obat';
-    private $view = 'v_obat'; 
+    private $tbl = 'tbl_obat_proses';
+    private $view = 'v_obat_proses';
 
     public function show($where='')
     {
@@ -14,9 +14,9 @@ class MObat extends CI_Model
         {
             $this->db->where($where);
         }
-        //$this->db->order_by('id', 'asc');
+        $this->db->order_by('id', 'asc');
         return $this->db->get();
-    }  
+    }
 
     public function insert($object)
     {
@@ -29,7 +29,7 @@ class MObat extends CI_Model
         $this->db->where($where);
         $this->db->update($this->tbl, $object);
         return(($this->db->affected_rows() > 0) ? true : false);
-    }   
+    }
 
     public function delete($where)
     {
@@ -40,7 +40,7 @@ class MObat extends CI_Model
 
     public function showMax($where='')
     {
-        $this->db->select_max('kode_obat');
+        $this->db->select_max('no_proses');
         if (@$where && $where != null) {
             $this->db->where($where);
         }

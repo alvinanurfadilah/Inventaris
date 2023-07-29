@@ -30,7 +30,7 @@
                 </div>
                 <div class="col-sm-12 col-md-6">
                   <button type="button" class="btn btn-primary btn-social pull-right" data-toggle="modal" data-target="#modal-default">
-                    <i class="fa fa-plus"></i>
+                    <i class="fa fa-plus"></i> Tambah Satuan
                   </button>
                 </div>
               </div>

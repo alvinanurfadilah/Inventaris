@@ -25,7 +25,7 @@
                         </div> -->
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form class="form-horizontal" action="<?= base_url('CObat/index_post'); ?>">
+                        <form class="form-horizontal" action="<?= base_url('CObat/index_post'); ?>" id="form" name="form">
                             <div class="card-body">
                             <div class="form-group row">
                                 <label for="inputEmail3" class="col-sm-2 col-form-label"><h5><b>Form Obat</b></h5></label>

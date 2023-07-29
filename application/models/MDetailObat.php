@@ -1,10 +1,10 @@
-<?php 
+<?php
 defined('BASEPATH') OR exit ('No direct script access allowed');
 
-class MObat extends CI_Model
+class MDetailObat extends CI_Model
 {
-    private $tbl = 'tbl_obat';
-    private $view = 'v_obat'; 
+    private $tbl = 'tbl_detail_obat';
+    private $view = 'v_detail_obat';
 
     public function show($where='')
     {
@@ -14,9 +14,9 @@ class MObat extends CI_Model
         {
             $this->db->where($where);
         }
-        //$this->db->order_by('id', 'asc');
+        $this->db->order_by('id', 'asc');
         return $this->db->get();
-    }  
+    }
 
     public function insert($object)
     {
@@ -29,7 +29,7 @@ class MObat extends CI_Model
         $this->db->where($where);
         $this->db->update($this->tbl, $object);
         return(($this->db->affected_rows() > 0) ? true : false);
-    }   
+    }
 
     public function delete($where)
     {
@@ -38,13 +38,15 @@ class MObat extends CI_Model
         return(($this->db->affected_rows() > 0) ? true : false);
     }
 
-    public function showMax($where='')
+    public function sumStok($where)
     {
-        $this->db->select_max('kode_obat');
-        if (@$where && $where != null) {
+        $this->db->select_sum('stock');
+        if(@$where && $where != null)
+        {
             $this->db->where($where);
         }
-        return $this->db->get($this->view);
+        return $this->db->get($this->view); 
     }
 }
+
 ?>

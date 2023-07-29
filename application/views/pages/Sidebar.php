@@ -29,19 +29,19 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="<?= base_url('') ?>master/Obat.php" class="nav-link">
+              <a href="<?= base_url('CObat') ?>" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Obat</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="<?= base_url('master/Jenis.php') ?>" class="nav-link">
+              <a href="<?= base_url('CJenis') ?>" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Jenis</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="<?= base_url('') ?>master/Satuan.php" class="nav-link">
+              <a href="<?= base_url('CSatuan') ?>" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Satuan</p>
               </a>
