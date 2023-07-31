@@ -14,7 +14,7 @@ class MObat extends CI_Model
         {
             $this->db->where($where);
         }
-        //$this->db->order_by('id', 'asc');
+        $this->db->order_by('id', 'asc');
         return $this->db->get();
     }  
 
@@ -24,12 +24,23 @@ class MObat extends CI_Model
         return(($this->db->affected_rows() > 0) ? true : false);
     }
 
-    public function update($where, $object)
+    public function edit_data($where,$table)
+    {
+        return $this->db->get_where($table,$where);
+    }
+
+    public function update_data($where, $data, $table)
     {
         $this->db->where($where);
-        $this->db->update($this->tbl, $object);
-        return(($this->db->affected_rows() > 0) ? true : false);
-    }   
+        $this->db->update($table, $data);
+    }
+
+    // public function update($where, $object)
+    // {
+    //     $this->db->where($where);
+    //     $this->db->update($this->tbl, $object);
+    //     return(($this->db->affected_rows() > 0) ? true : false);
+    // }   
 
     public function delete($where)
     {

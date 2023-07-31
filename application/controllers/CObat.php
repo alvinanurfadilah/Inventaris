@@ -22,6 +22,21 @@ class CObat extends CI_Controller
                 $this->load->view('pages/Footer');
         }
 
+        public function form()
+        {
+                // $data['data'] = $this->obat->show();
+                $data = [
+                        'data' => $this->obat->show(),
+                        'jenis' => $this->jenis->show(),
+                        'satuan' => $this->satuan->show()
+                ];
+                //$jenis = $this->jenis->show();
+                $this->load->view('pages/Header');
+                $this->load->view('pages/Sidebar');
+                $this->load->view('master/FormObat', $data);
+                $this->load->view('pages/Footer');
+        }
+
         public function index_get($slug = '')
         {
                 if (@$slug) {
@@ -60,5 +75,54 @@ class CObat extends CI_Controller
                 ];
                 $this->db->insert('tbl_obat', $data);
                 redirect('CObat/index');
+        }
+
+        function edit($id)
+        {
+                $where = array('id' => $id);
+                $data['data'] = $this->obat->edit_data($where, 'tbl_obat');
+                $row = ['id' => $data['id']];
+                $this->load->view('master/Obat', $row);
+        }
+
+        function update()
+        {
+                $id = $this->input->post('id');
+                $kode = $this->input->post('kode');
+                $name = $this->input->post('obat');
+                $jenis = $this->input->post('jenis');
+                $satuan = $this->input->post('satuan');
+
+                $data = array(
+                        'slug' => str_replace(' ', '-', strtolower($this->input->post('obat'))),
+                        'kode_obat' => $kode,
+                        'name' => $name,
+                        'jenis' => $jenis,
+                        'satuan' => $satuan,
+                        'updated_at' => date('Y-m-d H:i:s')
+                );
+
+                $where = array(
+                        'id' => $id
+                );
+
+                $this->obat->update_data($where, $data, 'tbl_obat');
+                redirect('CObat/index');
+        }
+
+
+        public function index_delete($slug)
+        {
+                if (@$slug) {
+                        $idslug = ['slug' => $slug];
+                        $get = $this->obat->show($idslug);
+
+                        if ($get->num_rows() == 1) {
+                                $data = $get->row_array();
+                                $id = ['id' => $data['id']];
+                                $this->obat->delete($id, 'tbl_obat');
+                        }
+                        redirect('CObat/index');
+                }
         }
 }

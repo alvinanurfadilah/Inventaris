@@ -1,13 +1,13 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 class CJenis extends CI_Controller
 {
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('MJenis');
-        $this->load->helper('url'); 
+        $this->load->model('MJenis', 'jenis');
+        $this->load->helper('url');
     }
 
     public function index()
@@ -30,54 +30,65 @@ class CJenis extends CI_Controller
         redirect('CJenis/index');
     }
 
-    function edit($slug){
-        $where = array('slug' => $slug);
-        $data['data'] = $this->MJenis->edit_data($where,'tbl_jenis');
+    function edit($id){
+        $where = array('id' => $id);
+        $data['data'] = $this->jenis->edit_data($where,'tbl_jenis');
         $row = ['id' => $data['id']];
-        $this->load->view('master/Jenis',$row);
+        $this->load->view('master/Jenis', $row);
     }
 
     function update(){
         $id = $this->input->post('id');
-        $jenis = $this->input->post('jenis');
-     
+        $jenis = $this->input->post('jenis_obat');
+
         $data = array(
-            'slug' => str_replace(' ', '-', strtolower($this->input->post('jenis'))),
+            'slug' => str_replace(' ', '-', strtolower($this->input->post('jenis_obat'))),
             'jenis' => $jenis,
-            'updated_at' => date('Y-m-d H:m:s')
+            'updated_at' => date('Y-m-d H:i:s')
         );
-     
+
         $where = array(
             'id' => $id
         );
-     
-        $this->MJenis->update_data($where,$data,'tbl_jenis');
+
+        $this->jenis->update_data($where,$data,'tbl_jenis');
         redirect('CJenis/index');
     }
 
-    public function delete($id)
-    {
-        $where = ['id' => $id];
-        $this->MJenis->delete($where, 'tbl_jenis');
-        redirect('CJenis/index');
-    }
 
 
     // public function index_put($slug='')
     // {
+    //     // echo $id;
+    //     // die;
     //     $idslug = ['slug' => $slug];
-    //     $data['data'] = $this->MJenis->show($idslug, 'tbl_jenis');
-    //     $row = ['id' => $data['id']];
+    //     $row = $this->jenis->show($idslug)->row();
+    //     $id = ['id' => $row['id']];
 
-    //     $this->input->post('id');
-        
-    //     $arr['slug'] = str_replace(' ', '-', strtolower($this->input->post('jenis')));
-    //     $arr['jenis'] = $this->input->post('jenis');
-    //     $arr['updated_at'] = date('Y-m-d H:i:s');
+    //     $data = [
+    //         'slug' => str_replace(' ', '-', strtolower($this->input->post('jenis_obat'))),
+    //         'jenis' => $this->input->post('jenis_obat'),
+    //         'updated_at' => date('Y-m-d H:i:s')
+    //     ];
 
-    //     $this->db->update($arr, $row, 'tbl_jenis');
+    //     $this->db->update($id, $data, 'tbl_jenis');
     //     redirect('CJenis/index');
     // }
+
+    public function index_delete($slug)
+    {
+        if (@$slug) {
+            $idslug = ['slug' => $slug];
+            $get = $this->jenis->show($idslug);
+
+            if ($get->num_rows() == 1) {
+                $data = $get->row_array();
+                $id = ['id' => $data['id']];
+                $this->jenis->delete($id, 'tbl_jenis');
+            }
+            redirect('CJenis/index');
+        }
+    }
 
 
     // public function index_post($slug='')
