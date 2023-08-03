@@ -58,13 +58,13 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="../obatMasuk.php" class="nav-link">
+              <a href="<?= base_url('CObatProses/masuk_index') ?>" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Obat Masuk</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="../obatKeluar.php" class="nav-link">
+              <a href="<?= base_url('CObatProses/keluar_index') ?>" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Obat Keluar</p>
               </a>
@@ -76,6 +76,14 @@
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
               History
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="<?= base_url('CPasien') ?>" class="nav-link">
+            <i class="nav-icon fas fa-tachometer-alt"></i>
+            <p>
+              Pasien
             </p>
           </a>
         </li>

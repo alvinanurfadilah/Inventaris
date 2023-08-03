@@ -60,18 +60,20 @@
                       <td><?= $val['satuan'] ?></td>
                       <td><?= $val['overall_stock'] ?></td>
                       <td>
-                        <a href="<?= base_url('CObat/form' . $val['id']) ?>" id="update">
-                        <div class="btn btn-primary btn-sm" data-toggle="form" data-target="update<?= $val['id'] ?>">
+                        <?php echo anchor('CObat/detail/'.$val['slug'], '<div class="btn btn-primary btn-sm">
+                            <i class="fas fa-info-circle"></i>
+                        </div>') ?>
+
+                        <?php echo anchor('CObat/edit/'.$val['slug'], '<div class="btn btn-primary btn-sm">
                           <i class="fas fa-edit"></i>
-                        </div>
-                        </a>
+                        </div>') ?>
 
                         <?php echo anchor('CObat/index_delete/' . $val['slug'], '<div class="btn btn-danger btn-sm">
                           <i class="fas fa-trash-alt"></i>
                         </div>') ?>
                       </td>
                     </tr>
-                    
+
                   <?php endforeach ?>
                 </tbody>
                 <tfoot>

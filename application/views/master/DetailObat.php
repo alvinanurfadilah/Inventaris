@@ -10,7 +10,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Data Obat</h1>
+                    <h1 class="m-0">Data Detail Obat</h1>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -32,42 +32,46 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <form class="form-horizontal">
-                                <div class="card-body">
-                                    <div class="form-group row">
-                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Kode Obat</label>
-                                        <div class="col-sm-10">
-                                            <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+
+                            <?php foreach ($data->result_array() as $val) : ?>
+                                <form class="form-horizontal" id="detail_obat">
+                                    <div class="card-body">
+                                        <div class="form-group row">
+                                            <label for="kode" class="col-sm-2 col-form-label">Kode Obat</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="kode" name="kode" value="<?= $val['kode_obat'] ?>" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="obat" class="col-sm-2 col-form-label">Nama Obat</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="obat" name="obat" value="<?= $val['name'] ?>" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="jenis" class="col-sm-2 col-form-label">Jenis Obat</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="jenis" name="jenis" value="<?= $val['jenis_id'] ?>" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="satuan" class="col-sm-2 col-form-label">Satuan Obat</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="satuan" name="satuan" value="<?= $val['satuan_id'] ?>" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="overall_stock" class="col-sm-2 col-form-label">Overall Stock</label>
+                                            <div class="col-sm-10">
+                                                <input type="number" class="form-control" id="overall_stock" name="oversll_stock" value="<?= $val['overall_stock'] ?>" disabled>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <label for="inputPassword3" class="col-sm-2 col-form-label">Nama Obat</label>
-                                        <div class="col-sm-10">
-                                            <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="inputPassword3" class="col-sm-2 col-form-label">Jenis Obat</label>
-                                        <div class="col-sm-10">
-                                            <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="inputPassword3" class="col-sm-2 col-form-label">Satuan Obat</label>
-                                        <div class="col-sm-10">
-                                            <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="inputPassword3" class="col-sm-2 col-form-label">Overall Stock</label>
-                                        <div class="col-sm-10">
-                                            <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /.card-body -->
-                                <!-- /.card-footer -->
-                            </form>
+                                    <!-- /.card-body -->
+                                    <!-- /.card-footer -->
+
+                                </form>
+                            <?php endforeach ?>
                         </div>
                         <div class="modal-header mb-3"></div>
                         <div class="card-header">
@@ -76,9 +80,6 @@
                                     <h3 class="card-title">Data Detail Obat</h3>
                                 </div>
                                 <div class="col-sm-12 col-md-6">
-                                    <button type="button" class="btn btn-primary btn-social pull-right" data-toggle="modal" data-target="#modal-default">
-                                        <i class="fa fa-plus"></i>
-                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -93,34 +94,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>Trident</td>
-                                        <td>Internet
-                                            Explorer 4.0
-                                        </td>
-                                        <td>Win 95+</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Trident</td>
-                                        <td>Internet
-                                            Explorer 4.0
-                                        </td>
-                                        <td>Win 95+</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Trident</td>
-                                        <td>Internet
-                                            Explorer 5.0
-                                        </td>
-                                        <td>Win 95+</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Trident</td>
-                                        <td>Internet
-                                            Explorer 5.5
-                                        </td>
-                                        <td>Win 95+</td>
-                                    </tr>
+                                    <?php $i = 0;
+                                    foreach ($data->result_array() as $val) { ?>
+                                        <tr>
+                                            <td><?= $i++ ?></td>
+                                            <td><?= $val['expired'] ?></td>
+                                            <td><?= $val['stock'] ?></td>
+                                        </tr>
+                                    <?php } ?>
                                 </tbody>
                                 <tfoot>
                                     <tr>
@@ -136,39 +117,4 @@
             </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
-</div>
-
-
-<!-- Modal -->
-<div class="modal fade" id="modal-default">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Form Jenis</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <label for="horizontal-text-input" class="col-sm-3 col-form-label">Tanggal Expired</label>
-                    <div class="col-sm-9">
-                        <input type="date" class="form-control" name="jenis" id="jenis" placeholder="">
-                    </div>
-                </div>
-                <div class="row">
-                    <label for="horizontal-text-input" class="col-sm-3 col-form-label">Stock</label>
-                    <div class="col-sm-9">
-                        <input type="number" class="form-control" name="jenis" id="jenis" placeholder="Masukkan Stock Obat">
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
 </div>

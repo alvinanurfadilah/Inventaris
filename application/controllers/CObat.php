@@ -15,7 +15,10 @@ class CObat extends CI_Controller
 
         public function index()
         {
-                $data['data'] = $this->obat->show();
+                $data = [
+                        'data' => $this->obat->show()
+                        
+                ];
                 $this->load->view('pages/Header');
                 $this->load->view('pages/Sidebar');
                 $this->load->view('master/Obat', $data);
@@ -24,16 +27,54 @@ class CObat extends CI_Controller
 
         public function form()
         {
-                // $data['data'] = $this->obat->show();
                 $data = [
                         'data' => $this->obat->show(),
                         'jenis' => $this->jenis->show(),
                         'satuan' => $this->satuan->show()
                 ];
-                //$jenis = $this->jenis->show();
                 $this->load->view('pages/Header');
                 $this->load->view('pages/Sidebar');
                 $this->load->view('master/FormObat', $data);
+                $this->load->view('pages/Footer');
+        }
+
+        public function detail_obat()
+        {
+                $data = [
+                        'data' => $this->obat->show(),
+                        'detail' => $this->detail_obat->show(),
+                        'jenis' => $this->jenis->show(),
+                        'satuan' => $this->satuan->show()
+                ];
+                $this->load->view('pages/Header');
+                $this->load->view('pages/Sidebar');
+                $this->load->view('master/DetailObat', $data);
+                $this->load->view('pages/Footer');
+        }
+
+        function detail($slug)
+        {
+                $where = array('slug' => $slug);
+                $data = [
+                        'data' => $this->obat->edit_data($where, 'tbl_obat'),
+                ];
+                //$row = ['id' => $data['id']];
+                $this->load->view('pages/Header');
+                $this->load->view('pages/Sidebar');
+                $this->load->view('master/DetailObat', $data);
+                $this->load->view('pages/Footer');
+        }
+
+        public function form_edit()
+        {
+                $data = [
+                        'data' => $this->obat->show(),
+                        'jenis' => $this->jenis->show(),
+                        'satuan' => $this->satuan->show()
+                ];
+                $this->load->view('pages/Header');
+                $this->load->view('pages/Sidebar');
+                $this->load->view('master/FormEditObat', $data);
                 $this->load->view('pages/Footer');
         }
 
@@ -77,12 +118,17 @@ class CObat extends CI_Controller
                 redirect('CObat/index');
         }
 
-        function edit($id)
+        function edit($slug)
         {
-                $where = array('id' => $id);
-                $data['data'] = $this->obat->edit_data($where, 'tbl_obat');
-                $row = ['id' => $data['id']];
-                $this->load->view('master/Obat', $row);
+                $where = array('slug' => $slug);
+                $data = [
+                        'data' => $this->obat->edit_data($where, 'tbl_obat'),
+                ];
+                //$row = ['id' => $data['id']];
+                $this->load->view('pages/Header');
+                $this->load->view('pages/Sidebar');
+                $this->load->view('master/FormEditObat', $data);
+                $this->load->view('pages/Footer');
         }
 
         function update()
@@ -97,8 +143,8 @@ class CObat extends CI_Controller
                         'slug' => str_replace(' ', '-', strtolower($this->input->post('obat'))),
                         'kode_obat' => $kode,
                         'name' => $name,
-                        'jenis' => $jenis,
-                        'satuan' => $satuan,
+                        'jenis_id' => $jenis,
+                        'satuan_id' => $satuan,
                         'updated_at' => date('Y-m-d H:i:s')
                 );
 

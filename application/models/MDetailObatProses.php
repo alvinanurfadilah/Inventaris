@@ -43,6 +43,15 @@ class MDetailObatProses extends CI_Model
         $this->db->where($where);
         return $this->db->get($this->view);
     }
+
+    public function search($where='')
+    {
+        $this->db->select('kode_obat');
+        if (@$where && $where != null) {
+            $this->db->where($where);
+        }
+        return $this->db->get($this->view);
+    }
 }
 
 ?>

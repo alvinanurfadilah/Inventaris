@@ -43,12 +43,9 @@
                     <th>No</th>
                     <th>Tanggal</th>
                     <th>User</th>
-                    <th>Kode Obat</th>
+                    <th>Pasien</th>
                     <th>Nama Obat</th>
-                    <th>Jenis</th>
-                    <th>Satuan</th>
-                    <th>Expired</th>
-                    <th>Stok</th>
+                    <th>Jumlah</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -63,23 +60,18 @@
                       <td><?= $val['name'] ?></td>
                       <td><?= $val['jenis'] ?></td>
                       <td><?= $val['satuan'] ?></td>
-                      <td><?= $val['expired'] ?></td>
-                      <td><?= $val['stock'] ?></td>
                       <td>A</td>
                     </tr>
                   <?php } ?>
                 </tbody>
                 <tfoot>
                   <tr>
-                    <th>No</th>
+                  <th>No</th>
                     <th>Tanggal</th>
                     <th>User</th>
-                    <th>Kode Obat</th>
+                    <th>Pasien</th>
                     <th>Nama Obat</th>
-                    <th>Jenis</th>
-                    <th>Satuan</th>
-                    <th>Expired</th>
-                    <th>Stok</th>
+                    <th>Jumlah</th>
                     <th>Action</th>
                   </tr>
                 </tfoot>
