@@ -17,7 +17,6 @@ class CObat extends CI_Controller
         {
                 $data = [
                         'data' => $this->obat->show()
-                        
                 ];
                 $this->load->view('pages/Header');
                 $this->load->view('pages/Sidebar');
@@ -155,7 +154,6 @@ class CObat extends CI_Controller
                 $this->obat->update_data($where, $data, 'tbl_obat');
                 redirect('CObat/index');
         }
-
 
         public function index_delete($slug)
         {
