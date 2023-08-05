@@ -6,15 +6,19 @@ class CJenis extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        is_logged_in();
         $this->load->model('MJenis', 'jenis');
         $this->load->helper('url');
     }
 
     public function index()
     {
+        $data['title'] = 'Menu Management';
+        $data['user'] = $this->db->get_where('v_user', ['email' => $this->session->userdata('email')])->row_array();
+
         $data['data'] = $this->MJenis->show();
-        $this->load->view('pages/Header');
-        $this->load->view('pages/Sidebar');
+        $this->load->view('pages/Header', $data);
+        $this->load->view('pages/Sidebar', $data);
         $this->load->view('master/Jenis', $data);
         $this->load->view('pages/Footer');
     }
@@ -30,14 +34,16 @@ class CJenis extends CI_Controller
         redirect('CJenis/index');
     }
 
-    function edit($id){
+    function edit($id)
+    {
         $where = array('id' => $id);
-        $data['data'] = $this->jenis->edit_data($where,'tbl_jenis');
+        $data['data'] = $this->jenis->edit_data($where, 'tbl_jenis');
         $row = ['id' => $data['id']];
         $this->load->view('master/Jenis', $row);
     }
 
-    function update(){
+    function update()
+    {
         $id = $this->input->post('id');
         $jenis = $this->input->post('jenis_obat');
 
@@ -51,7 +57,7 @@ class CJenis extends CI_Controller
             'id' => $id
         );
 
-        $this->jenis->update_data($where,$data,'tbl_jenis');
+        $this->jenis->update_data($where, $data, 'tbl_jenis');
         redirect('CJenis/index');
     }
 

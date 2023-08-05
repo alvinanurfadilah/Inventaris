@@ -6,6 +6,7 @@ class CObat extends CI_Controller
         public function __construct()
         {
                 parent::__construct();
+                is_logged_in();
                 $this->load->model('MObat', 'obat');
                 $this->load->model('MDetailObat', 'detail_obat');
                 $this->load->model('MJenis', 'jenis');
@@ -15,6 +16,8 @@ class CObat extends CI_Controller
 
         public function index()
         {
+                $data['title'] = 'Menu Management';
+                $data['user'] = $this->db->get_where('v_user', ['email' => $this->session->userdata('email')])->row_array();
                 $data = [
                         'data' => $this->obat->show()
                 ];

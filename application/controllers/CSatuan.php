@@ -6,12 +6,15 @@ class CSatuan extends CI_Controller
         public function __construct()
         {
                 parent::__construct();
+                is_logged_in();
                 $this->load->model('MSatuan');
                 $this->load->helper('url');
         }
 
         public function index()
         {
+                $data['title'] = 'Menu Management';
+                $data['user'] = $this->db->get_where('v_user', ['email' => $this->session->userdata('email')])->row_array();
                 $data['data'] = $this->MSatuan->show();
                 $this->load->view('pages/Header');
                 $this->load->view('pages/Sidebar');
@@ -30,37 +33,39 @@ class CSatuan extends CI_Controller
                 redirect('CSatuan/index');
         }
 
-        function edit($slug){
+        function edit($slug)
+        {
                 $where = array('slug' => $slug);
-                $data['data'] = $this->MJenis->edit_data($where,'tbl_satuan');
+                $data['data'] = $this->MJenis->edit_data($where, 'tbl_satuan');
                 $row = ['id' => $data['id']];
-                $this->load->view('master/Satuan',$row);
-            }
-        
-            function update(){
+                $this->load->view('master/Satuan', $row);
+        }
+
+        function update()
+        {
                 $id = $this->input->post('id');
                 $satuan = $this->input->post('satuan');
-             
+
                 $data = array(
-                    'slug' => str_replace(' ', '-', strtolower($this->input->post('satuan'))),
-                    'satuan' => $satuan,
-                    'updated_at' => date('Y-m-d H:i:s')
+                        'slug' => str_replace(' ', '-', strtolower($this->input->post('satuan'))),
+                        'satuan' => $satuan,
+                        'updated_at' => date('Y-m-d H:i:s')
                 );
-             
+
                 $where = array(
-                    'id' => $id
+                        'id' => $id
                 );
-             
-                $this->MSatuan->update_data($where,$data,'tbl_satuan');
+
+                $this->MSatuan->update_data($where, $data, 'tbl_satuan');
                 redirect('CSatuan/index');
-            }
-        
-            public function delete($id)
-            {
+        }
+
+        public function delete($id)
+        {
                 $where = ['id' => $id];
                 $this->MSatuan->delete($where, 'tbl_satuan');
                 redirect('CSatuan/index');
-            }
+        }
 
         // public function index_put($slug='')
         // {

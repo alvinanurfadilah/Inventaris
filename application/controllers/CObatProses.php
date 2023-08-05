@@ -6,6 +6,7 @@ class CObatProses extends CI_Controller
         public function __construct()
         {
                 parent::__construct();
+                is_logged_in();
                 $this->load->model('MObatProses', 'obat_proses');
                 $this->load->model('MDetailObatProses', 'detail_obat_proses');
                 $this->load->model('MPasien', 'pasien');

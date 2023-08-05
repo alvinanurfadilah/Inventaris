@@ -6,12 +6,15 @@ class CPasien extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        is_logged_in();
         $this->load->model('MPasien', 'pasien');
         $this->load->helper('url');
     }
 
     public function index()
     {
+        $data['title'] = 'Menu Management';
+        $data['user'] = $this->db->get_where('v_user', ['email' => $this->session->userdata('email')])->row_array();
         $data = [
             'data' => $this->pasien->show()
         ];

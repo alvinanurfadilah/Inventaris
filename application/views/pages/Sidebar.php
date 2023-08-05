@@ -30,9 +30,9 @@
 
       <!-- Looping Menu -->
       <?php foreach ($menu as $m) : ?>
-        <div class="sidebar-heading">
+        <li class="nav-header">
           <?= $m['menu'] ?>
-        </div>
+        </li>
 
 
         <!-- Siapkan Sub Menu sesuai Menu -->
@@ -49,97 +49,101 @@
         ?>
 
         <?php foreach ($subMenu as $sm) : ?>
-          <li class="nav-item">
-            <a class="nav-link" href="<?= base_url($sm['url']); ?>">
-              <i class="<?= base_url($sm['icon']); ?>"></i>
+          <?php if ($title == $sm['title']) : ?>
+            <li class="nav-item active">
+            <?php else : ?>
+            <li class="nav-item">
+            <?php endif ?>
+            <a href="<?= base_url($sm['url']) ?>" class="nav-link pb-0">
+              <i class="<?= $sm['icon'] ?>"></i>
               <span>
-                <?= base_url($sm['title']); ?>
+                <?= $sm['title'] ?>
               </span>
             </a>
-          </li>
-        <?php endforeach; ?>
+            </li>
+          <?php endforeach ?>
 
-      <?php endforeach; ?>
+        <?php endforeach ?>
 
 
-
-      <!-- <li class="nav-item">
-        <a href="CApoteker" class="nav-link">
-          <i class="nav-icon fas fa-tachometer-alt"></i>
-          <p>
-            My Profile
-          </p>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="#" class="nav-link">
-          <i class="nav-icon fas fa-tachometer-alt"></i>
-          <p>
-            Data Master
-            <i class="fas fa-angle-left right"></i>
-          </p>
-        </a>
-        <ul class="nav nav-treeview">
-          <li class="nav-item">
-            <a href="<?= base_url('CObat') ?>" class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Obat</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="<?= base_url('CJenis') ?>" class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Jenis</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="<?= base_url('CSatuan') ?>" class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Satuan</p>
-            </a>
-          </li>
-        </ul>
-      </li>
-      <li class="nav-item">
-        <a href="#" class="nav-link">
-          <i class="nav-icon fas fa-tachometer-alt"></i>
-          <p>
-            Data Transaksi
-            <i class="fas fa-angle-left right"></i>
-          </p>
-        </a>
-        <ul class="nav nav-treeview">
-          <li class="nav-item">
-            <a href="<?= base_url('CObatProses/masuk_index') ?>" class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Obat Masuk</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="<?= base_url('CObatProses/keluar_index') ?>" class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Obat Keluar</p>
-            </a>
-          </li>
-        </ul>
-      </li>
-      <li class="nav-item">
-        <a href="../history.php" class="nav-link">
-          <i class="nav-icon fas fa-tachometer-alt"></i>
-          <p>
-            History
-          </p>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="<?= base_url('CPasien') ?>" class="nav-link">
-          <i class="nav-icon fas fa-tachometer-alt"></i>
-          <p>
-            Pasien
-          </p>
-        </a>
-      </li>
-      <li class="nav-item"> -->
+        <!-- <li class="nav-header">EXAMPLES</li>
+        <li class="nav-item">
+          <a href="CApoteker" class="nav-link">
+            <i class="nav-icon fas fa-tachometer-alt"></i>
+            <p>
+              My Profile
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-tachometer-alt"></i>
+            <p>
+              Data Master
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="<?= base_url('CObat') ?>" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Obat</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="<?= base_url('CJenis') ?>" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Jenis</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="<?= base_url('CSatuan') ?>" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Satuan</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-tachometer-alt"></i>
+            <p>
+              Data Transaksi
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="<?= base_url('CObatProses/masuk_index') ?>" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Obat Masuk</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="<?= base_url('CObatProses/keluar_index') ?>" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Obat Keluar</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a href="../history.php" class="nav-link">
+            <i class="nav-icon fas fa-tachometer-alt"></i>
+            <p>
+              History
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="<?= base_url('CPasien') ?>" class="nav-link">
+            <i class="nav-icon fas fa-tachometer-alt"></i>
+            <p>
+              Pasien
+            </p>
+          </a>
+        </li>
+        <li class="nav-item"> -->
     </ul>
   </nav>
   <!-- /.sidebar-menu -->

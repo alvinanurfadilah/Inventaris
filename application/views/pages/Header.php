@@ -139,7 +139,9 @@
 
         <li class="nav-item dropdown no-arrow">
           <a href="" class="nav-link dropdown-toogle" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= $user['full_name'] ?></span>
+            <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= $user['full_name'] ?>
+            </span>
+            <i class="fas fa-user"></i>
           </a>
 
           <!-- Dropdown - User Information -->
