@@ -12,6 +12,9 @@ class Auth extends CI_Controller
 
     public function index()
     {
+        if ($this->session->userdata('email')) {
+            redirect('CMember');
+        }
         $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
         $this->form_validation->set_rules('password', 'Password', 'trim|required');
 
@@ -46,7 +49,7 @@ class Auth extends CI_Controller
                     if ($user['role_id'] == 1) {
                         redirect('CAdmin');
                     } else {
-                        redirect('CApoteker');
+                        redirect('CMember');
                     }
                 } else {
                     $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Wrong password! </div>');
@@ -64,6 +67,9 @@ class Auth extends CI_Controller
 
     public function register()
     {
+        if ($this->session->userdata('email')) {
+            redirect('CMember');
+        }
         $this->form_validation->set_rules('first_name', 'First Name', 'required|trim');
         $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[tbl_user.email]', [
             'is_unique' => 'This email has already registered!'
@@ -87,7 +93,7 @@ class Auth extends CI_Controller
                 'last_name' => htmlspecialchars($this->input->post('last_name', true)),
                 'email' => htmlspecialchars($this->input->post('email', true)),
                 'password' => password_hash($this->input->post('password1'), PASSWORD_DEFAULT),
-                'role_id' => 2,
+                'role_id' => 4,
                 'is_active' => 1,
                 'created_at' => date('Y-m-d H:i:s')
             ];
@@ -109,7 +115,7 @@ class Auth extends CI_Controller
 
     public function blocked()
     {
-        echo "Access blocked~";
+        echo "Access blocked!";
         //$this->load->view('auth/Blocked');
     }
 }

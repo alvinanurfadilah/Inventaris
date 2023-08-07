@@ -3,18 +3,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class MMenu extends CI_Model
 {
+    private $tbl = 'tbl_user_menu';
 
-    // private $tbl = 'tbl_user_menu';
-    // public function show($where = '')
-    // {
-    //     $this->db->select('*');
-    //     $this->db->from($this->tbl);
-    //     if (@$where && $where != null) {
-    //         $this->db->where($where);
-    //     }
-    //     $this->db->order_by('id', 'asc');
-    //     return $this->db->get();
-    // }
+    public function show()
+    {
+        $this->db->select('*');
+        $this->db->from($this->tbl);
+        return $this->db->get();
+    }
 
     public function getSubMenu()
     {

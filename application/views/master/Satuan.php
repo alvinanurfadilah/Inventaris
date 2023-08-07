@@ -10,7 +10,11 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Satuan Obat</h1>
+          <h1 class="m-0"><?= $title ?></h1>
+          <br>
+          <?= form_error('satuan', '<div class="alert alert-danger" role="alert">',  '</div>') ?>
+
+          <?= $this->session->flashdata('message'); ?>
         </div><!-- /.col -->
       </div><!-- /.row -->
     </div><!-- /.container-fluid -->
@@ -29,8 +33,7 @@
                   <h3 class="card-title">Data Satuan Obat</h3>
                 </div>
                 <div class="col-sm-12 col-md-6">
-                  <button type="button" class="btn btn-primary btn-social pull-right" data-toggle="modal" data-target="#modal-default">
-                    <i class="fa fa-plus"></i> Tambah Satuan
+                  <button type="button" class="btn btn-primary btn-social pull-right" data-toggle="modal" data-target="#modal-default">Add Satuan
                   </button>
                 </div>
               </div>
@@ -73,21 +76,21 @@
                               <span aria-hidden="true">&times;</span>
                             </button>
                           </div>
-                            <form action="<?= base_url('CSatuan/update'); ?>" method="POST">
-                              <div class="modal-body">
-                                <div class="row">
-                                  <label for="horizontal-text-input" class="col-sm-3 col-form-label">Nama Jenis</label>
-                                  <div class="col-sm-9">
-                                    <input type="hidden" class="form-control" name="id" id="id" value="<?= $val['id'] ?>">
-                                    <input type="text" class="form-control" name="satuan" id="satuan" value="<?= $val['satuan'] ?>">
-                                  </div>
+                          <form action="<?= base_url('CSatuan/update'); ?>" method="POST">
+                            <div class="modal-body">
+                              <div class="row">
+                                <label for="horizontal-text-input" class="col-sm-3 col-form-label">Nama Jenis</label>
+                                <div class="col-sm-9">
+                                  <input type="hidden" class="form-control" name="id" id="id" value="<?= $val['id'] ?>">
+                                  <input type="text" class="form-control" name="satuan" id="satuan" value="<?= $val['satuan'] ?>">
                                 </div>
                               </div>
-                              <div class="modal-footer justify-content-between">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Update</button>
-                              </div>
-                            </form>
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                              <button type="submit" class="btn btn-primary">Update</button>
+                            </div>
+                          </form>
                         </div>
                         <!-- /.modal-content -->
                       </div>

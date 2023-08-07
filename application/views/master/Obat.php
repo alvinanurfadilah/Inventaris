@@ -10,7 +10,7 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Data Obat</h1>
+          <h1 class="m-0"><?= $title ?></h1>
         </div><!-- /.col -->
       </div><!-- /.row -->
     </div><!-- /.container-fluid -->
@@ -60,11 +60,11 @@
                       <td><?= $val['satuan'] ?></td>
                       <td><?= $val['overall_stock'] ?></td>
                       <td>
-                        <?php echo anchor('CObat/detail/'.$val['slug'], '<div class="btn btn-primary btn-sm">
+                        <?php echo anchor('CObat/detail/' . $val['slug'], '<div class="btn btn-primary btn-sm">
                             <i class="fas fa-info-circle"></i>
                         </div>') ?>
 
-                        <?php echo anchor('CObat/edit/'.$val['slug'], '<div class="btn btn-primary btn-sm">
+                        <?php echo anchor('CObat/edit/' . $val['slug'], '<div class="btn btn-primary btn-sm">
                           <i class="fas fa-edit"></i>
                         </div>') ?>
 

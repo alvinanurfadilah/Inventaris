@@ -8,6 +8,11 @@
           <h1 class="m-0"><?= $title ?></h1>
 
           <br>
+          <div class="row">
+            <div class="col-lg">
+              <?= $this->session->flashdata('message') ?>
+            </div>
+          </div>
           <div class="card mb-3" style="max-width: 540px;">
             <div class="row g-0">
               <div class="col-md-4">

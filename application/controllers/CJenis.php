@@ -8,15 +8,15 @@ class CJenis extends CI_Controller
         parent::__construct();
         is_logged_in();
         $this->load->model('MJenis', 'jenis');
-        $this->load->helper('url');
     }
 
     public function index()
     {
-        $data['title'] = 'Menu Management';
+        $data['title'] = 'Jenis';
         $data['user'] = $this->db->get_where('v_user', ['email' => $this->session->userdata('email')])->row_array();
 
-        $data['data'] = $this->MJenis->show();
+        $data['data'] = $this->jenis->show();
+
         $this->load->view('pages/Header', $data);
         $this->load->view('pages/Sidebar', $data);
         $this->load->view('master/Jenis', $data);
@@ -25,13 +25,21 @@ class CJenis extends CI_Controller
 
     public function index_post()
     {
-        $data = [
-            'slug' => str_replace(' ', '-', strtolower($this->input->post('jenis_obat'))),
-            'jenis' => $this->input->post('jenis_obat'),
-            'created_at' => date('Y-m-d H:i:s')
-        ];
-        $this->db->insert('tbl_jenis', $data);
-        redirect('CJenis/index');
+        $this->form_validation->set_rules('jenis', 'Jenis Obat', 'required');
+
+        if ($this->form_validation->run() == false) {
+            redirect('CJenis');
+        } else {
+            $data = [
+                'slug' => str_replace(' ', '-', strtolower($this->input->post('jenis'))),
+                'jenis' => $this->input->post('jenis'),
+                'created_at' => date('Y-m-d H:i:s')
+            ];
+
+            $this->db->insert('tbl_jenis', $data);
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> New jenis obat added! </div>');
+            redirect('CJenis/index');
+        }
     }
 
     function edit($id)
@@ -45,10 +53,10 @@ class CJenis extends CI_Controller
     function update()
     {
         $id = $this->input->post('id');
-        $jenis = $this->input->post('jenis_obat');
+        $jenis = $this->input->post('jenis');
 
         $data = array(
-            'slug' => str_replace(' ', '-', strtolower($this->input->post('jenis_obat'))),
+            'slug' => str_replace(' ', '-', strtolower($this->input->post('jenis'))),
             'jenis' => $jenis,
             'updated_at' => date('Y-m-d H:i:s')
         );
@@ -58,6 +66,7 @@ class CJenis extends CI_Controller
         );
 
         $this->jenis->update_data($where, $data, 'tbl_jenis');
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Jenis updated successfully! </div>');
         redirect('CJenis/index');
     }
 
@@ -91,6 +100,7 @@ class CJenis extends CI_Controller
                 $data = $get->row_array();
                 $id = ['id' => $data['id']];
                 $this->jenis->delete($id, 'tbl_jenis');
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Jenis deleted successfully! </div>');
             }
             redirect('CJenis/index');
         }

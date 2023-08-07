@@ -50,11 +50,11 @@
 
         <?php foreach ($subMenu as $sm) : ?>
           <?php if ($title == $sm['title']) : ?>
-            <li class="nav-item active">
+            <li class="nav-item menu-open">
             <?php else : ?>
             <li class="nav-item">
             <?php endif ?>
-            <a href="<?= base_url($sm['url']) ?>" class="nav-link pb-0">
+            <a href="<?= base_url($sm['url']) ?>" class="nav-link">
               <i class="<?= $sm['icon'] ?>"></i>
               <span>
                 <?= $sm['title'] ?>

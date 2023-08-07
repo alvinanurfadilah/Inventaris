@@ -16,13 +16,17 @@ class CObat extends CI_Controller
 
         public function index()
         {
-                $data['title'] = 'Menu Management';
+                $data['title'] = 'Obat';
                 $data['user'] = $this->db->get_where('v_user', ['email' => $this->session->userdata('email')])->row_array();
-                $data = [
-                        'data' => $this->obat->show()
-                ];
-                $this->load->view('pages/Header');
-                $this->load->view('pages/Sidebar');
+                $data['data'] = $this->obat->show();
+
+                // $data = $this->db->get_where('tbl_obat', ['id' => $id ])->row_array();
+                // $detail = $this->detail_obat->show(['obat_id' => $data['obat_id']])->result_array();
+                // $data['obat'] = $detail;
+                // $data['overall_stock'] = $this->detail_obat->sumStok(['obat_id' => $data['obat_id']])->row()->stock;
+
+                $this->load->view('pages/Header', $data);
+                $this->load->view('pages/Sidebar', $data);
                 $this->load->view('master/Obat', $data);
                 $this->load->view('pages/Footer');
         }
@@ -42,14 +46,16 @@ class CObat extends CI_Controller
 
         public function detail_obat()
         {
+                $data['title'] = 'Detail Obat';
+                $data['user'] = $this->db->get_where('v_user', ['email' => $this->session->userdata('email')])->row_array();
                 $data = [
                         'data' => $this->obat->show(),
                         'detail' => $this->detail_obat->show(),
                         'jenis' => $this->jenis->show(),
                         'satuan' => $this->satuan->show()
                 ];
-                $this->load->view('pages/Header');
-                $this->load->view('pages/Sidebar');
+                $this->load->view('pages/Header', $data);
+                $this->load->view('pages/Sidebar', $data);
                 $this->load->view('master/DetailObat', $data);
                 $this->load->view('pages/Footer');
         }

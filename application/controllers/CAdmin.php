@@ -7,6 +7,7 @@ class CAdmin extends CI_Controller
 	{
 		parent::__construct();
 		is_logged_in();
+		$this->load->model('MRole', 'role');
 	}
 
 	public function index()
@@ -68,5 +69,61 @@ class CAdmin extends CI_Controller
 		}
 
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Access Changed! </div>');
+	}
+
+	public function post()
+	{
+		$data = [
+			'slug' => str_replace(' ', '-', strtolower($this->input->post('role'))),
+			'role' => $this->input->post('role'),
+			'created_at' => date('Y-m-d H:i:s')
+		];
+		$this->db->insert('tbl_role', $data);
+		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Role added successfully! </div>');
+		redirect('CAdmin/role');
+	}
+
+	function edit($slug)
+	{
+		$where = array('slug' => $slug);
+		$data['data'] = $this->role->edit_data($where, 'tbl_role');
+		$row = ['id' => $data['id']];
+		$this->load->view('CAdmin', $row);
+	}
+
+	function update()
+	{
+		$id = $this->input->post('id');
+		$role = $this->input->post('role');
+
+		$data = array(
+			'slug' => str_replace(' ', '-', strtolower($this->input->post('role'))),
+			'role' => $role,
+			'updated_at' => date('Y-m-d H:i:s')
+		);
+
+		$where = array(
+			'id' => $id
+		);
+
+		$this->role->update_data($where, $data, 'tbl_role');
+		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Role updated successfully! </div>');
+		redirect('CAdmin/role');
+	}
+
+	public function delete($id)
+	{
+		if (@$id) {
+			$idslug = ['id' => $id];
+			$get = $this->role->show($idslug);
+
+			if ($get->num_rows() == 1) {
+				$data = $get->row_array();
+				$id = ['id' => $data['id']];
+				$this->role->delete($id, 'tbl_role');
+				$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Role deleted successfully! </div>');
+			}
+			redirect('CAdmin/role');
+		}
 	}
 }

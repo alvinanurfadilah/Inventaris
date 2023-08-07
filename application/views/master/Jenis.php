@@ -9,8 +9,12 @@
   <div class="content-header">
     <div class="container-fluid">
       <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1 class="m-0">Jenis Obat</h1>
+        <div class="col-sm">
+          <h1 class="m-0"><?= $title ?></h1>
+          <br>
+          <?= form_error('jenis', '<div class="alert alert-danger" role="alert">',  '</div>') ?>
+
+          <?= $this->session->flashdata('message'); ?>
         </div><!-- /.col -->
       </div><!-- /.row -->
     </div><!-- /.container-fluid -->
@@ -30,7 +34,7 @@
                 </div>
                 <div class="col-sm-12 col-md-6">
                   <button type="button" class="btn btn-primary btn-social pull-right" data-toggle="modal" data-target="#modal-default">
-                    <i class="fa fa-plus"></i>
+                    Add Jenis
                   </button>
                 </div>
               </div>
@@ -52,10 +56,10 @@
                       <td><?= $i++ ?></td>
                       <td><?= $val['jenis'] ?></td>
                       <td>
+
                         <div class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-default-update<?= $val['id'] ?>">
                           <i class="fas fa-edit"></i>
                         </div>
-
 
                         <?php echo anchor('CJenis/index_delete/' . $val['slug'], '<div class="btn btn-danger btn-sm">
                           <i class="fas fa-trash-alt"></i>
@@ -79,7 +83,7 @@
                                 <label for="horizontal-text-input" class="col-sm-3 col-form-label">Nama Jenis</label>
                                 <div class="col-sm-9">
                                   <input type="hidden" class="form-control" name="id" id="id" value="<?= $val['id'] ?>">
-                                  <input type="text" class="form-control" name="jenis_obat" id="jenis_obat" value="<?= $val['jenis'] ?>">
+                                  <input type="text" class="form-control" name="jenis" id="jenis" value="<?= $val['jenis'] ?>">
                                 </div>
                               </div>
                             </div>
@@ -125,12 +129,12 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action="<?= base_url('CJenis/update'); ?>" method="POST">
+      <form action="<?= base_url('CJenis/index_post'); ?>" method="POST">
         <div class="modal-body">
           <div class="row">
             <label for="horizontal-text-input" class="col-sm-3 col-form-label">Nama Jenis</label>
             <div class="col-sm-9">
-              <input type="text" class="form-control" name="jenis_obat" id="jenis_obat" placeholder="Masukkan Nama Jenis">
+              <input type="text" class="form-control" name="jenis" id="jenist" placeholder="Masukkan Nama Jenis">
             </div>
           </div>
         </div>
