@@ -15,7 +15,7 @@ class CUser extends CI_Controller
         $data['title'] = 'User';
         $data['user'] = $this->db->get_where('v_user', ['email' => $this->session->userdata('email')])->row_array();
 
-        $data['data'] = $this->user->show();
+        $data['data'] = $this->user->getUser();
         $data['role'] = $this->db->get('tbl_role')->result_array();
 
         $this->load->view('pages/Header', $data);
@@ -51,11 +51,11 @@ class CUser extends CI_Controller
             'updated_at' => date('Y-m-d H:i:s')
         );
 
-        $where = array(
-            'id' => $id
-        );
+        $id = $this->input->post('id');
+        $where = $id;
 
-        $this->user->update_data($where, $data, 'tbl_user');
+        $table = 'tbl_user';
+        $this->user->update_data($where, $data, $table);
         redirect('CUser/index');
     }
 }

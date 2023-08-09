@@ -29,7 +29,7 @@
                   <h3 class="card-title">Data Obat Masuk</h3>
                 </div>
                 <div class="col-sm-12 col-md-6">
-                  <a href="<?= base_url('CObatProses/form') ?>" class="btn btn-primary btn-social pull-right" data-toggle="form" data-target="#form" id="input">
+                  <a href="<?= base_url('CObatProses/keluar_post') ?>" class="btn btn-primary btn-social pull-right" data-toggle="form" data-target="#form" id="input">
                     <i class="fa fa-plus"></i>
                   </a>
                 </div>
@@ -66,7 +66,7 @@
                 </tbody>
                 <tfoot>
                   <tr>
-                  <th>No</th>
+                    <th>No</th>
                     <th>Tanggal</th>
                     <th>User</th>
                     <th>Pasien</th>

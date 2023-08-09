@@ -11,7 +11,7 @@
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1 class="m-0"><?= $title ?></h1>
-                    <?= form_error('jenis', '<div class="alert alert-danger" role="alert">',  '</div>') ?>
+                    <?= form_error('role', '<div class="alert alert-danger" role="alert">',  '</div>') ?>
 
                     <?= $this->session->flashdata('message'); ?>
                 </div><!-- /.col -->
@@ -65,7 +65,7 @@
                                                     <i class="fas fa-edit"></i>
                                                 </div>
 
-                                                <?php echo anchor('CAdmin/delete/' . $r['id'], '<div class="btn btn-danger btn-sm">
+                                                <?php echo anchor('CAdmin/delete/' . $r['slug'], '<div class="btn btn-danger btn-sm">
                           <i class="fas fa-trash-alt"></i>
                         </div>') ?>
                                             </td>

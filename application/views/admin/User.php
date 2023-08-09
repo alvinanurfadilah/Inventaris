@@ -50,24 +50,21 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-
                                     <?php $i = 1;
-                                    foreach ($data->result_array() as $val) : ?>
+                                    foreach ($data as $val) : ?>
                                         <tr>
                                             <td><?= $i++ ?></td>
                                             <td><?= $val['first_name'] ?></td>
                                             <td><?= $val['last_name'] ?></td>
                                             <td><?= $val['email'] ?></td>
-                                            <td><?= $val['role_id'] ?></td>
+                                            <td><?= $val['role'] ?></td>
                                             <td><?= $val['is_active'] ?></td>
                                             <td>
-
                                                 <div class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-default-update<?= $val['id'] ?>">
                                                     <i class="fas fa-edit"></i>
                                                 </div>
                                             </td>
                                         </tr>
-
                                         <!-- Modal Update -->
                                         <div class="modal fade" id="modal-default-update<?= $val['id'] ?>">
                                             <div class="modal-dialog">
@@ -83,9 +80,7 @@
                                                             <div class="form-group row">
                                                                 <label for="horizontal-text-input" class="col-sm-3 col-form-label">First Name</label>
                                                                 <div class="col-sm-9">
-
                                                                     <input type="text" class="form-control" name="first_name" id="first_name" value="<?= $val['first_name'] ?>" readonly>
-
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">
@@ -103,17 +98,18 @@
                                                             <div class="form-group row">
                                                                 <label for="horizontal-text-input" class="col-sm-3 col-form-label">Role</label>
                                                                 <div class="col-sm-9">
-                                                                    <select name="menu_id" id="menu_id" class="form-control">
+                                                                    <select name="role_id" id="role_id" class="form-control">
                                                                         <option value="">Select Role</option>
-                                                                        <option value="<?= $val['role_id'] ?>"><?= $val['role_id'] ?></option>
+                                                                        <?php foreach ($role as $r) : ?>
+                                                                            <option value="<?= $r['id'] ?>"><?= $r['role'] ?></option>
+                                                                        <?php endforeach ?>
                                                                     </select>
                                                                 </div>
-                                                                <br><br>
-                                                                <div class="form-group">
-                                                                    <div class="form-check">
-                                                                        <input type="checkbox" class="form-check-input" value="1" name="is_active" id="is_active" checked>
-                                                                        <label class="form-check-laber" for="is_active">Active?</label>
-                                                                    </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <div class="form-check">
+                                                                    <input type="checkbox" class="form-check-input" value="1" name="is_active" id="is_active" checked>
+                                                                    <label class="form-check-laber" for="is_active">Active?</label>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -127,7 +123,6 @@
                                             </div>
                                             <!-- /.modal-dialog -->
                                         </div>
-
                                     <?php endforeach ?>
                                 </tbody>
                                 <tfoot>

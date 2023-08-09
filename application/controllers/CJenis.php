@@ -25,7 +25,7 @@ class CJenis extends CI_Controller
 
     public function index_post()
     {
-        $this->form_validation->set_rules('jenis', 'Jenis Obat', 'required');
+        $this->form_validation->set_rules('jenis', 'Jenis', 'required');
 
         if ($this->form_validation->run() == false) {
             redirect('CJenis');
@@ -42,9 +42,9 @@ class CJenis extends CI_Controller
         }
     }
 
-    function edit($id)
+    function edit($slug)
     {
-        $where = array('id' => $id);
+        $where = array('slug' => $slug);
         $data['data'] = $this->jenis->edit_data($where, 'tbl_jenis');
         $row = ['id' => $data['id']];
         $this->load->view('master/Jenis', $row);

@@ -10,7 +10,10 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Data Pasien</h1>
+                    <h1 class="m-0"><?= $title ?></h1>
+                    <?= form_error('obat', '<div class="alert alert-danger" role="alert">',  '</div>') ?>
+
+                    <?= $this->session->flashdata('message'); ?>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -29,9 +32,9 @@
                                     <h3 class="card-title">Data Pasien</h3>
                                 </div>
                                 <div class="col-sm-12 col-md-6">
-                                    <a href="<?= base_url('CPasien/form') ?>" class="btn btn-primary btn-social pull-right" data-toggle="form" data-target="#form" id="input">
-                                        <i class="fa fa-plus"></i>
-                                    </a>
+                                    <button type="button" class="btn btn-primary btn-social pull-right" data-toggle="modal" data-target="#modal-default">
+                                        Add Pasien
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -41,7 +44,8 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Nama</th>
+                                        <th>Nama Depan</th>
+                                        <th>Nama Belakang</th>
                                         <th>Jenis Kelamin</th>
                                         <th>Tanggal Lahir</th>
                                         <th>No. HP</th>
@@ -54,7 +58,8 @@
                                     foreach ($data->result_array() as $val) : ?>
                                         <tr>
                                             <td><?= $i++ ?></td>
-                                            <td><?= $val['full_name'] ?></td>
+                                            <td><?= $val['first_name'] ?></td>
+                                            <td><?= $val['last_name'] ?></td>
                                             <td><?= $val['gender'] ?></td>
                                             <td><?= $val['birth_date'] ?></td>
                                             <td><?= $val['phone'] ?></td>
@@ -64,21 +69,87 @@
                                                     <i class="fas fa-info-circle"></i>
                                                 </div>') ?>
 
-                                                <?php echo anchor('CPasien/edit/' . $val['slug'], '<div class="btn btn-primary btn-sm">
+                                                <div class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-default-update<?= $val['slug'] ?>">
                                                     <i class="fas fa-edit"></i>
-                                                </div>') ?>
+                                                </div>
 
-                                                <?php echo anchor('CPasien/index_delete/' . $val['slug'], '<div class="btn btn-danger btn-sm">
+                                                <?php echo anchor('CPasien/delete/' . $val['slug'], '<div class="btn btn-danger btn-sm">
                                                     <i class="fas fa-trash-alt"></i>
                                                 </div>') ?>
                                             </td>
                                         </tr>
+
+                                        <!-- Modal Update -->
+                                        <div class="modal fade" id="modal-default-update<?= $val['slug'] ?>">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Form Edit Pasien</h4>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <form action="<?= base_url('CPasien/update'); ?>" method="POST">
+                                                        <div class="modal-body">
+                                                            <div class="form-group row">
+                                                                <label for="first_name" class="col-sm-4 col-form-label">Nama Depan</label>
+                                                                <div class="col-sm-8">
+                                                                    <input type="text" class="form-control" name="first_name" id="first_name" value="<?= $val['first_name'] ?>">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <label for="last_name" class="col-sm-4 col-form-label">Nama Belakang</label>
+                                                                <div class="col-sm-8">
+                                                                    <input type="text" class="form-control" name="last_name" id="last_name" value="<?= $val['last_name'] ?>">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <label for="gender" class="col-sm-4 col-form-label">Jenis Kelamin</label>
+                                                                <div class="col-sm-8">
+                                                                    <select name="gender" id="gender" class="form-control">
+                                                                        <option value="">Pilih Jenis Kelamin</option>
+                                                                        <option value="Laki-Laki">Laki-Laki</option>
+                                                                        <option value="Perempuan">Perempuan</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <label for="birth_date" class="col-sm-4 col-form-label">Tanggal Lahir</label>
+                                                                <div class="col-sm-8">
+                                                                    <input type="date" class="form-control" name="birth_date" id="birth_date" value="<?= $val['birth_date'] ?>">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <label for="phone" class="col-sm-4 col-form-label">No. HP</label>
+                                                                <div class="col-sm-8">
+                                                                    <input type="text" class="form-control" name="phone" id="phone" value="<?= $val['phone'] ?>">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <label for="address" class="col-sm-4 col-form-label">Alamat</label>
+                                                                <div class="col-sm-8">
+                                                                    <input type="text" class="form-control" name="address" id="address" value="<?= $val['address'] ?>">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer justify-content-between">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                            <button type="submit" class="btn btn-primary">Update</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <!-- /.modal-content -->
+                                            </div>
+                                            <!-- /.modal-dialog -->
+                                        </div>
+
                                     <?php endforeach ?>
                                 </tbody>
                                 <tfoot>
                                     <tr>
                                         <th>No</th>
-                                        <th>Nama</th>
+                                        <th>Nama Depan</th>
+                                        <th>Nama Belakang</th>
                                         <th>Jenis Kelamin</th>
                                         <th>Tanggal Lahir</th>
                                         <th>No. HP</th>
@@ -93,4 +164,69 @@
             </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
+</div>
+
+
+<!-- Modal Input -->
+<div class="modal fade" id="modal-default">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Form Pasien</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="<?= base_url('CPasien/index_post'); ?>" method="POST">
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label for="first_name" class="col-sm-4 col-form-label">Nama Depan</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="first_name" id="first_name" placeholder="Nama Depan">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="last_name" class="col-sm-4 col-form-label">Nama Belakang</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Nama Belakang">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="gender" class="col-sm-4 col-form-label">Jenis Kelamin</label>
+                        <div class="col-sm-8">
+                            <select name="gender" id="gender" class="form-control">
+                                <option value="">Pilih Jenis Kelamin</option>
+                                <option value="Laki-Laki">Laki-Laki</option>
+                                <option value="Perempuan">Perempuan</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputPassword3" class="col-sm-4 col-form-label">Tanggal Lahir</label>
+                        <div class="col-sm-8">
+                            <input type="date" class="form-control" name="birth_date" id="birth_date" placeholder="Tanggal Lahir">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputPassword3" class="col-sm-4 col-form-label">No. HP</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="phone" id="phone" placeholder="No. HP">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputPassword3" class="col-sm-4 col-form-label">Alamat</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="address" id="address" placeholder="Alamat">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Tambah</button>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
 </div>

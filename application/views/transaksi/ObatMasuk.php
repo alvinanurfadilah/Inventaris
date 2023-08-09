@@ -10,7 +10,10 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Data Obat Masuk</h1>
+          <h1 class="m-0"><?= $title ?></h1>
+          <?= form_error('obat', '<div class="alert alert-danger" role="alert">',  '</div>') ?>
+
+          <?= $this->session->flashdata('message'); ?>
         </div><!-- /.col -->
       </div><!-- /.row -->
     </div><!-- /.container-fluid -->
@@ -29,9 +32,9 @@
                   <h3 class="card-title">Data Obat Masuk</h3>
                 </div>
                 <div class="col-sm-12 col-md-6">
-                  <a href="<?= base_url('CObatProses/form') ?>" class="btn btn-primary btn-social pull-right" data-toggle="form" data-target="#form" id="input">
-                    <i class="fa fa-plus"></i>
-                  </a>
+                  <button type="button" class="btn btn-primary btn-social pull-right" data-toggle="modal" data-target="#modal-default">
+                    Add Obat Masuk
+                  </button>
                 </div>
               </div>
             </div>
@@ -45,8 +48,6 @@
                     <th>User</th>
                     <th>Kode Obat</th>
                     <th>Nama Obat</th>
-                    <th>Jenis</th>
-                    <th>Satuan</th>
                     <th>Expired</th>
                     <th>Stok</th>
                     <th>Action</th>
@@ -61,8 +62,6 @@
                       <td><?= $val['name'] ?></td>
                       <td><?= $val['kode_obat'] ?></td>
                       <td><?= $val['name'] ?></td>
-                      <td><?= $val['jenis'] ?></td>
-                      <td><?= $val['satuan'] ?></td>
                       <td><?= $val['expired'] ?></td>
                       <td><?= $val['stock'] ?></td>
                       <td>A</td>
@@ -76,8 +75,6 @@
                     <th>User</th>
                     <th>Kode Obat</th>
                     <th>Nama Obat</th>
-                    <th>Jenis</th>
-                    <th>Satuan</th>
                     <th>Expired</th>
                     <th>Stok</th>
                     <th>Action</th>
@@ -88,6 +85,65 @@
           </div>
         </div>
       </div><!-- /.container-fluid -->
+    </div>
   </section>
   <!-- /.content -->
+</div>
+
+
+
+<!-- Modal Input -->
+<div class="modal fade" id="modal-default">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Form Obat Masuk</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="<?= base_url('CObatProses/masuk_post'); ?>" method="POST">
+        <div class="modal-body">
+          <div class="form-group row">
+            <label for="horizontal-text-input" class="col-sm-3 col-form-label">Tanggal Masuk</label>
+            <div class="col-sm-9">
+              <input type="date" class="form-control" name="tanggal" id="tanggal">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="horizontal-text-input" class="col-sm-3 col-form-label">User</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" name="jenis" id="jenist" placeholder="Masukkan Nama Jenis">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="horizontal-text-input" class="col-sm-3 col-form-label">Kode Obat</label>
+            <div class="col-sm-9">
+              <select name="jenis" id="jenis" class="form-control">
+                <option value="">Pilih Obat</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="horizontal-text-input" class="col-sm-3 col-form-label">Expired</label>
+            <div class="col-sm-9">
+              <input type="date" class="form-control" name="jenis" id="jenist" placeholder="Masukkan Nama Jenis">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="horizontal-text-input" class="col-sm-3 col-form-label">Stok</label>
+            <div class="col-sm-9">
+              <input type="number" class="form-control" name="jenis" id="jenist" placeholder="Masukkan Nama Jenis">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Tambah</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
 </div>

@@ -67,16 +67,18 @@
                                             <td><?= $sm['icon'] ?></td>
                                             <td><?= $sm['is_active'] ?></td>
                                             <td>
-                                                <div class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-default-update<?= $sm['id'] ?>">
+                                                <div class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-default-update<?= $sm['slug'] ?>">
                                                     <i class="fas fa-edit"></i>
                                                 </div>
 
-                                                <a href="" class="badge badge-danger">delete</a>
+                                                <?php echo anchor('Menu/deleteSubMenu/' . $sm['slug'], '<div class="btn btn-danger btn-sm ">
+                                                <i class="fas fa-trash-alt"></i>
+                                                </div>') ?>
                                             </td>
                                         </tr>
 
                                         <!-- Modal Edit New Sub Menu -->
-                                        <div class="modal fade" id="modal-default-update<?= $sm['id'] ?>">
+                                        <div class="modal fade" id="modal-default-update<?= $sm['slug'] ?>">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
@@ -116,7 +118,6 @@
                                                                     <input type="text" class="form-control" name="icon" id="icon" value="<?= $sm['icon'] ?>">
                                                                 </div>
                                                             </div>
-                                                            <br>
                                                             <div class="form-group">
                                                                 <div class="form-check">
                                                                     <input type="checkbox" class="form-check-input" value="1" name="is_active" id="is_active" checked>

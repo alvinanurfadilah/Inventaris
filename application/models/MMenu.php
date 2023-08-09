@@ -12,6 +12,17 @@ class MMenu extends CI_Model
         return $this->db->get();
     }
 
+    public function get($where = '')
+    {
+        $this->db->select('*');
+        $this->db->from($this->tbl);
+        if (@$where && $where != null) {
+            $this->db->where($where);
+        }
+        $this->db->order_by('id', 'asc');
+        return $this->db->get();
+    }
+
     public function getSubMenu()
     {
         $query = "SELECT `tbl_user_sub_menu`.*, `tbl_user_menu`.`menu`

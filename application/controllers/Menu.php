@@ -26,15 +26,19 @@ class Menu extends CI_Controller
             $this->load->view('menu/index', $data);
             $this->load->view('pages/Footer');
         } else {
-            $this->db->insert('tbl_user_menu', ['menu' => $this->input->post('menu')]);
+            $this->db->insert('tbl_user_menu', [
+                'slug' => str_replace(' ', '-', strtolower($this->input->post('menu'))),
+                'menu' => $this->input->post('menu'),
+                'created_at' => date('Y-m-d H:i:s')
+            ]);
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> New menu added! </div>');
             redirect('Menu/index');
         }
     }
 
-    function edit($id)
+    function edit($slug)
     {
-        $where = array('id' => $id);
+        $where = array('slug' => $slug);
         $data['data'] = $this->menu->edit_data($where, 'tbl_user_menu');
         $row = ['id' => $data['id']];
         $this->load->view('menu/index', $row);
@@ -46,7 +50,9 @@ class Menu extends CI_Controller
         $menu = $this->input->post('menu');
 
         $data = array(
-            'menu' => $menu
+            'slug' => str_replace(' ', '-', strtolower($this->input->post('menu'))),
+            'menu' => $menu,
+            'updated_at' => date('Y-m-d H:i:s')
         );
 
         $where = array(
@@ -62,16 +68,19 @@ class Menu extends CI_Controller
     {
         if (@$slug) {
             $idslug = ['slug' => $slug];
-            $get = $this->menu->show($idslug);
+            $get = $this->menu->get($idslug);
 
             if ($get->num_rows() == 1) {
                 $data = $get->row_array();
                 $id = ['id' => $data['id']];
-                $this->db->delete($id, 'tbl_user_menu');
+                $this->menu->delete($id, 'tbl_user_menu');
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Menu deleted successfully! </div>');
             }
             redirect('Menu/index');
         }
     }
+
+    // Sub Menu
 
     public function subMenu()
     {
@@ -93,11 +102,13 @@ class Menu extends CI_Controller
             $this->load->view('pages/Footer');
         } else {
             $data = [
+                'slug' => str_replace(' ', '-', strtolower($this->input->post('title'))),
                 'title' => $this->input->post('title'),
                 'menu_id' => $this->input->post('menu_id'),
                 'url' => $this->input->post('url'),
                 'icon' => $this->input->post('icon'),
                 'is_active' => $this->input->post('is_active'),
+                'created_at' => date('Y-m-d H:i:s')
             ];
             $this->db->insert('tbl_user_sub_menu', $data);
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> New sub menu added! </div>');
@@ -105,9 +116,9 @@ class Menu extends CI_Controller
         }
     }
 
-    function editSubMenu($id)
+    function editSubMenu($slug)
     {
-        $where = array('id' => $id);
+        $where = array('slug' => $slug);
         $data['data'] = $this->sub_menu->edit_data($where, 'tbl_user_sub_menu');
         $row = ['id' => $data['id']];
         $this->load->view('menu/subMenu', $row);
@@ -123,11 +134,13 @@ class Menu extends CI_Controller
         $is_active = $this->input->post('is_active');
 
         $data = array(
+            'slug' => str_replace(' ', '-', strtolower($this->input->post('title'))),
             'title' => $title,
             'menu_id' => $menu_id,
             'url' => $url,
             'icon' => $icon,
-            'is_active' => $is_active
+            'is_active' => $is_active,
+            'updated_at' => date('Y-m-d H:i:s')
         );
 
         $where = array(
@@ -135,7 +148,23 @@ class Menu extends CI_Controller
         );
 
         $this->sub_menu->update_data($where, $data, 'tbl_user_sub_menu');
-        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Sub Menu updated successfully! </div>');
+        // $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Sub Menu updated successfully! </div>');
         redirect('Menu/subMenu');
+    }
+
+    public function deleteSubMenu($slug)
+    {
+        if (@$slug) {
+            $idslug = ['slug' => $slug];
+            $get = $this->sub_menu->show($idslug);
+
+            if ($get->num_rows() == 1) {
+                $data = $get->row_array();
+                $id = ['id' => $data['id']];
+                $this->sub_menu->delete($id, 'tbl_user_sub_menu');
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Sub Menu deleted successfully! </div>');
+            }
+            redirect('Menu/subMenu');
+        }
     }
 }

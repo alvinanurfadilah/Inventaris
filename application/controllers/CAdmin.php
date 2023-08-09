@@ -25,7 +25,6 @@ class CAdmin extends CI_Controller
 	{
 		$data['title'] = 'Role';
 		$data['user'] = $this->db->get_where('v_user', ['email' => $this->session->userdata('email')])->row_array();
-
 		$data['role'] = $this->db->get('tbl_role')->result_array();
 
 		$this->load->view('pages/Header', $data);
@@ -73,14 +72,20 @@ class CAdmin extends CI_Controller
 
 	public function post()
 	{
-		$data = [
-			'slug' => str_replace(' ', '-', strtolower($this->input->post('role'))),
-			'role' => $this->input->post('role'),
-			'created_at' => date('Y-m-d H:i:s')
-		];
-		$this->db->insert('tbl_role', $data);
-		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Role added successfully! </div>');
-		redirect('CAdmin/role');
+		$this->form_validation->set_rules('role', 'Role', 'required|trim');
+		if ($this->form_validation->run() == false) {
+			redirect('CAdmin/role');
+		} else {
+			$data = [
+				'slug' => str_replace(' ', '-', strtolower($this->input->post('role'))),
+				'role' => $this->input->post('role'),
+				'created_at' => date('Y-m-d H:i:s')
+			];
+
+			$this->db->insert('tbl_role', $data);
+			$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Role added successfully! </div>');
+			redirect('CAdmin/role');
+		}
 	}
 
 	function edit($slug)
@@ -111,17 +116,33 @@ class CAdmin extends CI_Controller
 		redirect('CAdmin/role');
 	}
 
-	public function delete($id)
+	// public function delete($id)
+	// {
+	// 	if (@$id) {
+	// 		$idslug = ['id' => $id];
+	// 		$get = $this->role->show($idslug);
+
+	// 		if ($get->num_rows() == 1) {
+	// 			$data = $get->row_array();
+	// 			$id = ['id' => $data['id']];
+	// 			$this->role->delete($id, 'tbl_role');
+	// 			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Role deleted successfully! </div>');
+	// 		}
+	// 		redirect('CAdmin/role');
+	// 	}
+	// }
+
+	public function delete($slug)
 	{
-		if (@$id) {
-			$idslug = ['id' => $id];
+		if (@$slug) {
+			$idslug = ['slug' => $slug];
 			$get = $this->role->show($idslug);
 
 			if ($get->num_rows() == 1) {
 				$data = $get->row_array();
 				$id = ['id' => $data['id']];
 				$this->role->delete($id, 'tbl_role');
-				$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Role deleted successfully! </div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Role deleted successfully! </div>');
 			}
 			redirect('CAdmin/role');
 		}

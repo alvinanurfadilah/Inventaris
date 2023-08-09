@@ -57,7 +57,7 @@
                       <td><?= $val['jenis'] ?></td>
                       <td>
 
-                        <div class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-default-update<?= $val['id'] ?>">
+                        <div class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-default-update<?= $val['slug'] ?>">
                           <i class="fas fa-edit"></i>
                         </div>
 
@@ -68,7 +68,7 @@
                     </tr>
 
                     <!-- Modal Update -->
-                    <div class="modal fade" id="modal-default-update<?= $val['id'] ?>">
+                    <div class="modal fade" id="modal-default-update<?= $val['slug'] ?>">
                       <div class="modal-dialog">
                         <div class="modal-content">
                           <div class="modal-header">

@@ -25,6 +25,7 @@ class CSatuan extends CI_Controller
         public function index_post()
         {
                 $this->form_validation->set_rules('satuan', 'Satuan', 'required');
+
                 if ($this->form_validation->run() == false) {
                         redirect('CSatuan');
                 } else {
@@ -67,12 +68,20 @@ class CSatuan extends CI_Controller
                 redirect('CSatuan/index');
         }
 
-        public function delete($id)
+        public function delete($slug)
         {
-                $where = ['id' => $id];
-                $this->satuan->delete($where, 'tbl_satuan');
-                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Satuan deleted successfully! </div>');
-                redirect('CSatuan/index');
+                if (@$slug) {
+                        $idslug = ['slug' => $slug];
+                        $get = $this->satuan->show($idslug);
+
+                        if ($get->num_rows() == 1) {
+                                $data = $get->row_array();
+                                $id = ['id' => $data['id']];
+                                $this->satuan->delete($id, 'tbl_jenis');
+                                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Satuan deleted successfully! </div>');
+                        }
+                        redirect('CSatuan/index');
+                }
         }
 
         // public function index_put($slug='')

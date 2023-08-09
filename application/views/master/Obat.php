@@ -11,6 +11,9 @@
       <div class="row mb-2">
         <div class="col-sm-6">
           <h1 class="m-0"><?= $title ?></h1>
+          <?= form_error('obat', '<div class="alert alert-danger" role="alert">',  '</div>') ?>
+
+          <?= $this->session->flashdata('message'); ?>
         </div><!-- /.col -->
       </div><!-- /.row -->
     </div><!-- /.container-fluid -->
@@ -29,9 +32,9 @@
                   <h3 class="card-title">Data Obat</h3>
                 </div>
                 <div class="col-sm-12 col-md-6">
-                  <a href="<?= base_url('CObat/form') ?>" class="btn btn-primary btn-social pull-right" data-toggle="form" data-target="#form" id="input">
-                    <i class="fa fa-plus"></i>
-                  </a>
+                  <button type="button" class="btn btn-primary btn-social pull-right" data-toggle="modal" data-target="#modal-default">
+                    Add Obat
+                  </button>
                 </div>
               </div>
             </div>
@@ -64,15 +67,73 @@
                             <i class="fas fa-info-circle"></i>
                         </div>') ?>
 
-                        <?php echo anchor('CObat/edit/' . $val['slug'], '<div class="btn btn-primary btn-sm">
+                        <div class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-default-update<?= $val['slug'] ?>">
                           <i class="fas fa-edit"></i>
-                        </div>') ?>
+                        </div>
 
                         <?php echo anchor('CObat/index_delete/' . $val['slug'], '<div class="btn btn-danger btn-sm">
                           <i class="fas fa-trash-alt"></i>
                         </div>') ?>
                       </td>
                     </tr>
+
+                    <!-- Modal Update -->
+                    <div class="modal fade" id="modal-default-update<?= $val['slug'] ?>">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h4 class="modal-title">Update Obat</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <form action="<?= base_url('CObat/update') ?>" method="POST">
+                            <div class="modal-body">
+                              <div class="form-group row">
+                                <label for="horizontal-text-input" class="col-sm-4 col-form-label">Kode Obat</label>
+                                <div class="col-sm-8">
+                                  <input type="text" class="form-control" name="kode" id="kode" placeholder="Masukkan Kode Obat" value="<?= $val['kode_obat'] ?>">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="horizontal-text-input" class="col-sm-4 col-form-label">Nama Obat</label>
+                                <div class="col-sm-8">
+                                  <input type="text" class="form-control" name="obat" id="obat" placeholder="Masukkan Nama Obat" value="<?= $val['name'] ?>">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="horizontal-text-input" class="col-sm-4 col-form-label">Jenis</label>
+                                <div class="col-sm-8">
+                                  <select name="jenis" id="jenis" class="form-control">
+                                    <option value="">Select Jenis</option>
+                                    <?php foreach ($jenis->result_array() as $val) { ?>
+                                      <option value="<?php echo $val['id'] ?>"><?php echo $val['jenis'] ?></option>
+                                    <?php } ?>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="horizontal-text-input" class="col-sm-4 col-form-label">Satuan</label>
+                                <div class="col-sm-8">
+                                  <select name="satuan" id="satuan" class="form-control">
+                                    <option value="">Select Satuan</option>
+                                    <?php foreach ($satuan->result_array() as $val) { ?>
+                                      <option value="<?php echo $val['id'] ?>"><?php echo $val['satuan'] ?></option>
+                                    <?php } ?>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                              <button type="submit" class="btn btn-primary">Add</button>
+                            </div>
+                          </form>
+                        </div>
+                        <!-- /.modal-content -->
+                      </div>
+                      <!-- /.modal-dialog -->
+                    </div>
 
                   <?php endforeach ?>
                 </tbody>
@@ -94,4 +155,63 @@
       </div><!-- /.container-fluid -->
   </section>
   <!-- /.content -->
+</div>
+
+
+<!-- Modal Add New Menu -->
+<div class="modal fade" id="modal-default">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add New Sub Menu</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="<?= base_url('CObat/index_post') ?>" method="POST">
+        <div class="modal-body">
+          <div class="form-group row">
+            <label for="horizontal-text-input" class="col-sm-4 col-form-label">Kode Obat</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" name="kode_obat" id="kode_obat" placeholder="Masukkan Kode Obat">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="horizontal-text-input" class="col-sm-4 col-form-label">Nama Obat</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" name="name" id="name" placeholder="Masukkan Nama Obat">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="horizontal-text-input" class="col-sm-4 col-form-label">Jenis</label>
+            <div class="col-sm-8">
+              <select name="jenis_id" id="jenis_id" class="form-control">
+                <option value="">Select Jenis</option>
+                <?php foreach ($jenis->result_array() as $val) { ?>
+                  <option value="<?php echo $val['id'] ?>"><?php echo $val['jenis'] ?></option>
+                <?php } ?>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="horizontal-text-input" class="col-sm-4 col-form-label">Satuan</label>
+            <div class="col-sm-8">
+              <select name="satuan_id" id="satuan_id" class="form-control">
+                <option value="">Select Satuan</option>
+                <?php foreach ($satuan->result_array() as $val) { ?>
+                  <option value="<?php echo $val['id'] ?>"><?php echo $val['satuan'] ?></option>
+                <?php } ?>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Add</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
 </div>

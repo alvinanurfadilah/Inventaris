@@ -55,11 +55,11 @@
                       <td><?= $i++ ?></td>
                       <td><?= $val['satuan'] ?></td>
                       <td>
-                        <div class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-default-update<?= $val['id'] ?>">
+                        <div class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-default-update<?= $val['slug'] ?>">
                           <i class="fas fa-edit"></i>
                         </div>
 
-                        <?php echo anchor('CSatuan/delete/' . $val['id'], '<div class="btn btn-danger btn-sm">
+                        <?php echo anchor('CSatuan/delete/' . $val['slug'], '<div class="btn btn-danger btn-sm">
                           <i class="fas fa-trash-alt"></i>
                         </div>') ?>
                       </td>
@@ -67,7 +67,7 @@
 
 
                     <!-- Modal Update -->
-                    <div class="modal fade" id="modal-default-update<?= $val['id'] ?>">
+                    <div class="modal fade" id="modal-default-update<?= $val['slug'] ?>">
                       <div class="modal-dialog">
                         <div class="modal-content">
                           <div class="modal-header">

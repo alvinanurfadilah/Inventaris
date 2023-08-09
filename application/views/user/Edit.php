@@ -11,7 +11,7 @@
 
                     <div class="row">
                         <div class="col-lg">
-                            <?= form_open_multipart('CApoteker/edit') ?>
+                            <?= form_open_multipart('CMember/edit') ?>
                             <div class="form-group row">
                                 <label for="email" class="col-sm-2 col-form-label">Email</label>
                                 <div class="col-sm-10">

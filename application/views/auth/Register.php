@@ -10,14 +10,14 @@
             <form class="user" action="<?= base_url('Auth/register') ?>" method="post">
 
                 <div class="form-group">
-                    <input type="text" class="form-control" id="first_name" name="first_name" placeholder="First Name" value="<?= set_value('first_name')?>">
+                    <input type="text" class="form-control" id="first_name" name="first_name" placeholder="First Name" value="<?= set_value('first_name') ?>">
                     <?= form_error('first_name', '<small class="text-danger" pl-3>', '</small>'); ?>
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Last Name" value="<?= set_value('last_name')?>">
+                    <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Last Name" value="<?= set_value('last_name') ?>">
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" id="email" name="email" placeholder="Email" value="<?= set_value('email')?>">
+                    <input type="text" class="form-control" id="email" name="email" placeholder="Email" value="<?= set_value('email') ?>">
                     <?= form_error('email', '<small class="text-danger" pl-3>', '</small>'); ?>
                 </div>
                 <div class="form-group">

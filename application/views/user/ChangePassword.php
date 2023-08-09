@@ -11,7 +11,7 @@
                     <div class="row">
                         <div class="col lg">
                             <?= $this->session->flashdata('message'); ?>
-                            <form action="<?= base_url('CApoteker/changePassword') ?>" method="post">
+                            <form action="<?= base_url('CMember/changePassword') ?>" method="post">
                                 <div class="form-group row">
                                     <label for="currentPassword" class="col-sm-4 col-form-label">Current Password</label>
                                     <div class="col-sm-8">

@@ -53,5 +53,3 @@ class MDetailObatProses extends CI_Model
         return $this->db->get($this->view);
     }
 }
-
-?>

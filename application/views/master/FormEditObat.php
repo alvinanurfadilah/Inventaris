@@ -43,7 +43,7 @@
                                         <label for="jenis" class="col-sm-2 col-form-label">Jenis Obat</label>
                                         <div class="col-sm-10">
                                             <select name="jenis" id="jenis" class="form-control">
-                                                    <option value="<?php echo $val['jenis'] ?>"><?php echo $val['jenis'] ?></option>
+                                                <option value="<?php echo $val['jenis'] ?>"><?php echo $val['jenis'] ?></option>
                                             </select>
                                         </div>
                                     </div>

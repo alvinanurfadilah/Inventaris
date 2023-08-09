@@ -55,18 +55,16 @@
                                             <th scope="row"><?= $i++ ?></th>
                                             <td><?= $m['menu'] ?></td>
                                             <td>
-                                                <div class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-default-update<?= $m['id'] ?>">
+                                                <div class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-default-update<?= $m['slug'] ?>">
                                                     <i class="fas fa-edit"></i>
                                                 </div>
 
-                                                <?php echo anchor('Menu/delete/' . $m['id'], '<div class="btn btn-danger btn-sm ">
-                                                <i class="fas fa-trash-alt"></i>
-                                                </div>') ?>
+                                                <?php echo anchor('Menu/delete/' . $m['slug'], '<div class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></div>') ?>
                                             </td>
                                         </tr>
 
                                         <!-- Modal Update -->
-                                        <div class="modal fade" id="modal-default-update<?= $m['id'] ?>">
+                                        <div class="modal fade" id="modal-default-update<?= $m['slug'] ?>">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">

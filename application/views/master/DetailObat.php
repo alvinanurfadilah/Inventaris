@@ -11,6 +11,9 @@
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1 class="m-0"><?= $title ?></h1>
+                    <?= form_error('obat', '<div class="alert alert-danger" role="alert">',  '</div>') ?>
+
+                    <?= $this->session->flashdata('message'); ?>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -33,7 +36,8 @@
                         <!-- /.card-header -->
                         <div class="card-body">
 
-                            <?php foreach ($data->result_array() as $val) : ?>
+                            <?php $i = 1;
+                            foreach ($data->result_array() as $val) : ?>
                                 <form class="form-horizontal" id="detail_obat">
                                     <div class="card-body">
                                         <div class="form-group row">
@@ -51,13 +55,13 @@
                                         <div class="form-group row">
                                             <label for="jenis" class="col-sm-2 col-form-label">Jenis Obat</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="jenis" name="jenis" value="<?= $val['jenis_id'] ?>" disabled>
+                                                <input type="text" class="form-control" id="jenis" name="jenis" value="<?= $val['jenis'] ?>" disabled>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="satuan" class="col-sm-2 col-form-label">Satuan Obat</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="satuan" name="satuan" value="<?= $val['satuan_id'] ?>" disabled>
+                                                <input type="text" class="form-control" id="satuan" name="satuan" value="<?= $val['satuan'] ?>" disabled>
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -69,7 +73,6 @@
                                     </div>
                                     <!-- /.card-body -->
                                     <!-- /.card-footer -->
-
                                 </form>
                             <?php endforeach ?>
                         </div>
@@ -94,8 +97,8 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php $i = 0;
-                                    foreach ($data->result_array() as $val) { ?>
+                                    <?php $i = 1;
+                                    foreach ($detail->result_array() as $val) { ?>
                                         <tr>
                                             <td><?= $i++ ?></td>
                                             <td><?= $val['expired'] ?></td>
