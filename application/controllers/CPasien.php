@@ -8,6 +8,7 @@ class CPasien extends CI_Controller
         parent::__construct();
         is_logged_in();
         $this->load->model('MPasien', 'pasien');
+        $this->load->model('MDetailPasien', 'detail_pasien');
         $this->load->helper('url');
     }
 
@@ -103,5 +104,18 @@ class CPasien extends CI_Controller
             }
             redirect('CPasien/index');
         }
+    }
+
+
+    public function daftar()
+    {
+        $data['title'] = 'Daftar';
+        $data['user'] = $this->db->get_where('v_user', ['email' => $this->session->userdata('email')])->row_array();
+
+        $data['data'] = $this->detail_pasien->show();
+        $this->load->view('pages/Header', $data);
+        $this->load->view('pages/Sidebar', $data);
+        $this->load->view('Pasien/Daftar', $data);
+        $this->load->view('pages/Footer');
     }
 }

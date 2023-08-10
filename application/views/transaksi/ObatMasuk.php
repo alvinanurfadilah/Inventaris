@@ -59,13 +59,81 @@
                     <tr>
                       <td><?= $i++ ?></td>
                       <td><?= $val['tanggal'] ?></td>
-                      <td><?= $val['name'] ?></td>
+                      <td><?= $val['user_id'] ?></td>
                       <td><?= $val['kode_obat'] ?></td>
                       <td><?= $val['name'] ?></td>
                       <td><?= $val['expired'] ?></td>
                       <td><?= $val['stock'] ?></td>
-                      <td>A</td>
+                      <td>
+                        <div class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-default-update<?= $val['id'] ?>">
+                          <i class="fas fa-edit"></i>
+                        </div>
+
+                        <?php echo anchor('CObatProses/masuk_delete/' . $val['id'], '<div class="btn btn-danger btn-sm">
+                          <i class="fas fa-trash-alt"></i>
+                        </div>') ?>
+                      </td>
                     </tr>
+
+                    <!-- Modal Update -->
+                    <div class="modal fade" id="modal-default-update<?= $val['id'] ?>">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h4 class="modal-title">Edit Obat Masuk</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <form action="<?= base_url('CObatProses/masuk_update'); ?>" method="POST">
+                            <div class="modal-body">
+                              <div class="form-group row">
+                                <label for="horizontal-text-input" class="col-sm-3 col-form-label">Tanggal Masuk</label>
+                                <div class="col-sm-9">
+                                  <input type="text" class="form-control" name="tanggal" id="tanggal" value="<?php echo date('Y-m-d') ?>" readonly>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="horizontal-text-input" class="col-sm-3 col-form-label">User</label>
+                                <div class="col-sm-9">
+                                  <input type="text" class="form-control" name="user_id" id="user_id" value="<?php echo $id['first_name'] ?>" readonly>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="horizontal-text-input" class="col-sm-3 col-form-label">Kode Obat</label>
+                                <div class="col-sm-9">
+                                  <select name="obat_id" id="obat_id" class="form-control">
+                                    <option value="">Pilih Obat</option>
+                                    <?php foreach ($obat->result_array() as $ob) { ?>
+                                      <option value="<?php echo $ob['id'] ?>"><?php echo $ob['name'] ?></option>
+                                    <?php } ?>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="horizontal-text-input" class="col-sm-3 col-form-label">Expired</label>
+                                <div class="col-sm-9">
+                                  <input type="date" class="form-control" name="expired" id="expired" value="<?= $val['expired'] ?>">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="horizontal-text-input" class="col-sm-3 col-form-label">Stok</label>
+                                <div class="col-sm-9">
+                                  <input type="number" class="form-control" name="stock" id="stock" value="<?= $val['stock'] ?>">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                              <button type="submit" class="btn btn-primary">Update</button>
+                            </div>
+                          </form>
+                        </div>
+                        <!-- /.modal-content -->
+                      </div>
+                      <!-- /.modal-dialog -->
+                    </div>
+
                   <?php } ?>
                 </tbody>
                 <tfoot>
@@ -107,33 +175,36 @@
           <div class="form-group row">
             <label for="horizontal-text-input" class="col-sm-3 col-form-label">Tanggal Masuk</label>
             <div class="col-sm-9">
-              <input type="date" class="form-control" name="tanggal" id="tanggal">
+              <input type="text" class="form-control" name="tanggal" id="tanggal" value="<?php echo date('Y-m-d') ?>" readonly>
             </div>
           </div>
           <div class="form-group row">
             <label for="horizontal-text-input" class="col-sm-3 col-form-label">User</label>
             <div class="col-sm-9">
-              <input type="text" class="form-control" name="jenis" id="jenist" placeholder="Masukkan Nama Jenis">
+              <input type="text" class="form-control" name="user_id" id="user_id" value="<?php echo $id['id'] ?>" readonly>
             </div>
           </div>
           <div class="form-group row">
             <label for="horizontal-text-input" class="col-sm-3 col-form-label">Kode Obat</label>
             <div class="col-sm-9">
-              <select name="jenis" id="jenis" class="form-control">
+              <select name="obat_id" id="obat_id" class="form-control">
                 <option value="">Pilih Obat</option>
+                <?php foreach ($obat->result_array() as $val) { ?>
+                  <option value="<?php echo $val['id'] ?>"><?php echo $val['name'] ?></option>
+                <?php } ?>
               </select>
             </div>
           </div>
           <div class="form-group row">
             <label for="horizontal-text-input" class="col-sm-3 col-form-label">Expired</label>
             <div class="col-sm-9">
-              <input type="date" class="form-control" name="jenis" id="jenist" placeholder="Masukkan Nama Jenis">
+              <input type="date" class="form-control" name="expired" id="expired">
             </div>
           </div>
           <div class="form-group row">
             <label for="horizontal-text-input" class="col-sm-3 col-form-label">Stok</label>
             <div class="col-sm-9">
-              <input type="number" class="form-control" name="jenis" id="jenist" placeholder="Masukkan Nama Jenis">
+              <input type="number" class="form-control" name="stock" id="stock" placeholder="Masukkan Stock">
             </div>
           </div>
         </div>

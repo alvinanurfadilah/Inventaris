@@ -10,7 +10,10 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Data Obat Masuk</h1>
+          <h1 class="m-0"><?= $title ?></h1>
+          <?= form_error('obat', '<div class="alert alert-danger" role="alert">',  '</div>') ?>
+
+          <?= $this->session->flashdata('message'); ?>
         </div><!-- /.col -->
       </div><!-- /.row -->
     </div><!-- /.container-fluid -->
@@ -26,11 +29,10 @@
             <div class="card-header">
               <div class="row">
                 <div class="col-sm-12 col-md-6">
-                  <h3 class="card-title">Data Obat Masuk</h3>
+                  <h3 class="card-title">Data Obat Keluar</h3>
                 </div>
                 <div class="col-sm-12 col-md-6">
-                  <a href="<?= base_url('CObatProses/keluar_post') ?>" class="btn btn-primary btn-social pull-right" data-toggle="form" data-target="#form" id="input">
-                    <i class="fa fa-plus"></i>
+                  <a href="<?= base_url('CObatProses/form') ?>" class="btn btn-primary btn-social pull-right" data-toggle="form" data-target="#form" id="input">Add Obat Keluar
                   </a>
                 </div>
               </div>
@@ -44,8 +46,7 @@
                     <th>Tanggal</th>
                     <th>User</th>
                     <th>Pasien</th>
-                    <th>Nama Obat</th>
-                    <th>Jumlah</th>
+                    <th>Keterangan</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -58,8 +59,6 @@
                       <td><?= $val['name'] ?></td>
                       <td><?= $val['kode_obat'] ?></td>
                       <td><?= $val['name'] ?></td>
-                      <td><?= $val['jenis'] ?></td>
-                      <td><?= $val['satuan'] ?></td>
                       <td>A</td>
                     </tr>
                   <?php } ?>
@@ -70,8 +69,7 @@
                     <th>Tanggal</th>
                     <th>User</th>
                     <th>Pasien</th>
-                    <th>Nama Obat</th>
-                    <th>Jumlah</th>
+                    <th>Keterangan</th>
                     <th>Action</th>
                   </tr>
                 </tfoot>
