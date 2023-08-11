@@ -47,7 +47,6 @@
                                         <th>Tanggal</th>
                                         <th>User</th>
                                         <th>Pasien</th>
-                                        <th>Tanggal Berobat</th>
                                         <th>Keterangan</th>
                                         <th>Action</th>
                                     </tr>
@@ -57,76 +56,60 @@
                                     foreach ($data->result_array() as $val) : ?>
                                         <tr>
                                             <td><?= $i++ ?></td>
-                                            <td><?= $val['tanggal'] ?></td>
-                                            <td><?= $val['user_id'] ?></td>
-                                            <td><?= $val['pasien_id'] ?></td>
                                             <td><?= $val['tanggal_berobat'] ?></td>
+                                            <td><?= $val['user_id'] ?></td>
+                                            <td><?= $val['first_name'] . $val['last_name'] ?></td>
                                             <td><?= $val['ket'] ?></td>
                                             <td>
-                                                <?php echo anchor('CPasien/detail/' . $val['slug'], '<div class="btn btn-primary btn-sm">
-                                                    <i class="fas fa-info-circle"></i>
-                                                </div>') ?>
-
-                                                <div class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-default-update<?= $val['slug'] ?>">
+                                                <div class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-default-update<?= $val['id'] ?>">
                                                     <i class="fas fa-edit"></i>
                                                 </div>
 
-                                                <?php echo anchor('CPasien/delete/' . $val['slug'], '<div class="btn btn-danger btn-sm">
+                                                <?php echo anchor('CPasien/daftar_delete/' . $val['id'], '<div class="btn btn-danger btn-sm">
                                                     <i class="fas fa-trash-alt"></i>
                                                 </div>') ?>
                                             </td>
                                         </tr>
 
                                         <!-- Modal Update -->
-                                        <div class="modal fade" id="modal-default-update<?= $val['slug'] ?>">
+                                        <div class="modal fade" id="modal-default-update<?= $val['id'] ?>">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h4 class="modal-title">Form Edit Pasien</h4>
+                                                        <h4 class="modal-title">Form Pasien</h4>
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
                                                     </div>
-                                                    <form action="<?= base_url('CPasien/update'); ?>" method="POST">
+                                                    <form action="<?= base_url('CPasien/daftar_update'); ?>" method="POST">
                                                         <div class="modal-body">
                                                             <div class="form-group row">
-                                                                <label for="first_name" class="col-sm-4 col-form-label">Nama Depan</label>
+                                                                <label for="tanggal_berobat" class="col-sm-4 col-form-label">Tanggal</label>
                                                                 <div class="col-sm-8">
-                                                                    <input type="text" class="form-control" name="first_name" id="first_name" value="<?= $val['first_name'] ?>">
+                                                                    <input type="date" class="form-control" name="tanggal_berobat" id="tanggal_berobat" value="<?php echo date('Y-m-d') ?>" readonly>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">
-                                                                <label for="last_name" class="col-sm-4 col-form-label">Nama Belakang</label>
+                                                                <label for="user_id" class="col-sm-4 col-form-label">User</label>
                                                                 <div class="col-sm-8">
-                                                                    <input type="text" class="form-control" name="last_name" id="last_name" value="<?= $val['last_name'] ?>">
+                                                                    <input type="text" class="form-control" name="user_id" id="user_id" value="<?php echo $id['id'] ?>" readonly>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">
-                                                                <label for="gender" class="col-sm-4 col-form-label">Jenis Kelamin</label>
+                                                                <label for="pasien_id" class="col-sm-4 col-form-label">Pasien</label>
                                                                 <div class="col-sm-8">
-                                                                    <select name="gender" id="gender" class="form-control">
-                                                                        <option value="">Pilih Jenis Kelamin</option>
-                                                                        <option value="Laki-Laki">Laki-Laki</option>
-                                                                        <option value="Perempuan">Perempuan</option>
+                                                                    <select name="pasien_id" id="pasien_id" class="form-control">
+                                                                        <option value="">Pilih Pasien</option>
+                                                                        <?php foreach ($pasien->result_array() as $p) { ?>
+                                                                            <option value="<?php echo $p['id'] ?>"><?php echo $p['first_name'] .  $p['last_name'] ?></option>
+                                                                        <?php } ?>
                                                                     </select>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">
-                                                                <label for="birth_date" class="col-sm-4 col-form-label">Tanggal Lahir</label>
+                                                                <label for="ket" class="col-sm-4 col-form-label">Keterangan</label>
                                                                 <div class="col-sm-8">
-                                                                    <input type="date" class="form-control" name="birth_date" id="birth_date" value="<?= $val['birth_date'] ?>">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <label for="phone" class="col-sm-4 col-form-label">No. HP</label>
-                                                                <div class="col-sm-8">
-                                                                    <input type="text" class="form-control" name="phone" id="phone" value="<?= $val['phone'] ?>">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <label for="address" class="col-sm-4 col-form-label">Alamat</label>
-                                                                <div class="col-sm-8">
-                                                                    <input type="text" class="form-control" name="address" id="address" value="<?= $val['address'] ?>">
+                                                                    <input type="text" class="form-control" name="ket" id="ket" value="<?php echo $val['ket'] ?>">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -149,7 +132,6 @@
                                         <th>Tanggal</th>
                                         <th>User</th>
                                         <th>Pasien</th>
-                                        <th>Tanggal Berobat</th>
                                         <th>Keterangan</th>
                                         <th>Action</th>
                                     </tr>
@@ -174,46 +156,35 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="<?= base_url('CPasien/index_post'); ?>" method="POST">
+            <form action="<?= base_url('CPasien/daftar_post'); ?>" method="POST">
                 <div class="modal-body">
                     <div class="form-group row">
-                        <label for="first_name" class="col-sm-4 col-form-label">Nama Depan</label>
+                        <label for="tanggal_berobat" class="col-sm-4 col-form-label">Tanggal</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" name="first_name" id="first_name" placeholder="Nama Depan">
+                            <input type="date" class="form-control" name="tanggal_berobat" id="tanggal_berobat" value="<?php echo date('Y-m-d') ?>" readonly>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="last_name" class="col-sm-4 col-form-label">Nama Belakang</label>
+                        <label for="user_id" class="col-sm-4 col-form-label">User</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Nama Belakang">
+                            <input type="text" class="form-control" name="user_id" id="user_id" value="<?php echo $id['id'] ?>" readonly>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="gender" class="col-sm-4 col-form-label">Jenis Kelamin</label>
+                        <label for="pasien_id" class="col-sm-4 col-form-label">Pasien</label>
                         <div class="col-sm-8">
-                            <select name="gender" id="gender" class="form-control">
-                                <option value="">Pilih Jenis Kelamin</option>
-                                <option value="Laki-Laki">Laki-Laki</option>
-                                <option value="Perempuan">Perempuan</option>
+                            <select name="pasien_id" id="pasien_id" class="form-control">
+                                <option value="">Pilih Pasien</option>
+                                <?php foreach ($pasien->result_array() as $p) { ?>
+                                    <option value="<?php echo $p['id'] ?>"><?php echo $p['first_name'] .  $p['last_name'] ?></option>
+                                <?php } ?>
                             </select>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="inputPassword3" class="col-sm-4 col-form-label">Tanggal Lahir</label>
+                        <label for="ket" class="col-sm-4 col-form-label">Keterangan</label>
                         <div class="col-sm-8">
-                            <input type="date" class="form-control" name="birth_date" id="birth_date" placeholder="Tanggal Lahir">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="inputPassword3" class="col-sm-4 col-form-label">No. HP</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" name="phone" id="phone" placeholder="No. HP">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="inputPassword3" class="col-sm-4 col-form-label">Alamat</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" name="address" id="address" placeholder="Alamat">
+                            <input type="text" class="form-control" name="ket" id="ket" placeholder="Keterangan">
                         </div>
                     </div>
                 </div>

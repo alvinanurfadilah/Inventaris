@@ -28,7 +28,7 @@ class CObat extends CI_Controller
                         ->from('tbl_detail_obat')
                         ->group_by('obat_id')
                         ->get()
-                        ->row_array();
+                        ->result_array();
                 //$data['overall_stock'] = $this->detail_obat->sumStok(['obat_id' => $data['obat_id']])->row()->stock;
 
                 // $data = $this->db->get_where('tbl_obat', ['id' => $id ])->row_array();

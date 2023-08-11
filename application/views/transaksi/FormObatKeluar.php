@@ -42,25 +42,30 @@
                                     <div class="form-group row">
                                         <label for="tanggal" class="col-sm-2 col-form-label">Tanggal</label>
                                         <div class="col-sm-10">
-                                            <input type="date" class="form-control" id="tanggal" name="tanggal">
+                                            <input type="date" class="form-control" id="tanggal" name="tanggal" value="<?php echo date('Y-m-d') ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="user" class="col-sm-2 col-form-label">User</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="user" name="user">
+                                            <input type="text" class="form-control" id="user" name="user" value="<?php echo $id['id'] ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="pasien" class="col-sm-2 col-form-label">Pasien</label>
+                                        <label for="pasien_id" class="col-sm-2 col-form-label">Pasien</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="pasien" name="pasien">
+                                            <select name="pasien_id" id="pasien_id" class="form-control">
+                                                <option value="">Pilih Pasien</option>
+                                                <?php foreach ($pasien->result_array() as $val) { ?>
+                                                    <option value="<?php echo $val['id'] ?>"><?php echo $val['first_name'] . $val['last_name'] ?></option>
+                                                <?php } ?>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="satuan" class="col-sm-2 col-form-label">Keterangan</label>
+                                        <label for="ket" class="col-sm-2 col-form-label">Keterangan</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="satuan" name="satuan">
+                                            <input type="text" class="form-control" id="ket" name="ket" placeholder="Keterangan">
                                         </div>
                                     </div>
                                 </div>
@@ -106,6 +111,15 @@
                                 </tfoot>
                             </table>
                         </div>
+
+
+                        <div class="modal-header mb-3"></div>
+                        <div class="card-header">
+                            <button type="button" class="btn btn-primary btn-social pull-right" data-toggle="modal" data-target="#modal-default">Tambah
+                            </button>
+                        </div>
+
+
                     </div>
                 </div>
             </div><!-- /.container-fluid -->
@@ -119,23 +133,34 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Form Satuan</h4>
+                <h4 class="modal-title">Form Obat</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="<?= base_url('CSatuan/index_post'); ?>" method="POST">
+            <form action="<?= base_url('CObatProses/index_post'); ?>" method="POST">
                 <div class="modal-body">
-                    <div class="row">
-                        <label for="horizontal-text-input" class="col-sm-3 col-form-label">Nama Satuan</label>
+                    <div class="form-group row">
+                        <label for="obat_id" class="col-sm-3 col-form-label">Nama Obat</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="satuan" id="satuan" placeholder="Masukkan Nama Satuan">
+                            <select name="obat_id" id="obat_id" class="form-control">
+                                <option value="">Pilih Obat</option>
+                                <?php foreach ($obat->result_array() as $val) { ?>
+                                    <option value="<?php echo $val['id'] ?>"><?php echo $val['name'] ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="total" class="col-sm-3 col-form-label">Qty</label>
+                        <div class="col-sm-9">
+                            <input type="number" class="form-control" name="total" id="total" placeholder="Qty">
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Tambah</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </form>
         </div>

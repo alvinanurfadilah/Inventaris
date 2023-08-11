@@ -65,7 +65,7 @@
                                             <td><?= $val['phone'] ?></td>
                                             <td><?= $val['address'] ?></td>
                                             <td>
-                                                <?php echo anchor('CPasien/detail/' . $val['slug'], '<div class="btn btn-primary btn-sm">
+                                                <?php echo anchor('CPasien/detail/' . $val['id'], '<div class="btn btn-primary btn-sm">
                                                     <i class="fas fa-info-circle"></i>
                                                 </div>') ?>
 

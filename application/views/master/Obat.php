@@ -61,8 +61,8 @@
                       <td><?= $val['name'] ?></td>
                       <td><?= $val['jenis'] ?></td>
                       <td><?= $val['satuan'] ?></td>
+                      <td><?= $val['overall_stock'] ?></td>
 
-                      <td><?php echo $overall_stock['stock'] ?></td>
 
                       <td>
                         <?php echo anchor('CObat/detail/' . $val['slug'], '<div class="btn btn-primary btn-sm">

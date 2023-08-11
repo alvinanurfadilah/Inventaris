@@ -38,7 +38,18 @@ class CObatProses extends CI_Controller
                         'expired' => $this->input->post('expired'),
                         'created_at' => date('Y-m-d H:i:s')
                 ];
+
+
+                $direct = $this->db->get_where('tbl_detail_obat', ['obat_id' => $detail_obat['obat_id']]);
+                foreach ($direct->result_array() as $row) {
+                        $period_array[] = intval($row['stock']);
+                }
+                $total = array_sum($period_array);
+                $this->db->set('overall_stock', $total);
+                $this->db->where('id', $detail_obat['obat_id']);
+                $this->db->update('tbl_obat');
                 $this->db->insert('tbl_detail_obat', $detail_obat);
+
                 //untuk mengambil id paling terakhir
                 $last_idDetail = $this->db->insert_id();
 
@@ -141,8 +152,10 @@ class CObatProses extends CI_Controller
                 $data['title'] = 'Form Obat Keluar';
                 $data['user'] = $this->db->get_where('v_user', ['email' => $this->session->userdata('email')])->row_array();
 
-
+                $data['id'] = $this->db->get_where('tbl_user', ['email' => $this->session->userdata('email')])->row_array();
                 $data['data'] = $this->detail_obat_proses->show();
+                $data['pasien'] = $this->pasien->show();
+                $data['obat'] = $this->obat->show();
                 $this->load->view('pages/Header', $data);
                 $this->load->view('pages/Sidebar', $data);
                 $this->load->view('transaksi/FormObatKeluar', $data);
