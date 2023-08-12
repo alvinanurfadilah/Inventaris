@@ -85,6 +85,43 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Modal Input-->
+                        <div class="modal fade" id="modal-default">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Form Obat</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form action="<?php echo base_url('CObatProses/addObatKeluar') ?>" method="POST" id="formItem">
+                                        <div class="modal-body">
+
+                                            <div class="form-group row">
+                                                <label for="name" class="col-sm-3 col-form-label">Qty</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" name="name" id="name" placeholder="Qty">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="total" class="col-sm-3 col-form-label">Qty</label>
+                                                <div class="col-sm-9">
+                                                    <input type="number" class="form-control" name="total" id="total" placeholder="Qty">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer justify-content-between">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary" id="Simpan" name="Simpan" form="formItem" value="Simpan">Simpan</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- /.modal-content -->
+                            </div>
+                            <!-- /.modal-dialog -->
+                        </div>
                         <div class="card-body">
 
                             <table id="example1" class="table table-bordered table-striped">
@@ -96,11 +133,38 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>2</td>
-                                        <td>3</td>
-                                    </tr>
+                                    <?php
+                                    $berkas = "assets/data/data.json";
+                                    $dataObat = array();
+
+                                    $dataJson = file_get_contents($berkas);
+                                    $dataObat = json_decode($dataJson, true);
+
+                                    if (@($_POST['Simpan'])) {
+                                        $item = array();
+                                        array_push($item);
+
+                                        $dataBaru = [
+                                            'name' => $_POST['name'],
+                                            'total' => $_POST['total']
+                                        ];
+
+                                        array_push($dataObat, $dataBaru);
+
+                                        $dataJson = json_encode($dataObat, JSON_PRETTY_PRINT);
+                                        file_put_contents($berkas, $dataJson);
+                                    }
+                                    ?>
+                                    <?php for ($i = 0; $i < count($dataObat); $i++) {
+                                        $name = $dataObat[$i]['name'];
+                                        $total = $dataObat[$i]['total'];
+                                    ?>
+                                        <tr>
+                                            <td><?= $i ?></td>
+                                            <td><?= $name ?></td>
+                                            <td><?= $total ?></td>
+                                        </tr>
+                                    <?php } ?>
                                 </tbody>
                                 <tfoot>
                                     <tr>
@@ -125,46 +189,4 @@
             </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
-</div>
-
-
-<!-- Modal Input-->
-<div class="modal fade" id="modal-default">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Form Obat</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form action="<?= base_url('CObatProses/index_post'); ?>" method="POST">
-                <div class="modal-body">
-                    <div class="form-group row">
-                        <label for="obat_id" class="col-sm-3 col-form-label">Nama Obat</label>
-                        <div class="col-sm-9">
-                            <select name="obat_id" id="obat_id" class="form-control">
-                                <option value="">Pilih Obat</option>
-                                <?php foreach ($obat->result_array() as $val) { ?>
-                                    <option value="<?php echo $val['id'] ?>"><?php echo $val['name'] ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="total" class="col-sm-3 col-form-label">Qty</label>
-                        <div class="col-sm-9">
-                            <input type="number" class="form-control" name="total" id="total" placeholder="Qty">
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
-                </div>
-            </form>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
 </div>

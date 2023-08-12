@@ -161,4 +161,72 @@ class CObatProses extends CI_Controller
                 $this->load->view('transaksi/FormObatKeluar', $data);
                 $this->load->view('pages/Footer');
         }
+
+        public function addObatKeluar()
+        {
+                $berkas = "assets/data/data.json";
+                $dataObat = array();
+
+                $dataJson = file_get_contents($berkas);
+                $dataObat = json_decode($dataJson, true);
+
+                if (@($_POST['Simpan'])) {
+                        $item = array();
+                        array_push($item);
+
+                        $dataBaru = [
+                                'name' => $_POST['name'],
+                                'total' => $_POST['total'],
+                                'item' => $item
+                        ];
+
+                        array_push($dataObat, $dataBaru);
+
+                        $dataJson = json_encode($dataObat, JSON_PRETTY_PRINT);
+                        file_put_contents($berkas, $dataJson);
+                }
+                redirect('CObatProses/form');
+        }
+
+        public function keluar_post()
+        {
+                $detail_obat = [
+                        'obat_id' => $this->input->post('obat_id'),
+                        'stock' => $this->input->post('stock'),
+                        'updated_at' => date('Y-m-d H:i:s')
+                ];
+
+                $direct = $this->db->get_where('tbl_detail_obat', ['obat_id' => $detail_obat['obat_id']]);
+                foreach ($direct->result_array() as $row) {
+                        $period_array[] = intval($row['stock']);
+                }
+                $total = array_sum($period_array);
+                $this->db->set('overall_stock', $total);
+                $this->db->where('id', $detail_obat['obat_id']);
+                $this->db->update('tbl_obat');
+                $this->db->insert('tbl_detail_obat', $detail_obat);
+
+                //untuk mengambil id paling terakhir
+                $last_idDetail = $this->db->insert_id();
+
+                $obat_proses = [
+                        'tanggal' => $this->input->post('tanggal'),
+                        'user_id' => $this->input->post('user_id'),
+                        'kategori_id' => 1,
+                        'detail_pasien_id' => $this->input->post('detail_pasien_is'),
+                        'created_at' => date('Y-m-d H:i:s')
+                ];
+                $this->db->insert('tbl_obat_proses', $obat_proses);
+                $last_idProses = $this->db->insert_id();
+
+                $detail_obat_proses = [
+                        'total' => $this->input->post('total'),
+                        'detail_obat_id' => $last_idDetail,
+                        'obat_proses_id' => $last_idProses,
+                        'created_at' => date('Y-m-d H:i:s')
+                ];
+                $this->db->insert('tbl_detail_obat_proses', $detail_obat_proses);
+                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Obat Keluar added successfully! </div>');
+                redirect('CObatProses/masuk');
+        }
 }
