@@ -1,15 +1,7 @@
 [
     {
-        "name": "Zultrop",
-        "total": 3
-    },
-    {
-        "name": "Zultrop",
-        "total": 3
-    },
-    {
-        "name": "test test",
-        "total": "2",
+        "obat_id": "3",
+        "total": "3",
         "item": []
     }
 ]

@@ -40,7 +40,7 @@ class CAdmin extends CI_Controller
 
 		$data['role'] = $this->db->get_where('tbl_role', ['id' => $role_id])->row_array();
 
-		$this->db->where('id !=', 1);
+		$this->db->where('id !=', 2);
 		$data['menu'] = $this->db->get('tbl_user_menu')->result_array();
 
 		$this->load->view('pages/Header', $data);

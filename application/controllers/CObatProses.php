@@ -162,8 +162,9 @@ class CObatProses extends CI_Controller
                 $this->load->view('pages/Footer');
         }
 
-        public function addObatKeluar()
+        public function keluar_post()
         {
+                //add obat keluar untuk disimpan sementara dalam bentuk json, belum disimpan ke database
                 $berkas = "assets/data/data.json";
                 $dataObat = array();
 
@@ -175,7 +176,7 @@ class CObatProses extends CI_Controller
                         array_push($item);
 
                         $dataBaru = [
-                                'name' => $_POST['name'],
+                                'obat_id' => $_POST['obat_id'],
                                 'total' => $_POST['total'],
                                 'item' => $item
                         ];
@@ -186,10 +187,19 @@ class CObatProses extends CI_Controller
                         file_put_contents($berkas, $dataJson);
                 }
                 redirect('CObatProses/form');
-        }
 
-        public function keluar_post()
-        {
+
+                $obat_proses = [
+                        'tanggal' => $this->input->post('tanggal'),
+                        'user_id' => $this->input->post('user_id'),
+                        'kategori_id' => 1,
+                        'detail_pasien_id' => $this->input->post('detail_pasien_id'),
+                        'created_at' => date('Y-m-d H:i:s')
+                ];
+                $this->db->insert('tbl_obat_proses', $obat_proses);
+                //untuk mengambil id paling terakhir
+                $last_idProses = $this->db->insert_id();
+
                 $detail_obat = [
                         'obat_id' => $this->input->post('obat_id'),
                         'stock' => $this->input->post('stock'),
@@ -208,16 +218,6 @@ class CObatProses extends CI_Controller
 
                 //untuk mengambil id paling terakhir
                 $last_idDetail = $this->db->insert_id();
-
-                $obat_proses = [
-                        'tanggal' => $this->input->post('tanggal'),
-                        'user_id' => $this->input->post('user_id'),
-                        'kategori_id' => 1,
-                        'detail_pasien_id' => $this->input->post('detail_pasien_is'),
-                        'created_at' => date('Y-m-d H:i:s')
-                ];
-                $this->db->insert('tbl_obat_proses', $obat_proses);
-                $last_idProses = $this->db->insert_id();
 
                 $detail_obat_proses = [
                         'total' => $this->input->post('total'),

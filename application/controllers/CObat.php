@@ -107,18 +107,6 @@ class CObat extends CI_Controller
                         redirect('CObat/index');
                 }
         }
-        // public function form_edit()
-        // {
-        //         $data = [
-        //                 'data' => $this->obat->show(),
-        //                 'jenis' => $this->jenis->show(),
-        //                 'satuan' => $this->satuan->show()
-        //         ];
-        //         $this->load->view('pages/Header');
-        //         $this->load->view('pages/Sidebar');
-        //         $this->load->view('master/FormEditObat', $data);
-        //         $this->load->view('pages/Footer');
-        // }
 
         public function index_get($slug = '')
         {
@@ -146,20 +134,6 @@ class CObat extends CI_Controller
                 }
         }
 
-        // public function detail_obat()
-        // {
-        //         $data['title'] = 'Detail Obat';
-        //         $data['user'] = $this->db->get_where('v_user', ['email' => $this->session->userdata('email')])->row_array();
-        //         $data['data'] = $this->obat->show();
-        //         $data['detail'] = $this->detail_obat->show();
-        //         $data['jenis'] = $this->jenis->show();
-        //         $data['satuan'] = $this->satuan->show();
-        //         $this->load->view('pages/Header', $data);
-        //         $this->load->view('pages/Sidebar', $data);
-        //         $this->load->view('master/DetailObat', $data);
-        //         $this->load->view('pages/Footer');
-        // }
-
         function detail($slug)
         {
                 $where = array('slug' => $slug);
@@ -170,8 +144,6 @@ class CObat extends CI_Controller
                 $data['detail'] = $this->detail_obat->getDetail($where, 'v_detail_obat');
                 $data['jenis'] = $this->jenis->show();
                 $data['satuan'] = $this->satuan->show();
-                //$data['overall_stock'] = $this->detail_obat->sumStok(['obat_id' => $data['obat_id']])->row()->stock;
-                //$row = ['id' => $data['id']]; 
                 $this->load->view('pages/Header', $data);
                 $this->load->view('pages/Sidebar', $data);
                 $this->load->view('master/DetailObat', $data);

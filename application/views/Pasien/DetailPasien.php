@@ -104,11 +104,11 @@
                                 </thead>
                                 <tbody>
                                     <?php $i = 1;
-                                    foreach ($detail->result_array() as $val) { ?>
+                                    foreach ($detail->result_array() as $det) { ?>
                                         <tr>
                                             <td><?= $i++ ?></td>
-                                            <td><?= $val['tanggal_berobat'] ?></td>
-                                            <td><?= $val['ket'] ?></td>
+                                            <td><?= $det['tanggal_berobat'] ?></td>
+                                            <td><?= $det['ket'] ?></td>
                                         </tr>
                                     <?php } ?>
                                 </tbody>

@@ -39,4 +39,9 @@ class MPasien extends CI_Model
         $this->db->delete($this->tbl);
         return (($this->db->affected_rows() > 0) ? true : false);
     }
+
+    public function getPasien($where, $table)
+    {
+        return $this->db->get_where($table, $where);
+    }
 }

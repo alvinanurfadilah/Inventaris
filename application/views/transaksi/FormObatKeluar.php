@@ -96,13 +96,18 @@
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <form action="<?php echo base_url('CObatProses/addObatKeluar') ?>" method="POST" id="formItem">
+                                    <form action="<?php echo base_url('CObatProses/keluar_post') ?>" method="POST" id="formItem">
                                         <div class="modal-body">
 
                                             <div class="form-group row">
-                                                <label for="name" class="col-sm-3 col-form-label">Qty</label>
+                                                <label for="horizontal-text-input" class="col-sm-3 col-form-label">Kode Obat</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control" name="name" id="name" placeholder="Qty">
+                                                    <select name="obat_id" id="obat_id" class="form-control">
+                                                        <option value="">Pilih Obat</option>
+                                                        <?php foreach ($obat->result_array() as $val) { ?>
+                                                            <option value="<?php echo $val['id'] ?>"><?php echo $val['name'] ?></option>
+                                                        <?php } ?>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -156,12 +161,12 @@
                                     }
                                     ?>
                                     <?php for ($i = 0; $i < count($dataObat); $i++) {
-                                        $name = $dataObat[$i]['name'];
+                                        $obat_id = $dataObat[$i]['obat_id'];
                                         $total = $dataObat[$i]['total'];
                                     ?>
                                         <tr>
                                             <td><?= $i ?></td>
-                                            <td><?= $name ?></td>
+                                            <td><?= $obat_id ?></td>
                                             <td><?= $total ?></td>
                                         </tr>
                                     <?php } ?>

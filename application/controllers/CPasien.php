@@ -106,13 +106,14 @@ class CPasien extends CI_Controller
         }
     }
 
-    public function detail()
+    public function detail($id)
     {
+        $where = array('id' => $id);
         $data['title'] = 'Detail Pasien';
         $data['user'] = $this->db->get_where('v_user', ['email' => $this->session->userdata('email')])->row_array();
 
-        $data['data'] = $this->pasien->show();
-        $data['detail'] = $this->detail_pasien->show();
+        $data['data'] = $this->pasien->getPasien($where, 'tbl_pasien');
+        $data['detail'] = $this->detail_pasien->getDetail($where, 'v_detail_pasien');
         $this->load->view('pages/Header', $data);
         $this->load->view('pages/Sidebar', $data);
         $this->load->view('Pasien/DetailPasien', $data);

@@ -42,26 +42,8 @@ class MDetailObat extends CI_Model
         return (($this->db->affected_rows() > 0) ? true : false);
     }
 
-    // public function sumStok($where)
-    // {
-    //     $this->db->select_sum('stock');
-
-    //     $this->db->where($where);
-
-    //     return $this->db->get($where);
-    // }
-
     public function getDetail($where, $table)
     {
         return $this->db->get_where($table, $where);
-    }
-
-    public function sumStock()
-    {
-        $query = "SELECT `obat_id`, SUM(`stock`)
-        FROM `tbl_detail_obat`
-        GROUP BY `obat_id`";
-
-        return $this->db->query($query);
     }
 }
