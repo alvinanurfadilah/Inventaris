@@ -37,7 +37,7 @@
                         <div class="card-body">
 
 
-                            <form class="form-horizontal" id="detail_obat">
+                            <form action="<?= base_url('CObatProses/keluar_post'); ?>" class="form-horizontal" id="detail_obat" method="post">
                                 <div class="card-body">
                                     <div class="form-group row">
                                         <label for="tanggal" class="col-sm-2 col-form-label">Tanggal</label>
@@ -46,18 +46,18 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="user" class="col-sm-2 col-form-label">User</label>
+                                        <label for="user_id" class="col-sm-2 col-form-label">User</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="user" name="user" value="<?php echo $id['id'] ?>" readonly>
+                                            <input type="text" class="form-control" id="user_id" name="user_id" value="<?php echo $id['id'] ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="pasien_id" class="col-sm-2 col-form-label">Pasien</label>
                                         <div class="col-sm-10">
-                                            <select name="pasien_id" id="pasien_id" class="form-control">
+                                            <select name="detail_pasien_id" id="detail_pasien_id" class="form-control">
                                                 <option value="">Pilih Pasien</option>
                                                 <?php foreach ($pasien->result_array() as $val) { ?>
-                                                    <option value="<?php echo $val['id'] ?>"><?php echo $val['first_name'] . $val['last_name'] ?></option>
+                                                    <option value="<?php echo $val['id'] ?>"><?php echo $val['first_name'] ?> <?php echo $val['last_name'] ?></option>
                                                 <?php } ?>
                                             </select>
                                         </div>
@@ -68,6 +68,9 @@
                                             <input type="text" class="form-control" id="ket" name="ket" placeholder="Keterangan">
                                         </div>
                                     </div>
+
+                                    <button class="btn btn-primary" type="submit">Tambah</button>
+
                                 </div>
                                 <!-- /.card-body -->
                                 <!-- /.card-footer -->
@@ -85,50 +88,7 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Modal Input-->
-                        <div class="modal fade" id="modal-default">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Form Obat</h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <form action="<?php echo base_url('CObatProses/keluar_post') ?>" method="POST" id="formItem">
-                                        <div class="modal-body">
-
-                                            <div class="form-group row">
-                                                <label for="horizontal-text-input" class="col-sm-3 col-form-label">Kode Obat</label>
-                                                <div class="col-sm-9">
-                                                    <select name="obat_id" id="obat_id" class="form-control">
-                                                        <option value="">Pilih Obat</option>
-                                                        <?php foreach ($obat->result_array() as $val) { ?>
-                                                            <option value="<?php echo $val['id'] ?>"><?php echo $val['name'] ?></option>
-                                                        <?php } ?>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label for="total" class="col-sm-3 col-form-label">Qty</label>
-                                                <div class="col-sm-9">
-                                                    <input type="number" class="form-control" name="total" id="total" placeholder="Qty">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer justify-content-between">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-primary" id="Simpan" name="Simpan" form="formItem" value="Simpan">Simpan</button>
-                                        </div>
-                                    </form>
-                                </div>
-                                <!-- /.modal-content -->
-                            </div>
-                            <!-- /.modal-dialog -->
-                        </div>
                         <div class="card-body">
-
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
@@ -138,36 +98,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php
-                                    $berkas = "assets/data/data.json";
-                                    $dataObat = array();
 
-                                    $dataJson = file_get_contents($berkas);
-                                    $dataObat = json_decode($dataJson, true);
-
-                                    if (@($_POST['Simpan'])) {
-                                        $item = array();
-                                        array_push($item);
-
-                                        $dataBaru = [
-                                            'name' => $_POST['name'],
-                                            'total' => $_POST['total']
-                                        ];
-
-                                        array_push($dataObat, $dataBaru);
-
-                                        $dataJson = json_encode($dataObat, JSON_PRETTY_PRINT);
-                                        file_put_contents($berkas, $dataJson);
-                                    }
-                                    ?>
-                                    <?php for ($i = 0; $i < count($dataObat); $i++) {
-                                        $obat_id = $dataObat[$i]['obat_id'];
-                                        $total = $dataObat[$i]['total'];
-                                    ?>
+                                    <?php $i = 1;
+                                    foreach ($tampung->result_array() as $t) { ?>
                                         <tr>
-                                            <td><?= $i ?></td>
-                                            <td><?= $obat_id ?></td>
-                                            <td><?= $total ?></td>
+                                            <td><?= $i++ ?></td>
+                                            <td><?= $t['name'] ?></td>
+                                            <td><?= $t['jml_obat'] ?></td>
                                         </tr>
                                     <?php } ?>
                                 </tbody>
@@ -184,14 +121,59 @@
 
                         <div class="modal-header mb-3"></div>
                         <div class="card-header">
-                            <button type="button" class="btn btn-primary btn-social pull-right" data-toggle="modal" data-target="#modal-default">Tambah
-                            </button>
+
+
+
                         </div>
-
-
                     </div>
                 </div>
             </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
+</div>
+
+
+
+
+<!-- Modal Input-->
+<div class="modal fade" id="modal-default">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Form Obat</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="<?php echo base_url('CObatProses/tampung') ?>" method="POST" id="formItem">
+                <div class="modal-body">
+
+                    <div class="form-group row">
+                        <label for="horizontal-text-input" class="col-sm-3 col-form-label">Kode Obat</label>
+                        <div class="col-sm-9">
+                            <select name="detail_obat_id" id="detail_obat_id" class="form-control">
+                                <option value="">Pilih Obat</option>
+                                <option value="">[Nama Obat][Stok][Expired]</option>
+                                <?php foreach ($detail->result_array() as $val) { ?>
+                                    <option value="<?php echo $val['id'] ?>|<?php echo $val['obat_id'] ?>">[<?php echo $val['name'] ?>][<?php echo $val['stock'] ?>][<?php echo $val['expired'] ?>]</option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="jml_obat" class="col-sm-3 col-form-label">Jumlah Obat</label>
+                        <div class="col-sm-9">
+                            <input type="number" class="form-control" name="jml_obat" id="jml_obat" placeholder="Jumlah Obat">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="Simpan" name="Simpan" form="formItem" value="Simpan">Simpan</button>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
 </div>

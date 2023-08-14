@@ -1,7 +1,10 @@
 [
     {
         "obat_id": "3",
-        "total": "3",
-        "item": []
+        "total": "1"
+    },
+    {
+        "obat_id": "1",
+        "total": "1"
     }
 ]

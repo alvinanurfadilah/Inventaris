@@ -45,6 +45,8 @@
                     <th>No</th>
                     <th>Tanggal</th>
                     <th>User</th>
+                    <th>Nama Obat</th>
+                    <th>Jumlah Obat</th>
                     <th>Pasien</th>
                     <th>Keterangan</th>
                     <th>Action</th>
@@ -52,14 +54,24 @@
                 </thead>
                 <tbody>
                   <?php $i = 1;
-                  foreach ($data->result_array() as $val) { ?>
+                  foreach ($detail_pasien->result_array() as $val) { ?>
                     <tr>
                       <td><?= $i++ ?></td>
-                      <td><?= $val['tanggal'] ?></td>
-                      <td><?= $val['name'] ?></td>
-                      <td><?= $val['kode_obat'] ?></td>
-                      <td><?= $val['name'] ?></td>
+                      <td><?= $val['tanggal_berobat'] ?></td>
+                      <td><?= $val['user_id'] ?></td>
+                      <td>a</td>
                       <td>A</td>
+                      <td><?= $val['pasien_id'] ?></td>
+                      <td><?= $val['ket'] ?></td>
+                      <td>
+                        <div class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-default-update<?= $val['id'] ?>">
+                          <i class="fas fa-edit"></i>
+                        </div>
+
+                        <?php echo anchor('CObatProses/keluar_delete/' . $val['id'], '<div class="btn btn-danger btn-sm">
+                          <i class="fas fa-trash-alt"></i>
+                        </div>') ?>
+                      </td>
                     </tr>
                   <?php } ?>
                 </tbody>
@@ -68,6 +80,8 @@
                     <th>No</th>
                     <th>Tanggal</th>
                     <th>User</th>
+                    <th>Nama Obat</th>
+                    <th>Jumlah Obat</th>
                     <th>Pasien</th>
                     <th>Keterangan</th>
                     <th>Action</th>

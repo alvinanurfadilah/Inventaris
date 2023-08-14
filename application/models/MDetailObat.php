@@ -46,4 +46,13 @@ class MDetailObat extends CI_Model
     {
         return $this->db->get_where($table, $where);
     }
+
+    public function getObat()
+    {
+        $query = "SELECT `tbl_detail_obat`.`id`, `tbl_detail_obat`.`obat_id`, `tbl_obat`.`name`, `tbl_detail_obat`.`stock`, `tbl_detail_obat`.`expired`
+        FROM `tbl_detail_obat`
+        JOIN `tbl_obat` ON `tbl_obat`.`id` = `tbl_detail_obat`.`obat_id`";
+
+        return $this->db->query($query);
+    }
 }
