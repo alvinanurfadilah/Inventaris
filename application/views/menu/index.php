@@ -59,7 +59,9 @@
                                                     <i class="fas fa-edit"></i>
                                                 </div>
 
-                                                <?php echo anchor('Menu/delete/' . $m['slug'], '<div class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></div>') ?>
+                                                <div class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </div>
                                             </td>
                                         </tr>
 
@@ -140,4 +142,23 @@
         <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
+</div>
+
+
+<!-- Delete Modal-->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Yakin ingin menghapus?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-danger" href="<?= base_url('Menu/delete/') . $m['slug']; ?>">Hapus</a>
+            </div>
+        </div>
+    </div>
 </div>

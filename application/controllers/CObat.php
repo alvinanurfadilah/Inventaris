@@ -89,6 +89,7 @@ class CObat extends CI_Controller
                 );
 
                 $this->obat->update_data($where, $data, 'tbl_obat');
+                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Obat updated successfully! </div>');
                 redirect('CObat/index');
         }
 

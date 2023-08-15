@@ -34,7 +34,7 @@ class CUser extends CI_Controller
 
     function update()
     {
-        $id = $this->input->post('id');
+        //$id = $this->input->post('id');
         $first_name = $this->input->post('first_name');
         $last_name = $this->input->post('last_name');
         $email = $this->input->post('email');
@@ -42,20 +42,17 @@ class CUser extends CI_Controller
         $is_active = $this->input->post('is_active');
 
         $data = array(
-            'slug' => str_replace(' ', '-', strtolower($this->input->post('first_name'))),
             'first_name' => $first_name,
             'last_name' => $last_name,
-            'email' => $email,
             'role_id' => $role_id,
             'is_active' => $is_active,
             'updated_at' => date('Y-m-d H:i:s')
         );
 
-        $id = $this->input->post('id');
-        $where = $id;
-
-        $table = 'tbl_user';
-        $this->user->update_data($where, $data, $table);
+        //$this->db->where('id', $id);
+        $this->db->where('email', $email);
+        $this->db->update('tbl_user', $data);
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> User access has been updated! </div>');
         redirect('CUser/index');
     }
 }

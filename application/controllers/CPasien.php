@@ -20,7 +20,7 @@ class CPasien extends CI_Controller
         $data['data'] = $this->pasien->show();
         $this->load->view('pages/Header', $data);
         $this->load->view('pages/Sidebar', $data);
-        $this->load->view('Pasien/Pasien', $data);
+        $this->load->view('pasien/Pasien', $data);
         $this->load->view('pages/Footer');
     }
 
@@ -37,7 +37,6 @@ class CPasien extends CI_Controller
             redirect('CPasien');
         } else {
             $data = [
-                'slug' => str_replace(' ', '-', strtolower($this->input->post('first_name'))),
                 'first_name' => $this->input->post('first_name'),
                 'last_name' => $this->input->post('last_name'),
                 'gender' => $this->input->post('gender'),
@@ -52,12 +51,12 @@ class CPasien extends CI_Controller
         }
     }
 
-    function edit($slug)
+    function edit($id)
     {
-        $where = array('slug' => $slug);
+        $where = array('id' => $id);
         $data['data'] = $this->jenis->edit_data($where, 'tbl_pasien');
         $row = ['id' => $data['id']];
-        $this->load->view('Pasien/Pasien', $row);
+        $this->load->view('pasien/Pasien', $row);
     }
 
     function update()
@@ -71,7 +70,6 @@ class CPasien extends CI_Controller
         $phone = $this->input->post('phone');
 
         $data = array(
-            'slug' => str_replace(' ', '-', strtolower($this->input->post('first_name'))),
             'first_name' => $first_name,
             'last_name' => $last_name,
             'gender' => $gender,
@@ -90,10 +88,10 @@ class CPasien extends CI_Controller
         redirect('CPasien/index');
     }
 
-    public function delete($slug)
+    public function delete($id)
     {
-        if (@$slug) {
-            $idslug = ['slug' => $slug];
+        if (@$id) {
+            $idslug = ['id' => $id];
             $get = $this->pasien->show($idslug);
 
             if ($get->num_rows() == 1) {
@@ -131,7 +129,7 @@ class CPasien extends CI_Controller
         $data['pasien'] = $this->pasien->show();
         $this->load->view('pages/Header', $data);
         $this->load->view('pages/Sidebar', $data);
-        $this->load->view('Pasien/Daftar', $data);
+        $this->load->view('pasien/Daftar', $data);
         $this->load->view('pages/Footer');
     }
 
@@ -160,7 +158,7 @@ class CPasien extends CI_Controller
         $where = array('id' => $id);
         $data['data'] = $this->detail_pasien->edit_data($where, 'tbl_detail_pasien');
         $row = ['id' => $data['id']];
-        $this->load->view('Pasien/Daftar', $row);
+        $this->load->view('pasien/Daftar', $row);
     }
 
     function daftar_update()

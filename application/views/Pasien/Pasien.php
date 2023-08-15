@@ -69,18 +69,18 @@
                                                     <i class="fas fa-info-circle"></i>
                                                 </div>') ?>
 
-                                                <div class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-default-update<?= $val['slug'] ?>">
+                                                <div class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-default-update<?= $val['id'] ?>">
                                                     <i class="fas fa-edit"></i>
                                                 </div>
 
-                                                <?php echo anchor('CPasien/delete/' . $val['slug'], '<div class="btn btn-danger btn-sm">
+                                                <?php echo anchor('CPasien/delete/' . $val['id'], '<div class="btn btn-danger btn-sm">
                                                     <i class="fas fa-trash-alt"></i>
                                                 </div>') ?>
                                             </td>
                                         </tr>
 
                                         <!-- Modal Update -->
-                                        <div class="modal fade" id="modal-default-update<?= $val['slug'] ?>">
+                                        <div class="modal fade" id="modal-default-update<?= $val['id'] ?>">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
@@ -93,6 +93,7 @@
                                                         <div class="modal-body">
                                                             <div class="form-group row">
                                                                 <label for="first_name" class="col-sm-4 col-form-label">Nama Depan</label>
+                                                                <input type="text" class="form-control" name="id" id="id" value="<?= $val['id'] ?>" hidden>
                                                                 <div class="col-sm-8">
                                                                     <input type="text" class="form-control" name="first_name" id="first_name" value="<?= $val['first_name'] ?>">
                                                                 </div>

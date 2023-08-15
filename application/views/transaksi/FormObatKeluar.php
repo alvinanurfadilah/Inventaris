@@ -153,9 +153,8 @@
                         <div class="col-sm-9">
                             <select name="detail_obat_id" id="detail_obat_id" class="form-control">
                                 <option value="">Pilih Obat</option>
-                                <option value="">[Nama Obat][Stok][Expired]</option>
-                                <?php foreach ($detail->result_array() as $val) { ?>
-                                    <option value="<?php echo $val['id'] ?>|<?php echo $val['obat_id'] ?>">[<?php echo $val['name'] ?>][<?php echo $val['stock'] ?>][<?php echo $val['expired'] ?>]</option>
+                                <?php foreach ($obat->result_array() as $val) { ?>
+                                    <option value="<?php echo $val['id'] ?>">[<?php echo $val['name'] ?>]</option>
                                 <?php } ?>
                             </select>
                         </div>

@@ -143,12 +143,9 @@ class Menu extends CI_Controller
             'updated_at' => date('Y-m-d H:i:s')
         );
 
-        $where = array(
-            'id' => $id
-        );
-
-        $this->sub_menu->update_data($where, $data, 'tbl_user_sub_menu');
-        // $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Sub Menu updated successfully! </div>');
+        $this->db->where('id', $id);
+        $this->db->update('tbl_user_sub_menu', $data);
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Sub Menu updated successfully! </div>');
         redirect('Menu/subMenu');
     }
 

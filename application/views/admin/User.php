@@ -65,6 +65,7 @@
                                                 </div>
                                             </td>
                                         </tr>
+
                                         <!-- Modal Update -->
                                         <div class="modal fade" id="modal-default-update<?= $val['id'] ?>">
                                             <div class="modal-dialog">
@@ -79,6 +80,7 @@
                                                         <div class="modal-body">
                                                             <div class="form-group row">
                                                                 <label for="horizontal-text-input" class="col-sm-3 col-form-label">First Name</label>
+                                                                    <input type="text" class="form-control" name="id" id="id" value="<?= $val['id'] ?>" hidden>
                                                                 <div class="col-sm-9">
                                                                     <input type="text" class="form-control" name="first_name" id="first_name" value="<?= $val['first_name'] ?>" readonly>
                                                                 </div>
@@ -99,9 +101,8 @@
                                                                 <label for="horizontal-text-input" class="col-sm-3 col-form-label">Role</label>
                                                                 <div class="col-sm-9">
                                                                     <select name="role_id" id="role_id" class="form-control">
-                                                                        <option value="">Select Role</option>
                                                                         <?php foreach ($role as $r) : ?>
-                                                                            <option value="<?= $r['id'] ?>"><?= $r['role'] ?></option>
+                                                                            <option value="<?= $r['id'] ?>" <?= $val['role_id'] == $r['id'] ? 'selected' : null ?>><?= $r['role'] ?></option>
                                                                         <?php endforeach ?>
                                                                     </select>
                                                                 </div>

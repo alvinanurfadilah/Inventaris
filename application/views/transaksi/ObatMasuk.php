@@ -89,6 +89,7 @@
                             <div class="modal-body">
                               <div class="form-group row">
                                 <label for="horizontal-text-input" class="col-sm-3 col-form-label">Tanggal Masuk</label>
+                                <input type="text" class="form-control" name="id" id="id" value="<?= $val['id'] ?>" hidden>
                                 <div class="col-sm-9">
                                   <input type="text" class="form-control" name="tanggal" id="tanggal" value="<?php echo date('Y-m-d') ?>" readonly>
                                 </div>
@@ -105,7 +106,7 @@
                                   <select name="obat_id" id="obat_id" class="form-control">
                                     <option value="">Pilih Obat</option>
                                     <?php foreach ($obat->result_array() as $ob) { ?>
-                                      <option value="<?php echo $ob['id'] ?>"><?php echo $ob['name'] ?></option>
+                                      <option value="<?php echo $ob['id'] ?>" <?= $val['obat_id'] == $ob['id'] ? 'selected' : null ?>><?php echo $ob['name'] ?></option>
                                     <?php } ?>
                                   </select>
                                 </div>

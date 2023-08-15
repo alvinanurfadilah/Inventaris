@@ -58,7 +58,7 @@
                                             <td><?= $i++ ?></td>
                                             <td><?= $val['tanggal_berobat'] ?></td>
                                             <td><?= $val['user_id'] ?></td>
-                                            <td><?= $val['first_name'] . $val['last_name'] ?></td>
+                                            <td><?= $val['first_name'] ?> <?= $val['last_name'] ?></td>
                                             <td><?= $val['ket'] ?></td>
                                             <td>
                                                 <div class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-default-update<?= $val['id'] ?>">
@@ -85,6 +85,7 @@
                                                         <div class="modal-body">
                                                             <div class="form-group row">
                                                                 <label for="tanggal_berobat" class="col-sm-4 col-form-label">Tanggal</label>
+                                                                <input type="text" class="form-control" name="id" id="id" value="<?= $val['id'] ?>" hidden>
                                                                 <div class="col-sm-8">
                                                                     <input type="date" class="form-control" name="tanggal_berobat" id="tanggal_berobat" value="<?php echo date('Y-m-d') ?>" readonly>
                                                                 </div>
@@ -99,9 +100,8 @@
                                                                 <label for="pasien_id" class="col-sm-4 col-form-label">Pasien</label>
                                                                 <div class="col-sm-8">
                                                                     <select name="pasien_id" id="pasien_id" class="form-control">
-                                                                        <option value="">Pilih Pasien</option>
                                                                         <?php foreach ($pasien->result_array() as $p) { ?>
-                                                                            <option value="<?php echo $p['id'] ?>"><?php echo $p['first_name'] .  $p['last_name'] ?></option>
+                                                                            <option value="<?php echo $p['id'] ?>" <?= $val['pasien_id'] == $p['id'] ? 'selected' : null ?>><?php echo $p['first_name'] ?> <?php echo $p['last_name'] ?></option>
                                                                         <?php } ?>
                                                                     </select>
                                                                 </div>

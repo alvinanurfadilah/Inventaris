@@ -186,42 +186,46 @@ class CObatProses extends CI_Controller
 
         public function keluar_post()
         {
-                $obat_proses = [
-                        'tanggal' => $this->input->post('tanggal'),
-                        'user_id' => $this->input->post('user_id'),
-                        'kategori_id' => 2,
-                        'detail_pasien_id' => $this->input->post('detail_pasien_id'),
-                        'created_at' => date('Y-m-d H:i:s')
-                ];
-                $this->db->insert('tbl_obat_proses', $obat_proses);
-                $last_idProses = $this->db->insert_id();
-
-                $tampung = $this->db->get('tbl_tampung')->result_array();
-                foreach ($tampung as $t) {
-                        $this->db->set('jml_obat', $t['jml_obat']);
-                        $this->db->set('detail_obat_id', $t['detail_obat_id']);
-                        $this->db->set('obat_proses_id', $last_idProses);
-                        $this->db->set('created_at', date('Y-m-d H:i:s'));
-                        $this->db->insert('tbl_detail_obat_proses');
-
-                        $jml = $t['jml_obat'];
-                        $this->db->set('stock', "stock - $jml", FALSE);
-                        $this->db->update('tbl_detail_obat');
-
-                        $direct = $this->db->get_where('tbl_detail_obat', ['id' => $t['detail_obat_id']]);
-                        foreach ($direct->result_array() as $row) {
-                                $period_array[] = intval($row['stock']);
-                        }
-                        $total = array_sum($period_array);
-                        $this->db->set('overall_stock', $total);
-                        $this->db->where('id', $t['obat_id']);
-                        $this->db->update('tbl_obat');
-                };
-                $this->db->truncate('tbl_tampung');
-
-                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Obat Keluar added successfully! </div>');
-                redirect('CObatProses/keluar');
         }
+
+        // public function keluar_post()
+        // {
+        //         $obat_proses = [
+        //                 'tanggal' => $this->input->post('tanggal'),
+        //                 'user_id' => $this->input->post('user_id'),
+        //                 'kategori_id' => 2,
+        //                 'detail_pasien_id' => $this->input->post('detail_pasien_id'),
+        //                 'created_at' => date('Y-m-d H:i:s')
+        //         ];
+        //         $this->db->insert('tbl_obat_proses', $obat_proses);
+        //         $last_idProses = $this->db->insert_id();
+
+        //         $tampung = $this->db->get('tbl_tampung')->result_array();
+        //         foreach ($tampung as $t) {
+        //                 $this->db->set('jml_obat', $t['jml_obat']);
+        //                 $this->db->set('detail_obat_id', $t['detail_obat_id']);
+        //                 $this->db->set('obat_proses_id', $last_idProses);
+        //                 $this->db->set('created_at', date('Y-m-d H:i:s'));
+        //                 $this->db->insert('tbl_detail_obat_proses');
+
+        //                 $jml = $t['jml_obat'];
+        //                 $this->db->set('stock', "stock - $jml", FALSE);
+        //                 $this->db->update('tbl_detail_obat');
+
+        //                 $direct = $this->db->get_where('tbl_detail_obat', ['id' => $t['detail_obat_id']]);
+        //                 foreach ($direct->result_array() as $row) {
+        //                         $period_array[] = intval($row['stock']);
+        //                 }
+        //                 $total = array_sum($period_array);
+        //                 $this->db->set('overall_stock', $total);
+        //                 $this->db->where('id', $t['obat_id']);
+        //                 $this->db->update('tbl_obat');
+        //         };
+        //         $this->db->truncate('tbl_tampung');
+
+        //         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Obat Keluar added successfully! </div>');
+        //         redirect('CObatProses/keluar');
+        // }
 
 
 
