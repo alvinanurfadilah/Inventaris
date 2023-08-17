@@ -42,12 +42,16 @@ class MObatProses extends CI_Model
         return (($this->db->affected_rows() > 0) ? true : false);
     }
 
-    public function showMax($where = '')
+    public function getMasuk()
     {
-        $this->db->select_max('no_proses');
-        if (@$where && $where != null) {
-            $this->db->where($where);
-        }
-        return $this->db->get($this->view);
+        $query = "SELECT tbl_detail_obat_proses.id, tbl_detail_obat_proses.detail_obat_id, tbl_detail_obat.obat_id, tbl_obat.name, tbl_detail_obat.stock, tbl_detail_obat.expired, tbl_detail_obat_proses.obat_proses_id, tbl_obat_proses.tanggal, tbl_obat_proses.kategori_id
+        FROM tbl_detail_obat_proses
+        JOIN tbl_detail_obat ON tbl_detail_obat.id = tbl_detail_obat_proses.detail_obat_id
+        JOIN tbl_obat ON tbl_obat.id = tbl_detail_obat.obat_id
+        JOIN tbl_obat_proses ON tbl_obat_proses.id = tbl_detail_obat_proses.obat_proses_id
+        WHERE kategori_id = 1
+        ORDER BY tanggal";
+
+        return $this->db->query($query)->result_array();
     }
 }

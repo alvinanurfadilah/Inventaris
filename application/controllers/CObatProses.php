@@ -52,9 +52,6 @@ class CObatProses extends CI_Controller
                 $this->db->where('id', $detail_obat['obat_id']);
                 $this->db->update('tbl_obat');
 
-
-
-
                 $obat_proses = [
                         'tanggal' => $this->input->post('tanggal'),
                         'user_id' => $this->input->post('user_id'),
@@ -86,6 +83,8 @@ class CObatProses extends CI_Controller
         function masuk_update()
         {
                 $id = $this->input->post('id');
+                $detail_obat_id = $this->input->post('detail_obat_id');
+                $obat_proses_id = $this->input->post('obat_proses_id');
                 $obat_id = $this->input->post('obat_id');
                 $stock = $this->input->post('stock');
                 $expired = $this->input->post('expired');
@@ -99,11 +98,32 @@ class CObatProses extends CI_Controller
                         'updated_at' => date('Y-m-d H:i:s')
                 ];
 
+                $where = [
+                        'id' => $detail_obat_id
+                ];
+
+                $this->detail_obat->update_data($where, $detail_obat, 'tbl_detail_obat');
+
+                $direct = $this->db->get_where('tbl_detail_obat', ['obat_id' => $detail_obat['obat_id']]);
+                foreach ($direct->result_array() as $row) {
+                        $period_array[] = intval($row['stock']);
+                }
+                $total = array_sum($period_array);
+                $this->db->set('overall_stock', $total);
+                $this->db->where('id', $detail_obat['obat_id']);
+                $this->db->update('tbl_obat');
+
                 $obat_proses = [
                         'tanggal' => $tanggal,
                         'user_id' => $user_id,
                         'updated_at' => date('Y-m-d H:i:s')
                 ];
+
+                $where = [
+                        'id' => $obat_proses_id
+                ];
+
+                $this->obat_proses->update_data($where, $obat_proses, 'tbl_obat_proses');
 
                 $detail_obat_proses = [
                         'updated_at' => date('Y-m-d H:i:s')
@@ -113,9 +133,8 @@ class CObatProses extends CI_Controller
                         'id' => $id
                 ];
 
-                $this->detail_obat->update_data($where, $detail_obat, 'tbl_detail_obat');
-                $this->obat_proses->update_data($where, $obat_proses, 'tbl_obat_proses');
                 $this->detail_obat_proses->update_data($where, $detail_obat_proses, 'tbl_detail_obat_proses');
+                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Obat Masuk updated successfully! </div>');
                 redirect('CObatProses/masuk');
         }
 
@@ -128,7 +147,26 @@ class CObatProses extends CI_Controller
                         if ($get->num_rows() == 1) {
                                 $data = $get->row_array();
                                 $id = ['id' => $data['id']];
+
+
+                                // $detail_obat_id = ['id' => $data['detail_obat_id']];
+                                // $get = $this->detail_obat->show($detail_obat_id)->row_array();
+
+
+                                // $direct = $this->db->get_where('tbl_detail_obat', ['obat_id' => $get['obat_id']]);
+                                // var_dump($direct);
+                                // die;
+                                // foreach ($direct->result_array() as $row) {
+                                //         $period_array[] = intval($row['stock']);
+                                // }
+                                // $total = array_sum($period_array);
+                                // $this->db->set('overall_stock', $total);
+                                // $this->db->where('id', $detail_obat['obat_id']);
+                                // $this->db->update('tbl_obat');
+
+
                                 $this->detail_obat_proses->delete($id);
+
                                 $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Obat Masuk deleted successfully! </div>');
                         }
                         redirect('CObatProses/masuk');
@@ -244,5 +282,24 @@ class CObatProses extends CI_Controller
                         }
                         redirect('CObatProses/keluar');
                 }
+        }
+
+
+
+
+
+
+
+        public function laporanMasuk()
+        {
+                $data['title'] = 'Laporan Obat Masuk';
+                $data['user'] = $this->db->get_where('v_user', ['email' => $this->session->userdata('email')])->row_array();
+
+                $data['data'] = $this->obat_proses->getMasuk();
+
+                $this->load->view('pages/Header', $data);
+                $this->load->view('pages/Sidebar', $data);
+                $this->load->view('laporan/laporanMasuk', $data);
+                $this->load->view('pages/Footer');
         }
 }

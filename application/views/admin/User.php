@@ -78,9 +78,9 @@
                                                     </div>
                                                     <form action="<?= base_url('CUser/update'); ?>" method="POST">
                                                         <div class="modal-body">
+                                                            <input type="text" class="form-control" name="id" id="id" value="<?= $val['id'] ?>" hidden>
                                                             <div class="form-group row">
                                                                 <label for="horizontal-text-input" class="col-sm-3 col-form-label">First Name</label>
-                                                                    <input type="text" class="form-control" name="id" id="id" value="<?= $val['id'] ?>" hidden>
                                                                 <div class="col-sm-9">
                                                                     <input type="text" class="form-control" name="first_name" id="first_name" value="<?= $val['first_name'] ?>" readonly>
                                                                 </div>

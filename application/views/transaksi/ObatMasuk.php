@@ -90,6 +90,8 @@
                               <div class="form-group row">
                                 <label for="horizontal-text-input" class="col-sm-3 col-form-label">Tanggal Masuk</label>
                                 <input type="text" class="form-control" name="id" id="id" value="<?= $val['id'] ?>" hidden>
+                                <input type="text" class="form-control" name="detail_obat_id" id="detail_obat_id" value="<?= $val['detail_obat_id'] ?>" hidden>
+                                <input type="text" class="form-control" name="obat_proses_id" id="obat_proses_id" value="<?= $val['obat_proses_id'] ?>" hidden>
                                 <div class="col-sm-9">
                                   <input type="text" class="form-control" name="tanggal" id="tanggal" value="<?php echo date('Y-m-d') ?>" readonly>
                                 </div>
@@ -97,11 +99,11 @@
                               <div class="form-group row">
                                 <label for="horizontal-text-input" class="col-sm-3 col-form-label">User</label>
                                 <div class="col-sm-9">
-                                  <input type="text" class="form-control" name="user_id" id="user_id" value="<?php echo $id['first_name'] ?>" readonly>
+                                  <input type="text" class="form-control" name="user_id" id="user_id" value="<?php echo $val['user_id'] ?>" readonly>
                                 </div>
                               </div>
                               <div class="form-group row">
-                                <label for="horizontal-text-input" class="col-sm-3 col-form-label">Kode Obat</label>
+                                <label for="horizontal-text-input" class="col-sm-3 col-form-label">Nama Obat</label>
                                 <div class="col-sm-9">
                                   <select name="obat_id" id="obat_id" class="form-control">
                                     <option value="">Pilih Obat</option>
