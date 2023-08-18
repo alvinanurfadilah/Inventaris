@@ -18,10 +18,9 @@ class MTampung extends CI_Model
 
     public function getObat()
     {
-        $query = "SELECT `tbl_tampung`.`id`, `tbl_tampung`.`detail_obat_id`, `tbl_detail_obat`.`id`, `tbl_detail_obat`.`obat_id`, `tbl_obat`.`name`, `tbl_tampung`.`jml_obat`
+        $query = "SELECT `tbl_tampung`.`id`, `tbl_tampung`.`obat_id`, `tbl_obat`.`name`, `tbl_tampung`.`jml_obat`
         FROM `tbl_tampung`
-        JOIN `tbl_detail_obat` ON `tbl_detail_obat`.`id` = `tbl_tampung`.`detail_obat_id`
-        join `tbl_obat` ON `tbl_obat`.`id` = `tbl_detail_obat`.`obat_id`";
+        JOIN `tbl_obat` ON `tbl_obat`.`id` = `tbl_tampung`.`obat_id`";
 
         return $this->db->query($query);
     }

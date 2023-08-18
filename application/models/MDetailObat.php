@@ -65,12 +65,12 @@ class MDetailObat extends CI_Model
         return $this->db->query($query);
     }
 
-    public function getStock()
+    public function getStock($obat_id)
     {
         $query = "SELECT `tbl_detail_obat`.`id`, `tbl_detail_obat`.`obat_id`, `tbl_obat`.`name`, `tbl_detail_obat`.`stock`, `tbl_detail_obat`.`expired`
         FROM `tbl_detail_obat`
         JOIN `tbl_obat` on `tbl_obat`.`id` = `tbl_detail_obat`.`obat_id`
-        WHERE `tbl_detail_obat`.`stock` > 0
+        WHERE `tbl_detail_obat`.`stock` > 0 AND `tbl_detail_obat`.`expired` > CURRENT_TIME AND `tbl_detail_obat`.`obat_id` = $obat_id
         ORDER BY `tbl_detail_obat`.`expired`";
 
         return $this->db->query($query);

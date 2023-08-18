@@ -29,14 +29,22 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="row">
-                                <div class="col-sm-12 col-md-6">
-                                    <h3 class="card-title">Data Obat Masuk</h3>
-                                </div>
-                                <div class="col-sm-12 col-md-6">
-                                    <button type="button" class="btn btn-primary btn-social pull-right" data-toggle="modal" data-target="#modal-default">
-                                        Add Jenis
-                                    </button>
-                                </div>
+                                <form action="<?= base_url('CObatProses/laporanMasuk') ?>" method="get" class="col-sm-12">
+                                    <div class="col-sm-12 col-md-6">
+                                        <h3 class="card-title">Data Obat Masuk</h3>
+                                    </div>
+                                    <div class="col-sm-12 col-md-2">
+                                        <input type="date" class="form-control" id="start_date" name="start_date">
+                                    </div>
+                                    <div class="col-sm-12 col-md-2">
+                                        <input type="date" class="form-control" id="end_date" name="end_date">
+                                    </div>
+                                    <div class="col-sm-12 col-md-2">
+                                        <button type="submit" class="btn btn-primary btn-social pull-right">
+                                            Cari
+                                        </button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                         <!-- /.card-header -->
