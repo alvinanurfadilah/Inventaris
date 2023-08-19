@@ -40,7 +40,7 @@
                                         <input type="date" class="form-control" id="end_date" name="end_date">
                                     </div>
                                     <div class="col-sm-12 col-md-2">
-                                        <button type="submit" class="btn btn-primary btn-social pull-right">
+                                        <button type="submit" class="btn btn-primary btn-social pull-right" name="cari">
                                             Cari
                                         </button>
                                     </div>
@@ -60,13 +60,15 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    
+            
                                     <?php $i = 1;
-                                    foreach ($data as $val) : ?>
+                                    foreach ($data->result_array() as $val) : ?>
                                         <tr>
                                             <td><?= $i++ ?></td>
-                                            <td><?= $val['tanggal'] ?></td>
+                                            <td><?= date('d F Y', strtotime($val['tanggal'])) ?></td>
                                             <td><?= $val['name'] ?></td>
-                                            <td><?= $val['stock'] ?></td>
+                                            <td><?= $val['stock_history'] ?></td>
                                             <td><?= $val['expired'] ?></td>
                                         </tr>
                                     <?php endforeach ?>

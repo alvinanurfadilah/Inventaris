@@ -75,4 +75,11 @@ class MDetailObat extends CI_Model
 
         return $this->db->query($query);
     }
+
+    public function get()
+    {
+        $sql = "SELECT * FROM tbl_detail_obat";
+
+        return $this->db->query($sql);
+    }
 }

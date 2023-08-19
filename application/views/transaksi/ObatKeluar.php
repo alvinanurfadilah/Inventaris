@@ -57,11 +57,11 @@
                   foreach ($detail_pasien->result_array() as $val) { ?>
                     <tr>
                       <td><?= $i++ ?></td>
-                      <td><?= $val['tanggal_berobat'] ?></td>
+                      <td><?= $val['tanggal'] ?></td>
                       <td><?= $val['user_id'] ?></td>
-                      <td>a</td>
-                      <td>A</td>
-                      <td><?= $val['pasien_id'] ?></td>
+                      <td><?= $val['name'] ?></td>
+                      <td><?= $val['jml_obat'] ?></td>
+                      <td><?= $val['first_name'] ?> <?= $val['last_name'] ?></td>
                       <td><?= $val['ket'] ?></td>
                       <td>
                         <div class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-default-update<?= $val['id'] ?>">
@@ -73,6 +73,79 @@
                         </div>') ?>
                       </td>
                     </tr>
+
+                    <!-- Modal Update -->
+                    <div class="modal fade" id="modal-default-update<?= $val['id'] ?>">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h4 class="modal-title">Edit Obat Keluar</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <form action="<?= base_url('CObatProses/keluar_update'); ?>" method="POST">
+                            <div class="modal-body">
+                              <div class="form-group row">
+                                <label for="horizontal-text-input" class="col-sm-3 col-form-label">Tanggal Masuk</label>
+                                <input type="text" class="form-control" name="id" id="id" value="<?= $val['id'] ?>" hidden>
+                                <input type="text" class="form-control" name="detail_pasien_id" id="detail_pasien_id" value="<?= $val['detail_pasien_id'] ?>" hidden>
+                                <input type="text" class="form-control" name="detail_obat_id" id="detail_obat_id" value="<?= $val['detail_obat_id'] ?>" hidden>
+                                <input type="text" class="form-control" name="obat_proses_id" id="obat_proses_id" value="<?= $val['obat_proses_id'] ?>" hidden>
+                                <div class="col-sm-9">
+                                  <input type="text" class="form-control" name="tanggal" id="tanggal" value="<?= $val['tanggal'] ?>" readonly>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="horizontal-text-input" class="col-sm-3 col-form-label">User</label>
+                                <div class="col-sm-9">
+                                  <input type="text" class="form-control" name="user_id" id="user_id" value="<?php echo $val['user_id'] ?>" readonly>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="horizontal-text-input" class="col-sm-3 col-form-label">Nama Obat</label>
+                                <div class="col-sm-9">
+                                  <select name="obat_id" id="obat_id" class="form-control">
+                                    <?php foreach ($detail->result_array() as $ob) { ?>
+                                      <option value="<?php echo $ob['obat_id'] ?>" <?= $val['obat_id'] == $ob['obat_id'] ? 'selected' : null ?>><?php echo $ob['name'] ?></option>
+                                    <?php } ?>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="horizontal-text-input" class="col-sm-3 col-form-label">Jumlah Obat</label>
+                                <div class="col-sm-9">
+                                  <input type="number" class="form-control" name="jml_obat" id="jml_obat" value="<?= $val['jml_obat'] ?>">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="horizontal-text-input" class="col-sm-3 col-form-label">Pasien</label>
+                                <div class="col-sm-9">
+                                  <select name="pasien_id" id="pasien_id" class="form-control">
+                                    <?php foreach ($pasien->result_array() as $p) { ?>
+                                      <option value="<?php echo $p['pasien_id'] ?>" <?= $val['pasien_id'] == $p['pasien_id'] ? 'selected' : null ?>><?php echo $p['first_name'] ?> <?php echo $p['last_name'] ?></option>
+                                    <?php } ?>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="horizontal-text-input" class="col-sm-3 col-form-label">Keterangan</label>
+                                <div class="col-sm-9">
+                                  <input type="text" class="form-control" name="ket" id="ket" value="<?php echo $val['ket'] ?>">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                              <button type="submit" class="btn btn-primary">Update</button>
+                            </div>
+                          </form>
+                        </div>
+                        <!-- /.modal-content -->
+                      </div>
+                      <!-- /.modal-dialog -->
+                    </div>
+
                   <?php } ?>
                 </tbody>
                 <tfoot>

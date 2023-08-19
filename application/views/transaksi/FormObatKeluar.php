@@ -54,10 +54,10 @@
                                     <div class="form-group row">
                                         <label for="pasien_id" class="col-sm-2 col-form-label">Pasien</label>
                                         <div class="col-sm-10">
-                                            <select name="detail_pasien_id" id="detail_pasien_id" class="form-control">
+                                            <select name="pasien_id" id="pasien_id" class="form-control">
                                                 <option value="">Pilih Pasien</option>
-                                                <?php foreach ($pasien->result_array() as $val) { ?>
-                                                    <option value="<?php echo $val['id'] ?>"><?php echo $val['first_name'] ?> <?php echo $val['last_name'] ?></option>
+                                                <?php foreach ($detail_pasien->result_array() as $val) { ?>
+                                                    <option value="<?php echo $val['pasien_id'] ?>"><?php echo $val['first_name'] ?> <?php echo $val['last_name'] ?></option>
                                                 <?php } ?>
                                             </select>
                                         </div>
@@ -82,10 +82,10 @@
                                 <div class="col-sm-12 col-md-6">
                                     <h3 class="card-title">Data Obat</h3>
                                 </div>
-                                <div class="col-sm-12 col-md-6">
+                                <div class="col-sm-12 col-md-2">
                                     <button type="button" class="btn btn-primary btn-social pull-right" data-toggle="modal" data-target="#modal-default">Add Obat
                                     </button>
-                                </div>
+                                </div>  
                             </div>
                         </div>
                         <div class="card-body">
@@ -94,7 +94,7 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Nama Obat</th>
-                                        <th>Qty</th>
+                                        <th>Jumlah Obat</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -112,7 +112,7 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Nama Obat</th>
-                                        <th>Qty</th>
+                                        <th>Jumlah Obat</th>
                                     </tr>
                                 </tfoot>
                             </table>

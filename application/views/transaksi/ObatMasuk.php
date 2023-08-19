@@ -106,7 +106,6 @@
                                 <label for="horizontal-text-input" class="col-sm-3 col-form-label">Nama Obat</label>
                                 <div class="col-sm-9">
                                   <select name="obat_id" id="obat_id" class="form-control">
-                                    <option value="">Pilih Obat</option>
                                     <?php foreach ($obat->result_array() as $ob) { ?>
                                       <option value="<?php echo $ob['id'] ?>" <?= $val['obat_id'] == $ob['id'] ? 'selected' : null ?>><?php echo $ob['name'] ?></option>
                                     <?php } ?>
