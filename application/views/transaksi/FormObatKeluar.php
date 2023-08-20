@@ -85,7 +85,11 @@
                                 <div class="col-sm-12 col-md-2">
                                     <button type="button" class="btn btn-primary btn-social pull-right" data-toggle="modal" data-target="#modal-default">Add Obat
                                     </button>
-                                </div>  
+
+
+                                    <?php echo anchor('CObatProses/form_truncate/', '<div class="btn btn-danger btn-sm">Clear</div>') ?>
+
+                                </div>
                             </div>
                         </div>
                         <div class="card-body">

@@ -197,6 +197,12 @@ class CObatProses extends CI_Controller
                 redirect('CObatProses/form');
         }
 
+        public function form_truncate()
+        {
+                $this->db->truncate('tbl_tampung');
+                redirect('CObatProses/form');
+        }
+
         public function keluar()
         {
                 $data['title'] = 'Obat Keluar';
@@ -366,7 +372,18 @@ class CObatProses extends CI_Controller
 
                         if ($get->num_rows() == 1) {
                                 $data = $get->row_array();
+
+                                $jml_obat = $data['jml_obat'];
+                                $detail = ['id' => $data['detail_obat_id']];
+                                $do = $this->detail_obat->show($detail)->row_array();
+                                $stock = $do['stock'];
+                                $total = $stock + $jml_obat;
+                                $this->db->set('stock', $total);
+                                $this->db->where('id', $data['detail_obat_id']);
+                                $this->db->update('tbl_detail_obat');
+
                                 $id = ['id' => $data['id']];
+
                                 $this->detail_obat_proses->delete($id);
                                 $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Obat Keluar deleted successfully! </div>');
                         }
