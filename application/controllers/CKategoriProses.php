@@ -1,5 +1,12 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
+
+/**
+ * @property MKategoriProses $kategori_proses
+ * @property Session $session
+ * @property db $db
+ * @property input $input
+ */
 
 class CKategoriProses extends CI_Controller
 {
@@ -29,28 +36,30 @@ class CKategoriProses extends CI_Controller
         $this->db->insert('tbl_kategori_proses', $data);
     }
 
-    function edit($slug){
+    function edit($slug)
+    {
         $where = array('slug' => $slug);
-        $data['data'] = $this->kategori_proses->edit_data($where,'tbl_kategori_proses');
+        $data['data'] = $this->kategori_proses->edit_data($where, 'tbl_kategori_proses');
         $row = ['id' => $data['id']];
         $this->load->view($row);
     }
 
-    function update(){
+    function update()
+    {
         $id = $this->input->post('id');
         $name = $this->input->post('name');
-     
+
         $data = array(
             'slug' => str_replace(' ', '-', strtolower($this->input->post('kategori_proses'))),
             'name' => $name,
             'updated_at' => date('Y-m-d H:m:s')
         );
-     
+
         $where = array(
             'id' => $id
         );
-     
-        $this->kategori_proses->update_data($where,$data,'tbl_kategori_proses');
+
+        $this->kategori_proses->update_data($where, $data, 'tbl_kategori_proses');
     }
 
     public function delete($id)
@@ -59,5 +68,3 @@ class CKategoriProses extends CI_Controller
         $this->kategori_proses->delete($where, 'tbl_kategori_proses');
     }
 }
-
-?>

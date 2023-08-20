@@ -34,13 +34,6 @@ class MDetailObatProses extends CI_Model
         $this->db->update($table, $data);
     }
 
-    // public function delete($where)
-    // {
-    //     $this->db->where($where);
-    //     $this->db->delete($this->tbl);
-    //     return (($this->db->affested_rows() > 0) ? true : false);
-    // }
-
     public function delete($id)
     {
         $sql = "DELETE `tbl_detail_obat_proses`, `tbl_detail_obat`, `tbl_obat_proses`
@@ -52,10 +45,15 @@ class MDetailObatProses extends CI_Model
         return $this->db->query($sql, [$id]);
     }
 
-    public function newStok($where)
+    public function deleteKeluar($id)
     {
-        $this->db->select_sum('jml_obat');
-        $this->db->where($where);
-        return $this->db->get($this->view);
+        $sql = "DELETE `tbl_detail_obat_proses`, `tbl_detail_obat`, `tbl_obat_proses`, `tbl_detail_pasien`
+        FROM `tbl_detail_obat_proses`, `tbl_detail_obat`, `tbl_obat_proses`. `tbl_detail_pasien`
+        WHERE `tbl_detail_obat_proses`.`detail_obat_id` = `tbl_detail_obat`.`id`
+        AND `tbl_detail_obat_proses`.`obat_proses_id` = `tbl_obat_proses`.`id`
+        AND `tbl_obat_proses`.`detail_pasien_id` = `tbl_detail_pasien`.`id`
+        AND `tbl_detail_obat_proses`.`id` = ? ";
+
+        return $this->db->query($sql, [$id]);
     }
 }

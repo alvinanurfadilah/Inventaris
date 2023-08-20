@@ -1,6 +1,15 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+/**
+ * @property MPasien $pasien
+ * @property MDetailPasien $detail_pasien
+ * @property Session $session
+ * @property db $db
+ * @property input $input
+ * @property form_validation $form_validation
+ */
+
 class CPasien extends CI_Controller
 {
     public function __construct()
@@ -54,7 +63,7 @@ class CPasien extends CI_Controller
     function edit($id)
     {
         $where = array('id' => $id);
-        $data['data'] = $this->jenis->edit_data($where, 'tbl_pasien');
+        $data['data'] = $this->pasien->edit_data($where, 'tbl_pasien');
         $row = ['id' => $data['id']];
         $this->load->view('pasien/Pasien', $row);
     }

@@ -1,6 +1,14 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+/**
+ * @property MUser $user
+ * @property Session $session
+ * @property db $db
+ * @property input $input
+ * @property form_validation $form_validation
+ */
+
 class CUser extends CI_Controller
 {
     public function __construct()
@@ -28,7 +36,7 @@ class CUser extends CI_Controller
     {
         $where = array('id' => $id);
         $data['data'] = $this->user->edit_data($where, 'tbl_user');
-        $this->load->view('admin/User', $row);
+        $this->load->view('admin/User', $data);
     }
 
     function update()

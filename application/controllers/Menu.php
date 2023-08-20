@@ -1,6 +1,15 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+/**
+ * @property MMenu $menu
+ * @property MSubMenu $sub_menu
+ * @property Session $session
+ * @property db $db
+ * @property input $input
+ * @property form_validation $form_validation
+ */
+
 class Menu extends CI_Controller
 {
     public function __construct()

@@ -1,6 +1,14 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+/**
+ * @property MSatuan $satuan
+ * @property Session $session
+ * @property db $db
+ * @property input $input
+ * @property form_validation $form_validation
+ */
+
 class CSatuan extends CI_Controller
 {
         public function __construct()
@@ -43,7 +51,7 @@ class CSatuan extends CI_Controller
         function edit($slug)
         {
                 $where = array('slug' => $slug);
-                $data['data'] = $this->MJenis->edit_data($where, 'tbl_satuan');
+                $data['data'] = $this->satuan->edit_data($where, 'tbl_satuan');
                 $row = ['id' => $data['id']];
                 $this->load->view('master/Satuan', $row);
         }
@@ -83,25 +91,4 @@ class CSatuan extends CI_Controller
                         redirect('CSatuan/index');
                 }
         }
-
-        // public function index_put($slug='')
-        // {
-        //         $idslug = ['slug' =>$slug];
-        //         $data = $this->MJenis->show($idslug);
-        //         $id = ['id' => $data['id']];
-        //         $this->load->view('master/Satuan', $id);
-
-        //         $arr = [
-        //                 'slug' => str_replace(' ', '-', strtolower($this->input->post('jenis'))),
-        //                 'jenis' => $this->input->post('jenis'),
-        //                 'updated_at' => date('Y-m-d H:i:s')
-        //         ];
-
-        //         $where = [
-        //                 'id' => $this->input->post('id')
-        //         ];
-
-        //         $this->MJenis->update($where, $arr, 'tbl_jenis');
-        //         redirect('CSatuan/index');
-        // }
 }

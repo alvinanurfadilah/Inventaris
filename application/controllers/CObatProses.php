@@ -1,6 +1,19 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+/**
+ * @property MObatProses $obat_proses
+ * @property MDetailObatProses $detail_obat_proses
+ * @property MObat $obat
+ * @property MDetailObat $detail_obat
+ * @property MPasien $pasien
+ * @property MDetailPasien $detail_pasien
+ * @property MTampung $tampung
+ * @property Session $session
+ * @property db $db
+ * @property input $input
+ */
+
 class CObatProses extends CI_Controller
 {
         public function __construct()
@@ -278,10 +291,28 @@ class CObatProses extends CI_Controller
                                                 $this->db->set('stock', 0);
                                                 $this->db->where('id', $d['id']);
                                                 $this->db->update('tbl_detail_obat');
+
+                                                $direct = $this->db->get_where('tbl_detail_obat', ['obat_id' => $t['obat_id']]);
+                                                foreach ($direct->result_array() as $row) {
+                                                        $period_array[] = intval($row['stock']);
+                                                }
+                                                $total = array_sum($period_array);
+                                                $this->db->set('overall_stock', $total);
+                                                $this->db->where('id', $t['obat_id']);
+                                                $this->db->update('tbl_obat');
                                         } else {
                                                 $this->db->set('stock', abs($sisa));
                                                 $this->db->where('id', $d['id']);
                                                 $this->db->update('tbl_detail_obat');
+
+                                                $direct = $this->db->get_where('tbl_detail_obat', ['obat_id' => $t['obat_id']]);
+                                                foreach ($direct->result_array() as $row) {
+                                                        $period_array[] = intval($row['stock']);
+                                                }
+                                                $total = array_sum($period_array);
+                                                $this->db->set('overall_stock', $total);
+                                                $this->db->where('id', $t['obat_id']);
+                                                $this->db->update('tbl_obat');
                                                 break;
                                         }
                                 }
@@ -376,6 +407,8 @@ class CObatProses extends CI_Controller
                                 $jml_obat = $data['jml_obat'];
                                 $detail = ['id' => $data['detail_obat_id']];
                                 $do = $this->detail_obat->show($detail)->row_array();
+                                var_dump($do);
+                                die;
                                 $stock = $do['stock'];
                                 $total = $stock + $jml_obat;
                                 $this->db->set('stock', $total);
@@ -384,7 +417,7 @@ class CObatProses extends CI_Controller
 
                                 $id = ['id' => $data['id']];
 
-                                $this->detail_obat_proses->delete($id);
+                                $this->detail_obat_proses->deleteKeluar($id);
                                 $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Obat Keluar deleted successfully! </div>');
                         }
                         redirect('CObatProses/keluar');
@@ -401,11 +434,11 @@ class CObatProses extends CI_Controller
                 $data['title'] = 'Laporan Obat Masuk';
                 $data['user'] = $this->db->get_where('v_user', ['email' => $this->session->userdata('email')])->row_array();
 
+                $data['data'] = $this->obat_proses->getMasuk();
 
-                //nampilin tanggal per periode tapi masih error:')
-                $start_date = $_GET['start_date'];
-                $end_date = $_GET['end_date'];
-                $data['data'] = $this->obat_proses->getMasukTgl($start_date, $end_date);
+                // $start_date = $_GET['start_date'];
+                // $end_date = $_GET['end_date'];
+                // $data['data'] = $this->obat_proses->getMasukTgl($start_date, $$end_date);
 
 
                 $this->load->view('pages/Header', $data);

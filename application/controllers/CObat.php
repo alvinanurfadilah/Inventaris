@@ -1,6 +1,17 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+/**
+ * @property MObat $obat
+ * @property MDetailObat $detail_obat
+ * @property MJenis $jenis
+ * @property MSatuan $satuan
+ * @property Session $session
+ * @property db $db
+ * @property input $input
+ * @property form_validation $form_validation
+ */
+
 class CObat extends CI_Controller
 {
         public function __construct()
@@ -106,32 +117,6 @@ class CObat extends CI_Controller
                                 $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Obat deleted successfully! </div>');
                         }
                         redirect('CObat/index');
-                }
-        }
-
-        public function index_get($slug = '')
-        {
-                if (@$slug) {
-                        $get = $this->obat->show(['slug' => $slug]);
-                        $data = $get->row_array();
-                        $detail = $this->detail_obat->show(['obat_id' => $data['obat_id']])->result_array();
-                        $data['obat'] = $detail;
-                        //untuk menampilkan overall_stock sesuai dengan slug yang dipanggil
-                        $data['overall_stock'] = $this->detail_obat->sumStok(['obat_id' => $data['obat_id']])->row()->stock;
-                } else {
-                        $get = $this->obat->show();
-                        $obat = $get->result_array();
-                        $data = [];
-                        foreach ($obat as $obt) {
-                                $detail = $this->detail_obat->show(['obat_id' => $obt['obat_id']])->result_array();
-                                $obt['obat'] = $detail;
-                                $obt['overall_stock'] = $this->detail_obat->sumStok(['obat_id' => $obt['obat_id']])->row()->stock;
-                                $data[] = $obt;
-                        }
-                }
-
-                if ($data['overall_stock'] < 5) {
-                        $data = $this->obat['overall_stock']->fetch_assoc();
                 }
         }
 

@@ -39,13 +39,6 @@ class MObat extends CI_Model
         $this->db->update($table, $data);
     }
 
-    // public function update($where, $object)
-    // {
-    //     $this->db->where($where);
-    //     $this->db->update($this->tbl, $object);
-    //     return(($this->db->affected_rows() > 0) ? true : false);
-    // }   
-
     public function delete($where)
     {
         $this->db->where($where);

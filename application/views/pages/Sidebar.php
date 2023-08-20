@@ -2,7 +2,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
 
   <!-- Brand Logo -->
-  <a href="" class="brand-link">
+  <a href="<?php base_url('') ?>" class="brand-link">
     <img src="" alt="" class="" style="opacity: .8">
     <i class="fas fa-fw fa-clinic-medical"></i>
     <span class="brand-text font-weight-light">KLINIK ALFARMA</span>
@@ -41,11 +41,11 @@
           <?php
           $menuId = $m['id'];
           $querySubMenu = "SELECT * 
-        FROM `tbl_user_sub_menu` 
-        JOIN `tbl_user_menu` 
-        ON `tbl_user_sub_menu`.`menu_id` = `tbl_user_menu`.`id` 
-        WHERE `tbl_user_sub_menu`.`menu_id` = $menuId 
-        AND `tbl_user_sub_menu`.`is_active` = 1 ";
+          FROM `tbl_user_sub_menu` 
+          JOIN `tbl_user_menu` 
+          ON `tbl_user_sub_menu`.`menu_id` = `tbl_user_menu`.`id` 
+          WHERE `tbl_user_sub_menu`.`menu_id` = $menuId 
+          AND `tbl_user_sub_menu`.`is_active` = 1 ";
 
           $subMenu = $this->db->query($querySubMenu)->result_array();
           ?>
