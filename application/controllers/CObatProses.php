@@ -424,13 +424,8 @@ class CObatProses extends CI_Controller
                 }
         }
 
-
-
-
-
         public function laporanMasuk()
         {
-
                 $data['title'] = 'Laporan Obat Masuk';
                 $data['user'] = $this->db->get_where('v_user', ['email' => $this->session->userdata('email')])->row_array();
 
@@ -444,6 +439,24 @@ class CObatProses extends CI_Controller
                 $this->load->view('pages/Header', $data);
                 $this->load->view('pages/Sidebar', $data);
                 $this->load->view('laporan/laporanMasuk', $data);
+                $this->load->view('pages/Footer');
+        }
+
+        public function laporanKeluar()
+        {
+                # code...
+        }
+
+        public function laporanPembelian()
+        {
+                $data['title'] = 'Laporan Pembelian Obat';
+                $data['user'] = $this->db->get_where('v_user', ['email' => $this->session->userdata('email')])->row_array();
+
+                $data['data'] = $this->obat->getStok();
+
+                $this->load->view('pages/Header', $data);
+                $this->load->view('pages/Sidebar', $data);
+                $this->load->view('laporan/laporanPembelian', $data);
                 $this->load->view('pages/Footer');
         }
 }

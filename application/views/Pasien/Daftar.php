@@ -176,7 +176,7 @@
                             <select name="pasien_id" id="pasien_id" class="form-control">
                                 <option value="">Pilih Pasien</option>
                                 <?php foreach ($pasien->result_array() as $p) { ?>
-                                    <option value="<?php echo $p['id'] ?>"><?php echo $p['first_name'] .  $p['last_name'] ?></option>
+                                    <option value="<?php echo $p['id'] ?>"><?php echo $p['first_name'] ?> <?php echo $p['last_name'] ?></option>
                                 <?php } ?>
                             </select>
                         </div>

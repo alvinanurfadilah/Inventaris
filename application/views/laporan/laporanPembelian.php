@@ -29,22 +29,9 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="row">
-                                <form action="<?= base_url('CObatProses/laporanMasuk') ?>" method="get" class="col-sm-12">
-                                    <div class="col-sm-12 col-md-6">
-                                        <h3 class="card-title">Data Obat Masuk</h3>
-                                    </div>
-                                    <div class="col-sm-12 col-md-2">
-                                        <input type="date" class="form-control" id="start_date" name="start_date">
-                                    </div>
-                                    <div class="col-sm-12 col-md-2">
-                                        <input type="date" class="form-control" id="end_date" name="end_date">
-                                    </div>
-                                    <div class="col-sm-12 col-md-2">
-                                        <button type="submit" class="btn btn-primary btn-social pull-right" name="cari">
-                                            Cari
-                                        </button>
-                                    </div>
-                                </form>
+                                <div class="col-sm-12 col-md-6">
+                                    <h3 class="card-title">Laporan Pembelian Obat</h3>
+                                </div>
                             </div>
                         </div>
                         <!-- /.card-header -->
@@ -53,10 +40,8 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Tanggal Masuk</th>
                                         <th>Nama Obat</th>
-                                        <th>Stok</th>
-                                        <th>Tanggal Expired</th>
+                                        <th>Overall Stock</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -64,20 +49,16 @@
                                     foreach ($data->result_array() as $val) : ?>
                                         <tr>
                                             <td><?= $i++ ?></td>
-                                            <td><?= date('d F Y', strtotime($val['tanggal'])) ?></td>
                                             <td><?= $val['name'] ?></td>
-                                            <td><?= $val['stock_history'] ?></td>
-                                            <td><?= $val['expired'] ?></td>
+                                            <td><?= $val['overall_stock'] ?></td>
                                         </tr>
                                     <?php endforeach ?>
                                 </tbody>
                                 <tfoot>
                                     <tr>
                                         <th>No</th>
-                                        <th>Tanggal Masuk</th>
                                         <th>Nama Obat</th>
-                                        <th>Stok</th>
-                                        <th>Tanggal Expired</th>
+                                        <th>Overall Stock</th>
                                     </tr>
                                 </tfoot>
                             </table>

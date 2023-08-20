@@ -46,12 +46,11 @@ class MObat extends CI_Model
         return (($this->db->affected_rows() > 0) ? true : false);
     }
 
-    public function showMax($where = '')
+    //untuk menampilkan data obat yang overall stock nya < 5
+    public function getStok()
     {
-        $this->db->select_max('kode_obat');
-        if (@$where && $where != null) {
-            $this->db->where($where);
-        }
-        return $this->db->get($this->view);
+        $query = "SELECT * FROM tbl_obat WHERE overall_stock < 5";
+
+        return $this->db->query($query);
     }
 }
