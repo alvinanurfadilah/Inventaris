@@ -57,6 +57,7 @@ class CObatProses extends CI_Controller
                 $this->db->insert('tbl_detail_obat', $detail_obat);
                 //untuk mengambil id paling terakhir
                 $last_idDetail = $this->db->insert_id();
+
                 $direct = $this->db->get_where('tbl_detail_obat', ['obat_id' => $detail_obat['obat_id']]);
                 foreach ($direct->result_array() as $row) {
                         $period_array[] = intval($row['stock']);
@@ -399,21 +400,22 @@ class CObatProses extends CI_Controller
         {
                 if (@$id) {
                         $idslug = ['id' => $id];
-                        $get = $this->detail_obat_proses->show($idslug);
+                        $get = $this->detail_obat_proses->get($idslug);
 
                         if ($get->num_rows() == 1) {
                                 $data = $get->row_array();
 
-                                $jml_obat = $data['jml_obat'];
-                                $detail = ['id' => $data['detail_obat_id']];
-                                $do = $this->detail_obat->show($detail)->row_array();
-                                var_dump($do);
-                                die;
-                                $stock = $do['stock'];
-                                $total = $stock + $jml_obat;
-                                $this->db->set('stock', $total);
-                                $this->db->where('id', $data['detail_obat_id']);
-                                $this->db->update('tbl_detail_obat');
+
+                                // $jml_obat = $data['jml_obat'];
+                                // $detail = ['id' => $data['detail_obat_id']];
+                                // $do = $this->detail_obat->show($detail)->row_array();
+                                // var_dump($do);
+                                // die;
+                                // $stock = $do['stock'];
+                                // $total = $stock + $jml_obat;
+                                // $this->db->set('stock', $total);
+                                // $this->db->where('id', $data['detail_obat_id']);
+                                // $this->db->update('tbl_detail_obat');
 
                                 $id = ['id' => $data['id']];
 
@@ -429,12 +431,14 @@ class CObatProses extends CI_Controller
                 $data['title'] = 'Laporan Obat Masuk';
                 $data['user'] = $this->db->get_where('v_user', ['email' => $this->session->userdata('email')])->row_array();
 
-                $data['data'] = $this->obat_proses->getMasuk();
+                $start_date = $this->input->get('start_date');
+                $end_date = $this->input->get('end_date');
 
-                // $start_date = $_GET['start_date'];
-                // $end_date = $_GET['end_date'];
-                // $data['data'] = $this->obat_proses->getMasukTgl($start_date, $$end_date);
-
+                if ($start_date && $end_date) {
+                        $data['data'] = $this->obat_proses->getMasukTgl($start_date, $end_date);
+                } else {
+                        $data['data'] = $this->obat_proses->getMasuk();
+                }
 
                 $this->load->view('pages/Header', $data);
                 $this->load->view('pages/Sidebar', $data);
@@ -444,7 +448,22 @@ class CObatProses extends CI_Controller
 
         public function laporanKeluar()
         {
-                # code...
+                $data['title'] = 'Laporan Obat Keluar';
+                $data['user'] = $this->db->get_where('v_user', ['email' => $this->session->userdata('email')])->row_array();
+
+                $start_date = $this->input->get('start_date');
+                $end_date = $this->input->get('end_date');
+
+                if ($start_date && $end_date) {
+                        $data['data'] = $this->obat_proses->getKeluarTgl($start_date, $end_date);
+                } else {
+                        $data['data'] = $this->obat_proses->getKeluar();
+                }
+
+                $this->load->view('pages/Header', $data);
+                $this->load->view('pages/Sidebar', $data);
+                $this->load->view('laporan/laporanKeluar', $data);
+                $this->load->view('pages/Footer');
         }
 
         public function laporanPembelian()

@@ -33,12 +33,6 @@ class CObat extends CI_Controller
                 $data['data'] = $this->obat->show();
                 $data['jenis'] = $this->jenis->show();
                 $data['satuan'] = $this->satuan->show();
-                // $data['overall_stock'] = $this->db->select('obat_id')
-                //         ->select_sum('stock')
-                //         ->from('tbl_detail_obat')
-                //         ->group_by('obat_id')
-                //         ->get()
-                //         ->result_array();
 
                 $this->load->view('pages/Header', $data);
                 $this->load->view('pages/Sidebar', $data);

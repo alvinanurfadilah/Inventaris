@@ -35,8 +35,6 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-
-
                             <form action="<?= base_url('CObatProses/keluar_post'); ?>" class="form-horizontal" id="detail_obat" method="post">
                                 <div class="card-body">
                                     <div class="form-group row">
@@ -85,10 +83,7 @@
                                 <div class="col-sm-12 col-md-2">
                                     <button type="button" class="btn btn-primary btn-social pull-right" data-toggle="modal" data-target="#modal-default">Add Obat
                                     </button>
-
-
                                     <?php echo anchor('CObatProses/form_truncate/', '<div class="btn btn-danger btn-sm">Clear</div>') ?>
-
                                 </div>
                             </div>
                         </div>
@@ -121,22 +116,13 @@
                                 </tfoot>
                             </table>
                         </div>
-
-
-                        <div class="modal-header mb-3"></div>
-                        <div class="card-header">
-
-
-
-                        </div>
                     </div>
                 </div>
-            </div><!-- /.container-fluid -->
+            </div>
+        </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
 </div>
-
-
 
 
 <!-- Modal Input-->

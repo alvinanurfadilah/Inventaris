@@ -42,6 +42,7 @@ class MObatProses extends CI_Model
         return (($this->db->affected_rows() > 0) ? true : false);
     }
 
+    //untuk menampilkan laporan masuk
     public function getMasuk()
     {
         $query = "SELECT `tbl_detail_obat_proses`.`id`, `tbl_detail_obat_proses`.`detail_obat_id`, `tbl_detail_obat`.`obat_id`, `tbl_obat`.`name`, `tbl_detail_obat`.`stock_history`, `tbl_detail_obat`.`expired`, `tbl_detail_obat_proses`.`obat_proses_id`, `tbl_obat_proses`.`tanggal`, `tbl_obat_proses`.`kategori_id`
@@ -63,6 +64,32 @@ class MObatProses extends CI_Model
         JOIN `tbl_obat` ON `tbl_obat`.`id` = `tbl_detail_obat`.`obat_id`
         JOIN `tbl_obat_proses` ON `tbl_obat_proses`.`id` = `tbl_detail_obat_proses`.`obat_proses_id`
         WHERE `tbl_obat_proses`.`kategori_id` = 1 AND `tbl_obat_proses`.`tanggal` BETWEEN '$start_date' AND '$end_date'
+        ORDER BY `tbl_obat_proses`.`tanggal`";
+
+        return $this->db->query($query);
+    }
+
+    public function getKeluar()
+    {
+        $query = "SELECT `tbl_detail_obat_proses`.`id`, `tbl_detail_obat_proses`.`jml_obat`, `tbl_detail_obat_proses`.`detail_obat_id`, `tbl_detail_obat`.`obat_id`, `tbl_obat`.`name`, `tbl_detail_obat_proses`.`obat_proses_id`, `tbl_obat_proses`.`tanggal`, `tbl_obat_proses`.`kategori_id`
+        FROM `tbl_detail_obat_proses`
+        JOIN `tbl_detail_obat` ON `tbl_detail_obat`.`id` = `tbl_detail_obat_proses`.`detail_obat_id`
+        JOIN `tbl_obat` ON `tbl_obat`.`id` = `tbl_detail_obat`.`obat_id`
+        JOIN `tbl_obat_proses` ON `tbl_obat_proses`.`id` = `tbl_detail_obat_proses`.`obat_proses_id`
+        WHERE `tbl_obat_proses`.`kategori_id` = 2
+        ORDER BY `tbl_obat_proses`.`tanggal`";
+
+        return $this->db->query($query);
+    }
+
+    public function getKeluarTgl($start_date, $end_date)
+    {
+        $query = "SELECT `tbl_detail_obat_proses`.`id`, `tbl_detail_obat_proses`.`jml_obat`, `tbl_detail_obat_proses`.`detail_obat_id`, `tbl_detail_obat`.`obat_id`, `tbl_obat`.`name`, `tbl_detail_obat_proses`.`obat_proses_id`, `tbl_obat_proses`.`tanggal`, `tbl_obat_proses`.`kategori_id`
+        FROM `tbl_detail_obat_proses`
+        JOIN `tbl_detail_obat` ON `tbl_detail_obat`.`id` = `tbl_detail_obat_proses`.`detail_obat_id`
+        JOIN `tbl_obat` ON `tbl_obat`.`id` = `tbl_detail_obat`.`obat_id`
+        JOIN `tbl_obat_proses` ON `tbl_obat_proses`.`id` = `tbl_detail_obat_proses`.`obat_proses_id`
+        WHERE `tbl_obat_proses`.`kategori_id` = 2 AND `tbl_obat_proses`.`tanggal` BETWEEN '$start_date' AND '$end_date'
         ORDER BY `tbl_obat_proses`.`tanggal`";
 
         return $this->db->query($query);

@@ -17,6 +17,17 @@ class MDetailObatProses extends CI_Model
         return $this->db->get();
     }
 
+    public function get($where = '')
+    {
+        $this->db->select('*');
+        $this->db->from($this->view);
+        if (@$where && $where != null) {
+            $this->db->where($where);
+        }
+        $this->db->order_by('id', 'asc');
+        return $this->db->get();
+    }
+
     public function insert($object)
     {
         $this->db->insert($this->tbl, $object);

@@ -31,7 +31,7 @@
                                     <h3 class="card-title">Data Obat Masuk</h3>
                                 </div>
                                 <div class="col-6">
-                                    <form action="<?= base_url('CObatProses/laporanMasuk') ?>" method="get">
+                                    <form action="<?= base_url('CObatProses/laporanKeluar') ?>" method="get">
                                         <div class="row">
                                             <div class="col-4">
                                                 <input type="date" class="form-control" id="start_date" name="start_date">
@@ -55,10 +55,9 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Tanggal Masuk</th>
+                                        <th>Tanggal Keluar</th>
                                         <th>Nama Obat</th>
-                                        <th>Stok</th>
-                                        <th>Tanggal Expired</th>
+                                        <th>Jumlah Obat</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -68,18 +67,16 @@
                                             <td><?= $i++ ?></td>
                                             <td><?= date('d F Y', strtotime($val['tanggal'])) ?></td>
                                             <td><?= $val['name'] ?></td>
-                                            <td><?= $val['stock_history'] ?></td>
-                                            <td><?= $val['expired'] ?></td>
+                                            <td><?= $val['jml_obat'] ?></td>
                                         </tr>
                                     <?php endforeach ?>
                                 </tbody>
                                 <tfoot>
                                     <tr>
                                         <th>No</th>
-                                        <th>Tanggal Masuk</th>
+                                        <th>Tanggal Keluar</th>
                                         <th>Nama Obat</th>
-                                        <th>Stok</th>
-                                        <th>Tanggal Expired</th>
+                                        <th>Jumlah Obat</th>
                                     </tr>
                                 </tfoot>
                             </table>

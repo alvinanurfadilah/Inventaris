@@ -28,7 +28,6 @@
                     <input type="password" class="form-control" id="password2" name="password2" placeholder="Retype password">
                     <div class="input-group-append">
                         <div class="input-group-text">
-                            <span class="fas fa-lock"></span>
                         </div>
                     </div>
                 </div>

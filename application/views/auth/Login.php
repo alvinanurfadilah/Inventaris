@@ -6,13 +6,13 @@
   <div class="card">
     <div class="card-body login-card-body">
 
-    <?= $this->session->flashdata('message'); ?>
+      <?= $this->session->flashdata('message'); ?>
 
       <p class="login-box-msg">Sign in to start your session</p>
 
       <form class="user" action="<?= base_url('Auth/index') ?>" method="post">
         <div class="form-group mb-3">
-          <input type="text" class="form-control" id="email" name="email" placeholder="Email" value="<?php echo set_value('email')?>">
+          <input type="text" class="form-control" id="email" name="email" placeholder="Email" value="<?php echo set_value('email') ?>">
           <?= form_error('email', '<small class="text-danger" pl-3>', '</small>'); ?>
         </div>
         <div class="form-group mb-3">
@@ -27,9 +27,9 @@
       </form>
       <!-- /.social-auth-links -->
 
-      <p class="mb-1">
+      <!-- <p class="mb-1">
         <a href="forgot-password.html">I forgot my password</a>
-      </p>
+      </p> -->
       <p class="mb-0">
         <a href="<?= base_url('Auth/register') ?>" class="text-center">Register a new membership</a>
       </p>

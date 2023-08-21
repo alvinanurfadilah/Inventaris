@@ -11,7 +11,6 @@
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1 class="m-0"><?= $title ?></h1>
-                    <?= form_error('jenis', '<div class="alert alert-danger" role="alert">',  '</div>') ?>
 
                     <?= $this->session->flashdata('message'); ?>
                 </div><!-- /.col -->
@@ -31,8 +30,6 @@
                                 <div class="col-sm-12 col-md-6">
                                     <h3 class="card-title">Data User</h3>
                                 </div>
-                                <div class="col-sm-12 col-md-6">
-                                </div>
                             </div>
                         </div>
                         <!-- /.card-header -->
@@ -51,7 +48,7 @@
                                 </thead>
                                 <tbody>
                                     <?php $i = 1;
-                                    foreach ($data as $val) : ?>
+                                    foreach ($data->result_array() as $val) : ?>
                                         <tr>
                                             <td><?= $i++ ?></td>
                                             <td><?= $val['first_name'] ?></td>
@@ -63,6 +60,8 @@
                                                 <div class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-default-update<?= $val['id'] ?>">
                                                     <i class="fas fa-edit"></i>
                                                 </div>
+
+                                                <?php echo anchor('CUser/delete/' . $val['id'], '<div class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></div>') ?>
                                             </td>
                                         </tr>
 
@@ -76,11 +75,11 @@
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
                                                     </div>
-                                                    <form action="<?= base_url('CUser/update'); ?>" method="POST">
+                                                    <form action="<?= base_url('CUser/update') ?>" method="POST">
                                                         <div class="modal-body">
-                                                            <input type="text" class="form-control" name="id" id="id" value="<?= $val['id'] ?>" hidden>
                                                             <div class="form-group row">
                                                                 <label for="horizontal-text-input" class="col-sm-3 col-form-label">First Name</label>
+                                                                <input type="text" class="form-control" name="id" id="id" value="<?= $val['id'] ?>" hidden>
                                                                 <div class="col-sm-9">
                                                                     <input type="text" class="form-control" name="first_name" id="first_name" value="<?= $val['first_name'] ?>" readonly>
                                                                 </div>
@@ -100,10 +99,10 @@
                                                             <div class="form-group row">
                                                                 <label for="horizontal-text-input" class="col-sm-3 col-form-label">Role</label>
                                                                 <div class="col-sm-9">
-                                                                    <select name="role_id" id="role_id" class="form-control">
-                                                                        <?php foreach ($role as $r) : ?>
-                                                                            <option value="<?= $r['id'] ?>" <?= $val['role_id'] == $r['id'] ? 'selected' : null ?>><?= $r['role'] ?></option>
-                                                                        <?php endforeach ?>
+                                                                    <select name="role" id="role" class="form-control">
+                                                                        <?php foreach ($role->result_array() as $r) { ?>
+                                                                            <option value="<?php echo $r['id'] ?>" <?= $val['role_id'] == $r['id'] ? 'selected' : null ?>><?php echo $r['role'] ?></option>
+                                                                        <?php } ?>
                                                                     </select>
                                                                 </div>
                                                             </div>
