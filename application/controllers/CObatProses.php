@@ -118,14 +118,21 @@ class CObatProses extends CI_Controller
 
                 $this->detail_obat->update_data($where, $detail_obat, 'tbl_detail_obat');
 
-                $direct = $this->db->get_where('tbl_detail_obat', ['obat_id' => $detail_obat['obat_id']]);
-                foreach ($direct->result_array() as $row) {
-                        $period_array[] = intval($row['stock']);
+                // $direct = $this->db->get_where('tbl_detail_obat', ['obat_id' => $detail_obat['obat_id']]);
+                // foreach ($direct->result_array() as $row) {
+                //         $period_array[] = intval($row['stock']);
+                // }
+                // $total = array_sum($period_array);
+                // $this->db->set('overall_stock', $total);
+                // $this->db->where('id', $detail_obat['obat_id']);
+                // $this->db->update('tbl_obat');
+
+                $overall = $this->detail_obat_proses->getOverall()->result_array();
+                foreach ($overall as $o) {
+                        $this->db->set('overall_stock', $o['stock']);
+                        $this->db->where('id', $o['obat_id']);
+                        $this->db->update('tbl_obat');
                 }
-                $total = array_sum($period_array);
-                $this->db->set('overall_stock', $total);
-                $this->db->where('id', $detail_obat['obat_id']);
-                $this->db->update('tbl_obat');
 
                 $obat_proses = [
                         'tanggal' => $tanggal,
@@ -204,10 +211,8 @@ class CObatProses extends CI_Controller
 
         public function tampung()
         {
-
                 $obat_id = $this->input->post('obat_id');
                 $jml_obat = $this->input->post('jml_obat');
-
 
                 $get = $this->db->get_where('tbl_obat', ['id' => $obat_id])->row_array();
                 $stok = $get['overall_stock'];
@@ -281,7 +286,6 @@ class CObatProses extends CI_Controller
                         $this->db->set('detail_obat_id', $get['id']);
                         $this->db->insert('tbl_detail_obat_proses');
 
-
                         $jml = $t['jml_obat'];
                         $stok = $get['stock'];
                         $hasil = $jml - $stok;
@@ -329,15 +333,14 @@ class CObatProses extends CI_Controller
                 }
         }
 
-        public function keluar_edit($id)
-        {
-                $where = array('id' => $id);
-                $data['data'] = $this->detail_obat_proses->edit_data($where, 'tbl_detail_obat_proses');
-                $row = ['id' => $data['id']];
-                $this->load->view('CObatProses/keluar', $row);
-        }
-
         // Tidak usah ada update, delete saja
+        // public function keluar_edit($id)
+        // {
+        //         $where = array('id' => $id);
+        //         $data['data'] = $this->detail_obat_proses->edit_data($where, 'tbl_detail_obat_proses');
+        //         $row = ['id' => $data['id']];
+        //         $this->load->view('CObatProses/keluar', $row);
+        // }
         // public function keluar_update()
         // {
         //         $id = $this->input->post('id');
@@ -434,6 +437,13 @@ class CObatProses extends CI_Controller
                                 $this->db->set('stock', $total);
                                 $this->db->where('id', $data['detail_obat_id']);
                                 $this->db->update('tbl_detail_obat');
+
+                                $overall = $this->detail_obat_proses->getOverall()->result_array();
+                                foreach ($overall as $o) {
+                                        $this->db->set('overall_stock', $o['stock']);
+                                        $this->db->where('id', $o['obat_id']);
+                                        $this->db->update('tbl_obat');
+                                }
 
                                 $id = ['id' => $data['id']];
 

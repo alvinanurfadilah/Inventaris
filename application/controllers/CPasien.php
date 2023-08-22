@@ -191,7 +191,7 @@ class CPasien extends CI_Controller
         );
 
         $this->pasien->update_data($where, $data, 'tbl_detail_pasien');
-        //$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Pasien updated successfully! </div>');
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Pasien updated successfully! </div>');
         redirect('CPasien/daftar');
     }
 

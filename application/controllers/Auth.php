@@ -95,7 +95,6 @@ class Auth extends CI_Controller
             $this->load->view('auth/Footer');
         } else {
             $data = [
-                'slug' => str_replace(' ', '-', strtolower($this->input->post('first_name'))),
                 'first_name' => htmlspecialchars($this->input->post('first_name', true)),
                 'last_name' => htmlspecialchars($this->input->post('last_name', true)),
                 'email' => htmlspecialchars($this->input->post('email', true)),
