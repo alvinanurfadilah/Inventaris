@@ -64,9 +64,9 @@
                       <td><?= $val['first_name'] ?> <?= $val['last_name'] ?></td>
                       <td><?= $val['ket'] ?></td>
                       <td>
-                        <div class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-default-update<?= $val['id'] ?>">
+                        <!-- <div class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-default-update<?= $val['id'] ?>">
                           <i class="fas fa-edit"></i>
-                        </div>
+                        </div> -->
 
                         <?php echo anchor('CObatProses/keluar_delete/' . $val['id'], '<div class="btn btn-danger btn-sm">
                           <i class="fas fa-trash-alt"></i>

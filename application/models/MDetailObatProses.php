@@ -20,7 +20,7 @@ class MDetailObatProses extends CI_Model
     public function get($where = '')
     {
         $this->db->select('*');
-        $this->db->from($this->view);
+        $this->db->from($this->tbl);
         if (@$where && $where != null) {
             $this->db->where($where);
         }
@@ -58,13 +58,18 @@ class MDetailObatProses extends CI_Model
 
     public function deleteKeluar($id)
     {
-        $sql = "DELETE `tbl_detail_obat_proses`, `tbl_detail_obat`, `tbl_obat_proses`, `tbl_detail_pasien`
-        FROM `tbl_detail_obat_proses`, `tbl_detail_obat`, `tbl_obat_proses`. `tbl_detail_pasien`
-        WHERE `tbl_detail_obat_proses`.`detail_obat_id` = `tbl_detail_obat`.`id`
-        AND `tbl_detail_obat_proses`.`obat_proses_id` = `tbl_obat_proses`.`id`
+        $sql = "DELETE `tbl_detail_obat_proses`, `tbl_obat_proses`, `tbl_detail_pasien`
+        FROM `tbl_detail_obat_proses`, `tbl_obat_proses`, `tbl_detail_pasien`
+        WHERE `tbl_detail_obat_proses`.`obat_proses_id` = `tbl_obat_proses`.`id`
         AND `tbl_obat_proses`.`detail_pasien_id` = `tbl_detail_pasien`.`id`
-        AND `tbl_detail_obat_proses`.`id` = ? ";
+        AND `tbl_detail_obat_proses`.`id` = ?";
 
         return $this->db->query($sql, [$id]);
+    }
+
+
+    function getOverall()
+    {
+        return $this->db->query("SELECT obat_id, SUM(stock) AS stock FROM tbl_detail_obat GROUP BY obat_id");
     }
 }

@@ -57,7 +57,7 @@
                                         <th>No</th>
                                         <th>Tanggal Masuk</th>
                                         <th>Nama Obat</th>
-                                        <th>Stok</th>
+                                        <th>Qty</th>
                                         <th>Tanggal Expired</th>
                                     </tr>
                                 </thead>

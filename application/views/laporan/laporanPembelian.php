@@ -30,7 +30,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-sm-12 col-md-6">
-                                    <h3 class="card-title">Laporan Pembelian Obat</h3>
+                                    <h3 class="card-title">Laporan Limit Obat</h3>
                                 </div>
                             </div>
                         </div>

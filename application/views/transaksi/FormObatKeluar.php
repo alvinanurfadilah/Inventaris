@@ -29,6 +29,48 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-sm-12 col-md-6">
+                                    <h3 class="card-title">Data Obat</h3>
+                                </div>
+                                <div class="col-sm-12 col-md-2">
+                                    <button type="button" class="btn btn-primary btn-social pull-right" data-toggle="modal" data-target="#modal-default">Add Obat
+                                    </button>
+                                    <?php echo anchor('CObatProses/form_truncate/', '<div class="btn btn-danger btn-sm">Clear</div>') ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table id="example1" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Nama Obat</th>
+                                        <th>Jumlah Obat</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <?php $i = 1;
+                                    foreach ($tampung->result_array() as $t) { ?>
+                                        <tr>
+                                            <td><?= $i++ ?></td>
+                                            <td><?= $t['name'] ?></td>
+                                            <td><?= $t['jml_obat'] ?></td>
+                                        </tr>
+                                    <?php } ?>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Nama Obat</th>
+                                        <th>Jumlah Obat</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <div class="modal-header mb-2"></div>
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6">
                                     <h3 class="card-title">Data Pasien</h3>
                                 </div>
                             </div>
@@ -74,48 +116,6 @@
                                 <!-- /.card-footer -->
                             </form>
                         </div>
-                        <div class="modal-header mb-3"></div>
-                        <div class="card-header">
-                            <div class="row">
-                                <div class="col-sm-12 col-md-6">
-                                    <h3 class="card-title">Data Obat</h3>
-                                </div>
-                                <div class="col-sm-12 col-md-2">
-                                    <button type="button" class="btn btn-primary btn-social pull-right" data-toggle="modal" data-target="#modal-default">Add Obat
-                                    </button>
-                                    <?php echo anchor('CObatProses/form_truncate/', '<div class="btn btn-danger btn-sm">Clear</div>') ?>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <table id="example1" class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Nama Obat</th>
-                                        <th>Jumlah Obat</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                    <?php $i = 1;
-                                    foreach ($tampung->result_array() as $t) { ?>
-                                        <tr>
-                                            <td><?= $i++ ?></td>
-                                            <td><?= $t['name'] ?></td>
-                                            <td><?= $t['jml_obat'] ?></td>
-                                        </tr>
-                                    <?php } ?>
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Nama Obat</th>
-                                        <th>Jumlah Obat</th>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -123,6 +123,7 @@
     </section>
     <!-- /.content -->
 </div>
+
 
 
 <!-- Modal Input-->

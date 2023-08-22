@@ -12,7 +12,7 @@
                 <div class="col-sm">
                     <h1 class="m-0"><?= $title ?></h1>
 
-                    <?= $this->session->flashdata('message'); ?>
+                    <div><?= $this->session->flashdata('message'); ?></div>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -28,7 +28,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-6">
-                                    <h3 class="card-title">Data Obat Masuk</h3>
+                                    <h3 class="card-title">Data Obat Keluar</h3>
                                 </div>
                                 <div class="col-6">
                                     <form action="<?= base_url('CObatProses/laporanKeluar') ?>" method="get">

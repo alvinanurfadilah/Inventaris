@@ -161,6 +161,7 @@ class CObatProses extends CI_Controller
                         if ($get->num_rows() == 1) {
                                 $data = $get->row_array();
 
+
                                 // mengurangi stok obat
                                 $stock = $data['stock'];
                                 $obat = ['id' => $data['obat_id']];
@@ -203,12 +204,28 @@ class CObatProses extends CI_Controller
 
         public function tampung()
         {
-                $tampung = [
-                        'obat_id' => $this->input->post('obat_id'),
-                        'jml_obat' => $this->input->post('jml_obat')
-                ];
-                $this->db->insert('tbl_tampung', $tampung);
-                redirect('CObatProses/form');
+
+                $obat_id = $this->input->post('obat_id');
+                $jml_obat = $this->input->post('jml_obat');
+
+
+                $get = $this->db->get_where('tbl_obat', ['id' => $obat_id])->row_array();
+                $stok = $get['overall_stock'];
+
+                if ($jml_obat >= $stok) {
+                        $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Obat yang diminta melebihi stok yang ada! </div>');
+                        redirect('CObatProses/form');
+                }
+                if ($jml_obat < $stok) {
+                        $this->db->set('obat_id', $obat_id);
+                        $this->db->set('jml_obat', $jml_obat);
+                        $this->db->insert('tbl_tampung');
+                        redirect('CObatProses/form');
+                }
+                //cari stok overall seaui obat yang dikeluarkan
+                //decision jika stok overall kurang dari permintaan, dibatalkan
+                // $this->db->insert('tbl_tampung', $tampung);
+                // redirect('CObatProses/form');
         }
 
         public function form_truncate()
@@ -264,6 +281,7 @@ class CObatProses extends CI_Controller
                         $this->db->set('detail_obat_id', $get['id']);
                         $this->db->insert('tbl_detail_obat_proses');
 
+
                         $jml = $t['jml_obat'];
                         $stok = $get['stock'];
                         $hasil = $jml - $stok;
@@ -271,15 +289,6 @@ class CObatProses extends CI_Controller
                                 $this->db->set('stock', abs($hasil));
                                 $this->db->where('id', $get['id']);
                                 $this->db->update('tbl_detail_obat');
-
-                                $direct = $this->db->get_where('tbl_detail_obat', ['obat_id' => $t['obat_id']]);
-                                foreach ($direct->result_array() as $row) {
-                                        $period_array[] = intval($row['stock']);
-                                }
-                                $total = array_sum($period_array);
-                                $this->db->set('overall_stock', $total);
-                                $this->db->where('id', $t['obat_id']);
-                                $this->db->update('tbl_obat');
                         } else {
                                 // untuk mengurangi stok obat
                                 $detail = $this->detail_obat->getStock($t['obat_id'])->result_array();
@@ -292,37 +301,32 @@ class CObatProses extends CI_Controller
                                                 $this->db->set('stock', 0);
                                                 $this->db->where('id', $d['id']);
                                                 $this->db->update('tbl_detail_obat');
-
-                                                $direct = $this->db->get_where('tbl_detail_obat', ['obat_id' => $t['obat_id']]);
-                                                foreach ($direct->result_array() as $row) {
-                                                        $period_array[] = intval($row['stock']);
-                                                }
-                                                $total = array_sum($period_array);
-                                                $this->db->set('overall_stock', $total);
-                                                $this->db->where('id', $t['obat_id']);
-                                                $this->db->update('tbl_obat');
                                         } else {
                                                 $this->db->set('stock', abs($sisa));
                                                 $this->db->where('id', $d['id']);
                                                 $this->db->update('tbl_detail_obat');
-
-                                                $direct = $this->db->get_where('tbl_detail_obat', ['obat_id' => $t['obat_id']]);
-                                                foreach ($direct->result_array() as $row) {
-                                                        $period_array[] = intval($row['stock']);
-                                                }
-                                                $total = array_sum($period_array);
-                                                $this->db->set('overall_stock', $total);
-                                                $this->db->where('id', $t['obat_id']);
-                                                $this->db->update('tbl_obat');
                                                 break;
                                         }
                                 }
                         }
                 }
 
-                $this->db->truncate('tbl_tampung');
-                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Obat Keluar added successfully! </div>');
-                redirect('CObatProses/keluar');
+                $overall = $this->detail_obat_proses->getOverall()->result_array();
+                foreach ($overall as $o) {
+                        $this->db->set('overall_stock', $o['stock']);
+                        $this->db->where('id', $o['obat_id']);
+                        $this->db->update('tbl_obat');
+                }
+                $over = $overall['overall_stock'];
+                if ($over < 5) {
+                        $this->db->truncate('tbl_tampung');
+                        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Obat Keluar added successfully! </div><div class="alert alert-danger" role="alert">Ada obat kurang dari 5! </div>');
+                        redirect('CObatProses/keluar');
+                } else {
+                        $this->db->truncate('tbl_tampung');
+                        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Obat Keluar added successfully! </div>');
+                        redirect('CObatProses/keluar');
+                }
         }
 
         public function keluar_edit($id)
@@ -333,68 +337,85 @@ class CObatProses extends CI_Controller
                 $this->load->view('CObatProses/keluar', $row);
         }
 
-        public function keluar_update()
-        {
-                $id = $this->input->post('id');
-                $detail_obat_id = $this->input->post('detail_obat_id');
-                $obat_proses_id = $this->input->post('obat_proses_id');
-                $detail_pasien_id = $this->input->post('detail_pasien_id');
-                $tanggal = $this->input->post('tanggal');
-                $user_id = $this->input->post('user_id');
-                $obat_id = $this->input->post('obat_id');
-                $jml_obat = $this->input->post('jml_obat');
-                $pasien_id = $this->input->post('pasien_id');
-                $ket = $this->input->post('ket');
+        // Tidak usah ada update, delete saja
+        // public function keluar_update()
+        // {
+        //         $id = $this->input->post('id');
+        //         $detail_obat_id = $this->input->post('detail_obat_id');
+        //         $obat_proses_id = $this->input->post('obat_proses_id');
+        //         $detail_pasien_id = $this->input->post('detail_pasien_id');
+        //         $tanggal = $this->input->post('tanggal');
+        //         $user_id = $this->input->post('user_id');
+        //         $obat_id = $this->input->post('obat_id');
+        //         $jml_obat = $this->input->post('jml_obat');
+        //         $pasien_id = $this->input->post('pasien_id');
+        //         $ket = $this->input->post('ket');
 
-                $pasien = [
-                        'user_id' => $user_id,
-                        'pasien_id' => $pasien_id,
-                        'tanggal_berobat' => $tanggal,
-                        'ket' => $ket
-                ];
+        //         $pasien = [
+        //                 'user_id' => $user_id,
+        //                 'pasien_id' => $pasien_id,
+        //                 'tanggal_berobat' => $tanggal,
+        //                 'ket' => $ket
+        //         ];
 
-                $where = [
-                        'id' => $detail_pasien_id
-                ];
+        //         $wherePasien = [
+        //                 'id' => $detail_pasien_id
+        //         ];
 
-                $this->detail_pasien->update_data($where, $pasien, 'tbl_detail_pasien');
+        //         $this->detail_pasien->update_data($wherePasien, $pasien, 'tbl_detail_pasien');
 
-                $detail_obat = [
-                        'obat_id' => $obat_id
-                ];
+        //         $detail_obat = [
+        //                 'obat_id' => $obat_id
+        //         ];
 
-                $where = [
-                        'id' => $detail_obat_id
-                ];
+        //         $whereDetail = [
+        //                 'id' => $detail_obat_id
+        //         ];
 
-                $this->detail_obat->update_data($where, $detail_obat, 'tbl_detail_obat');
+        //         $this->detail_obat->update_data($whereDetail, $detail_obat, 'tbl_detail_obat');
+
+        //         $obat_proses = [
+        //                 'tanggal' => $tanggal,
+        //                 'user_id' => $user_id,
+        //                 'updated_at' => date('Y-m-d H:i:s')
+        //         ];
+
+        //         $whereProses = [
+        //                 'id' => $obat_proses_id
+        //         ];
+
+        //         $this->obat_proses->update_data($whereProses, $obat_proses, 'tbl_obat_proses');
+
+        //         $detail_obat_proses = [
+        //                 'jml_obat' => $jml_obat,
+        //                 'updated_at' => date('Y-m-d H:i:s')
+        //         ];
+
+        //         $where = [
+        //                 'id' => $id
+        //         ];
+
+        //         $this->detail_obat_proses->update_data($where, $detail_obat_proses, 'tbl_detail_obat_proses');
 
 
-                $obat_proses = [
-                        'tanggal' => $tanggal,
-                        'user_id' => $user_id,
-                        'updated_at' => date('Y-m-d H:i:s')
-                ];
+        //         $get = $this->detail_obat->show($whereDetail);
+        //         $data = $get->row_array();
+        //         $stok = $data['stock'];
+        //         $getDOP = $this->detail_obat_proses->show($where);
+        //         $dataDOP = $getDOP->row_array();
+        //         // var_dump($dataDOP);
+        //         // die;
+        //         $jml = $dataDOP['jml_obat'];
 
-                $where = [
-                        'id' => $obat_proses_id
-                ];
+        //         $sisa = abs($jml - $jml_obat);
+        //         $total = $stok + $sisa;
+        //         $this->db->set('stock', $total);
+        //         $this->db->where('id', $whereDetail['detail_obat_id']);
+        //         $this->db->update('tbl_detail_obat');
 
-                $this->obat_proses->update_data($where, $obat_proses, 'tbl_obat_proses');
-
-                $detail_obat_proses = [
-                        'jml_obat' => $jml_obat,
-                        'updated_at' => date('Y-m-d H:i:s')
-                ];
-
-                $where = [
-                        'id' => $id
-                ];
-
-                $this->detail_obat_proses->update_data($where, $detail_obat_proses, 'tbl_detail_obat_proses');
-                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Obat Keluar updated successfully! </div>');
-                redirect('CObatProses/keluar');
-        }
+        //         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Obat Keluar updated successfully! </div>');
+        //         redirect('CObatProses/keluar');
+        // }
 
         public function keluar_delete($id)
         {
@@ -405,17 +426,14 @@ class CObatProses extends CI_Controller
                         if ($get->num_rows() == 1) {
                                 $data = $get->row_array();
 
-
-                                // $jml_obat = $data['jml_obat'];
-                                // $detail = ['id' => $data['detail_obat_id']];
-                                // $do = $this->detail_obat->show($detail)->row_array();
-                                // var_dump($do);
-                                // die;
-                                // $stock = $do['stock'];
-                                // $total = $stock + $jml_obat;
-                                // $this->db->set('stock', $total);
-                                // $this->db->where('id', $data['detail_obat_id']);
-                                // $this->db->update('tbl_detail_obat');
+                                $jml_obat = $data['jml_obat'];
+                                $detail = ['id' => $data['detail_obat_id']];
+                                $do = $this->detail_obat->show($detail)->row_array();
+                                $stock = $do['stock'];
+                                $total = $stock + $jml_obat;
+                                $this->db->set('stock', $total);
+                                $this->db->where('id', $data['detail_obat_id']);
+                                $this->db->update('tbl_detail_obat');
 
                                 $id = ['id' => $data['id']];
 
