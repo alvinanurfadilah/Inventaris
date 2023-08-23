@@ -27,6 +27,7 @@ class CAdmin extends CI_Controller
 
 		$data['data'] = $this->obat->getStok();
 		$data['record'] = $this->obat->record();
+		$data['masuk'] = $this->obat->masuk();
 
 		$this->load->view('pages/Header', $data);
 		$this->load->view('pages/Sidebar', $data);

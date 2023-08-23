@@ -60,4 +60,15 @@ class MObat extends CI_Model
 
         return $this->db->query($sql)->row_array();
     }
+
+    public function masuk()
+    {
+        return $this->db->query("SELECT sum(tbl_detail_obat.stock_history) AS jumlah
+        FROM tbl_detail_obat_proses
+        JOIN tbl_detail_obat ON tbl_detail_obat.id = tbl_detail_obat_proses.detail_obat_id
+        JOIN tbl_obat_proses ON tbl_obat_proses.id = tbl_detail_obat_proses.obat_proses_id
+        JOIN tbl_obat ON tbl_obat.id = tbl_detail_obat.obat_id
+        WHERE tbl_detail_obat_proses.jml_obat IS NULL
+        AND DATE_FORMAT(tbl_obat_proses.tanggal, '%m/%Y') = DATE_FORMAT(NOW(), '%m/%Y')")->row_array();
+    }
 }

@@ -58,11 +58,9 @@ class MDetailObatProses extends CI_Model
 
     public function deleteKeluar($id)
     {
-        $sql = "DELETE `tbl_detail_obat_proses`, `tbl_obat_proses`, `tbl_detail_pasien`
-        FROM `tbl_detail_obat_proses`, `tbl_obat_proses`, `tbl_detail_pasien`
-        WHERE `tbl_detail_obat_proses`.`obat_proses_id` = `tbl_obat_proses`.`id`
-        AND `tbl_obat_proses`.`detail_pasien_id` = `tbl_detail_pasien`.`id`
-        AND `tbl_detail_obat_proses`.`id` = ?";
+        $sql = "DELETE `tbl_detail_obat_proses`
+        FROM `tbl_detail_obat_proses`
+        WHERE `tbl_detail_obat_proses`.`id` = ?";
 
         return $this->db->query($sql, [$id]);
     }
