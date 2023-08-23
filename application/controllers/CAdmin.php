@@ -3,6 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
  * @property MRole $role
+ * @property MObat $obat
  * @property Session $session
  * @property db $db
  * @property input $input
@@ -16,12 +17,16 @@ class CAdmin extends CI_Controller
 		parent::__construct();
 		is_logged_in();
 		$this->load->model('MRole', 'role');
+		$this->load->model('MObat', 'obat');
 	}
 
 	public function index()
 	{
 		$data['title'] = 'Dashboard';
 		$data['user'] = $this->db->get_where('v_user', ['email' => $this->session->userdata('email')])->row_array();
+
+		$data['data'] = $this->obat->getStok();
+		$data['record'] = $this->obat->record();
 
 		$this->load->view('pages/Header', $data);
 		$this->load->view('pages/Sidebar', $data);

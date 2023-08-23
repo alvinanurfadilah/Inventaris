@@ -53,4 +53,11 @@ class MObat extends CI_Model
 
         return $this->db->query($query);
     }
+
+    public function record()
+    {
+        $sql = "SELECT COUNT(*) AS jmlRecord FROM tbl_obat";
+
+        return $this->db->query($sql)->row_array();
+    }
 }
