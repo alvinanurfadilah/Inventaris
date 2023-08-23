@@ -51,7 +51,7 @@
                                     foreach ($data->result_array() as $val) : ?>
                                         <tr>
                                             <td><?= $i++ ?></td>
-                                            <td><?= $val['first_name'] ?></td>
+                                            <td>[<?= $val['id'] ?>] <?= $val['first_name'] ?></td>
                                             <td><?= $val['last_name'] ?></td>
                                             <td><?= $val['email'] ?></td>
                                             <td><?= $val['role'] ?></td>

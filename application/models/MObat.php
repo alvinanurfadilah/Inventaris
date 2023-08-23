@@ -71,4 +71,37 @@ class MObat extends CI_Model
         WHERE tbl_detail_obat_proses.jml_obat IS NULL
         AND DATE_FORMAT(tbl_obat_proses.tanggal, '%m/%Y') = DATE_FORMAT(NOW(), '%m/%Y')")->row_array();
     }
+
+    public function masukStok()
+    {
+        return $this->db->query("SELECT tbl_detail_obat.obat_id, tbl_obat.name, sum(tbl_detail_obat.stock_history) AS jumlah
+        FROM tbl_detail_obat_proses
+        JOIN tbl_detail_obat ON tbl_detail_obat.id = tbl_detail_obat_proses.detail_obat_id
+        JOIN tbl_obat_proses ON tbl_obat_proses.id = tbl_detail_obat_proses.obat_proses_id
+        JOIN tbl_obat ON tbl_obat.id = tbl_detail_obat.obat_id
+        WHERE tbl_detail_obat_proses.jml_obat IS NULL
+        AND DATE_FORMAT(tbl_obat_proses.tanggal, '%m/%Y') = DATE_FORMAT(NOW(), '%m/%Y')
+        GROUP BY tbl_detail_obat.obat_id")->result_array();
+    }
+
+    public function keluar()
+    {
+        return $this->db->query("SELECT SUM(tbl_detail_obat_proses.jml_obat) AS jumlah
+        FROM tbl_detail_obat_proses
+        JOIN tbl_detail_obat ON tbl_detail_obat.id = tbl_detail_obat_proses.detail_obat_id
+        JOIN tbl_obat_proses ON tbl_obat_proses.id = tbl_detail_obat_proses.obat_proses_id
+        JOIN tbl_obat ON tbl_obat.id = tbl_detail_obat.obat_id
+        AND DATE_FORMAT(tbl_obat_proses.tanggal, '%m/%Y') = DATE_FORMAT(NOW(), '%m/%Y')")->row_array();
+    }
+
+    public function keluarStok()
+    {
+        return $this->db->query("SELECT tbl_detail_obat.obat_id, tbl_obat.name, sum(tbl_detail_obat_proses.jml_obat) AS jumlah
+        FROM tbl_detail_obat_proses
+        JOIN tbl_detail_obat ON tbl_detail_obat.id = tbl_detail_obat_proses.detail_obat_id
+        JOIN tbl_obat_proses ON tbl_obat_proses.id = tbl_detail_obat_proses.obat_proses_id
+        JOIN tbl_obat ON tbl_obat.id = tbl_detail_obat.obat_id
+        WHERE DATE_FORMAT(tbl_obat_proses.tanggal, '%m/%Y') = DATE_FORMAT(NOW(), '%m/%Y')
+        GROUP BY tbl_detail_obat.obat_id")->result_array();
+    }
 }

@@ -188,7 +188,7 @@
             </div>
           </div>
           <div class="form-group row">
-            <label for="horizontal-text-input" class="col-sm-3 col-form-label">Kode Obat</label>
+            <label for="horizontal-text-input" class="col-sm-3 col-form-label">Nama Obat</label>
             <div class="col-sm-9">
               <select name="obat_id" id="obat_id" class="form-control">
                 <option value="">Pilih Obat</option>
