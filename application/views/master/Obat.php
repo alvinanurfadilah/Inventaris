@@ -12,7 +12,11 @@
         <div class="col-sm-6">
           <h1 class="m-0"><?= $title ?></h1>
           <br>
-          <?= form_error('obat', '<div class="alert alert-danger" role="alert">',  '</div>') ?>
+          <?php if (validation_errors()) : ?>
+            <div class="alert alert-danger" role="alert">
+              <?= validation_errors() ?>
+            </div>
+          <?php endif ?>
 
           <?= $this->session->flashdata('message'); ?>
         </div><!-- /.col -->

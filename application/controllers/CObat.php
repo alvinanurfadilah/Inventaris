@@ -58,8 +58,12 @@ class CObat extends CI_Controller
                                 'satuan_id' => $this->input->post('satuan_id'),
                                 'created_at' => date('Y-m-d H:i:s')
                         ];
-                        $this->db->insert('tbl_obat', $data);
-                        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> New obat added! </div>');
+                        if ($this->obat->isExist($data['name'])) {
+                                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Nama Obat sudah tersedia! </div>');
+                        } else {
+                                $this->db->insert('tbl_obat', $data);
+                                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> New obat added! </div>');
+                        }
                         redirect('CObat/index');
                 }
         }

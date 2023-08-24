@@ -323,14 +323,12 @@ class CObatProses extends CI_Controller
                 }
                 $over = $overall['overall_stock'];
                 if ($over < 5) {
-                        $this->db->truncate('tbl_tampung');
                         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Obat Keluar added successfully! </div><div class="alert alert-danger" role="alert">Ada obat kurang dari 5! </div>');
-                        redirect('CObatProses/keluar');
                 } else {
-                        $this->db->truncate('tbl_tampung');
                         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Obat Keluar added successfully! </div>');
-                        redirect('CObatProses/keluar');
                 }
+                $this->db->truncate('tbl_tampung');
+                redirect('CObatProses/keluar');
         }
 
         // Tidak usah ada update, delete saja

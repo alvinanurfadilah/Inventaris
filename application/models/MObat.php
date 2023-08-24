@@ -61,6 +61,7 @@ class MObat extends CI_Model
         return $this->db->query($sql)->row_array();
     }
 
+    // dashboard
     public function masuk()
     {
         return $this->db->query("SELECT sum(tbl_detail_obat.stock_history) AS jumlah
@@ -72,6 +73,7 @@ class MObat extends CI_Model
         AND DATE_FORMAT(tbl_obat_proses.tanggal, '%m/%Y') = DATE_FORMAT(NOW(), '%m/%Y')")->row_array();
     }
 
+    //table dashboard
     public function masukStok()
     {
         return $this->db->query("SELECT tbl_detail_obat.obat_id, tbl_obat.name, sum(tbl_detail_obat.stock_history) AS jumlah
@@ -84,6 +86,7 @@ class MObat extends CI_Model
         GROUP BY tbl_detail_obat.obat_id")->result_array();
     }
 
+    //dashboard
     public function keluar()
     {
         return $this->db->query("SELECT SUM(tbl_detail_obat_proses.jml_obat) AS jumlah
@@ -94,6 +97,7 @@ class MObat extends CI_Model
         AND DATE_FORMAT(tbl_obat_proses.tanggal, '%m/%Y') = DATE_FORMAT(NOW(), '%m/%Y')")->row_array();
     }
 
+    //table dashboard
     public function keluarStok()
     {
         return $this->db->query("SELECT tbl_detail_obat.obat_id, tbl_obat.name, sum(tbl_detail_obat_proses.jml_obat) AS jumlah
@@ -103,5 +107,11 @@ class MObat extends CI_Model
         JOIN tbl_obat ON tbl_obat.id = tbl_detail_obat.obat_id
         WHERE DATE_FORMAT(tbl_obat_proses.tanggal, '%m/%Y') = DATE_FORMAT(NOW(), '%m/%Y')
         GROUP BY tbl_detail_obat.obat_id")->result_array();
+    }
+
+    public function isExist($input)
+    {
+        $query = $this->db->get_where('tbl_obat', ['name' => $input]);
+        return $query->num_rows() > 0;
     }
 }
