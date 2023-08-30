@@ -105,7 +105,7 @@
                                     <div class="form-group row">
                                         <label for="ket" class="col-sm-2 col-form-label">Keterangan</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="ket" name="ket" placeholder="Keterangan">
+                                            <textarea class="form-control" id="ket" name="ket" placeholder="Keterangan"></textarea>
                                         </div>
                                     </div>
 

@@ -321,8 +321,8 @@ class CObatProses extends CI_Controller
                         $this->db->where('id', $o['obat_id']);
                         $this->db->update('tbl_obat');
                 }
-                $over = $overall['overall_stock'];
-                if ($over < 5) {
+                $over = $this->obat->getStok()->result_array();
+                if ($over) {
                         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Obat Keluar added successfully! </div><div class="alert alert-danger" role="alert">Ada obat kurang dari 5! </div>');
                 } else {
                         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Obat Keluar added successfully! </div>');
